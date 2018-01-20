@@ -26,14 +26,16 @@
 */
 int main (void)					// Hauptprogramm, hier startet der Mikrocontroller
 {
-
-	DDRC |= (1 << PC5) | (1 << PC4); 		// Port C0 als Ausgang festlegen (LED1)
+	DDRD |= (1 << PD5) | (1 << PD4) | (1 << PD3) | (1 << PD2) | (1 << PD6) | (1 << PD7); 		// Port C0 als Ausgang festlegen (LED1)
+	int port[6] = { (1 << PD5), (1 << PD4), (1 << PD3), (1 << PD2), (1 << PD6), (1 << PD7) };
 
 	while (1) {
-		PORTC = (1 << PC5) | (1 << PC4);
-		_delay_ms(1000);
-		PORTC = (0 << PC5) | (0 << PC4);
-		_delay_ms(1000);
-	}							// Ende der Endlosschleife (Es wird wieder zu "while(1)" gesprungen.
+	        for(int i = 0; i < 5; i++) {
+	                PORTD |= port[i];
+		        _delay_ms(1000);
+		        PORTD &= ~port[i];
+		        _delay_ms(1000);
+	        }
+	}						// Ende der Endlosschleife (Es wird wieder zu "while(1)" gesprungen.
 	return 0;					// Wird nie erreicht, aber ohne schreibt der GCC eine Warnung.
 }								// Ende des Hauptprogramms

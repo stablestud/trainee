@@ -14,8 +14,10 @@ int main(void) {
         setOutput();
         while (1) {
               for(int i = 0;i < 16;i++) {
-                        printNumber(13);
-                }
+                        printNumber(1);
+                        _delay_ms(1000);
+                        clearSegment();
+              }
 
         }
 }

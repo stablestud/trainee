@@ -1,0 +1,7 @@
+/home/alexander/workspace/kdevelop/Lab/lab_3_4_3/build/CMakeFiles/install/strip.dir
+/home/alexander/workspace/kdevelop/Lab/lab_3_4_3/build/CMakeFiles/edit_cache.dir
+/home/alexander/workspace/kdevelop/Lab/lab_3_4_3/build/CMakeFiles/lab_3_4_3.dir
+/home/alexander/workspace/kdevelop/Lab/lab_3_4_3/build/CMakeFiles/list_install_components.dir
+/home/alexander/workspace/kdevelop/Lab/lab_3_4_3/build/CMakeFiles/install/local.dir
+/home/alexander/workspace/kdevelop/Lab/lab_3_4_3/build/CMakeFiles/rebuild_cache.dir
+/home/alexander/workspace/kdevelop/Lab/lab_3_4_3/build/CMakeFiles/install.dir

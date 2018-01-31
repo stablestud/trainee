@@ -1,0 +1,7 @@
+/home/alexander/workspace/kdevelop/Sandbox/build/CMakeFiles/install/strip.dir
+/home/alexander/workspace/kdevelop/Sandbox/build/CMakeFiles/edit_cache.dir
+/home/alexander/workspace/kdevelop/Sandbox/build/CMakeFiles/sandbox.dir
+/home/alexander/workspace/kdevelop/Sandbox/build/CMakeFiles/rebuild_cache.dir
+/home/alexander/workspace/kdevelop/Sandbox/build/CMakeFiles/list_install_components.dir
+/home/alexander/workspace/kdevelop/Sandbox/build/CMakeFiles/install/local.dir
+/home/alexander/workspace/kdevelop/Sandbox/build/CMakeFiles/install.dir

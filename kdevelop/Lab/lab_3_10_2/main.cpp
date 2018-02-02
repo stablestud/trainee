@@ -35,21 +35,19 @@ struct Collection {
 
 void AddToCollection ( Collection &col, int element )
 {
-        int previous_size = sizeof ( col.elements ) / sizeof ( col.elements[0] );
-
-        if ( previous_size == 0 )
-                col.elements = new int[1];
-
-        int new_vector[ previous_size + 1 ];
-
-        for ( int i = 0; i < previous_size + 1; i++ ) {
-
+        if ( ! col.elno ) {
+                col.elements = new int [ 1 ] { element };
         }
-
+        col.elno++;
+        cout << sizeof ( col.elements ) / sizeof ( col.elements [ 0 ] ) << " elements ... " << endl;
+        int *aux = col.elements;
         delete[] col.elements;
-        col.elements = new int[ previous_size + 1 ];
+        col.elements = new int [ col.elno + 1 ];
+        col.elements = aux;
+        col.elements [ col.elno + 1 ] = element;
+        cout << sizeof ( col.elements ) / sizeof ( col.elements [ 0 ] ) << " elements ... " << endl;
+        delete[] aux;
 
-        col.elno = element;
 }
 
 void PrintCollection ( Collection col )

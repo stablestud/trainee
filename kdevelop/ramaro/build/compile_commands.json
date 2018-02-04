@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/home/alexander/workspace/kdevelop/ramaro/build",
-  "command": "/usr/bin/c++    -g   -o CMakeFiles/ramaro.dir/main.cpp.o -c /home/alexander/workspace/kdevelop/ramaro/main.cpp",
-  "file": "/home/alexander/workspace/kdevelop/ramaro/main.cpp"
-}
-]

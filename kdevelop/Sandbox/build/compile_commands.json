@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/home/alexander/workspace/kdevelop/Sandbox/build",
-  "command": "/usr/bin/c++    -g   -o CMakeFiles/sandbox.dir/main.cpp.o -c /home/alexander/workspace/kdevelop/Sandbox/main.cpp",
-  "file": "/home/alexander/workspace/kdevelop/Sandbox/main.cpp"
-}
-]

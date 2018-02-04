@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/home/alexander/workspace/kdevelop/Lab/lab_3_4_2/build",
-  "command": "/usr/bin/c++    -g   -o CMakeFiles/lab_3_4_2.dir/main.cpp.o -c /home/alexander/workspace/kdevelop/Lab/lab_3_4_2/main.cpp",
-  "file": "/home/alexander/workspace/kdevelop/Lab/lab_3_4_2/main.cpp"
-}
-]

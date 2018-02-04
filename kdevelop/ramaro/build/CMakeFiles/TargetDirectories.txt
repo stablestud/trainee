@@ -1,7 +1,0 @@
-/home/alexander/workspace/kdevelop/ramaro/build/CMakeFiles/install/strip.dir
-/home/alexander/workspace/kdevelop/ramaro/build/CMakeFiles/edit_cache.dir
-/home/alexander/workspace/kdevelop/ramaro/build/CMakeFiles/ramaro.dir
-/home/alexander/workspace/kdevelop/ramaro/build/CMakeFiles/rebuild_cache.dir
-/home/alexander/workspace/kdevelop/ramaro/build/CMakeFiles/list_install_components.dir
-/home/alexander/workspace/kdevelop/ramaro/build/CMakeFiles/install/local.dir
-/home/alexander/workspace/kdevelop/ramaro/build/CMakeFiles/install.dir

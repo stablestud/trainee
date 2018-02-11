@@ -35,19 +35,15 @@ struct Collection {
 
 void AddToCollection ( Collection &col, int element )
 {
-        if ( ! col.elno ) {
-                col.elements = new int [ 1 ] { element };
-        }
         col.elno++;
-        cout << sizeof ( col.elements ) / sizeof ( col.elements [ 0 ] ) << " elements ... " << endl;
+        cout << col.elno << endl;
         int *aux = col.elements;
-        delete[] col.elements;
-        col.elements = new int [ col.elno + 1 ];
+        if ( col.elements != NULL ) { 
+                delete[] col.elements;
+        }
+        col.elements = new int [ col.elno ];
         col.elements = aux;
-        col.elements [ col.elno + 1 ] = element;
-        cout << sizeof ( col.elements ) / sizeof ( col.elements [ 0 ] ) << " elements ... " << endl;
-        delete[] aux;
-
+        col.elements [ col.elno - 1 ] = element;
 }
 
 void PrintCollection ( Collection col )

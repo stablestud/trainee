@@ -1,17 +1,17 @@
 [Buildset]
-BuildItems=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x00)
+BuildItems=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x01\x00\x00\x00\x0b\x00\x00\x00\x00\x01\x00\x00\x00\x14\x00l\x00a\x00b\x00_\x003\x00_\x001\x000\x00_\x002)
 
 [CMake]
 Build Directory Count=1
 Current Build Directory Index=0
 
 [CMake][CMake Build Directory 0]
-Build Directory Path=/home/alexander/workspace/kdevelop/Lab/lab_3_10_2/build
+Build Directory Path=/home/stablestud/Documents/workspace/kdevelop/Lab/lab_3_10_2/build
 Build Type=Debug
 CMake Binary=/usr/bin/cmake
 Environment Profile=
 Extra Arguments=
-Install Directory=/usr/local
+Install Directory=
 
 [Launch]
 Launch Configurations=Launch Configuration 0
@@ -27,7 +27,7 @@ Arguments=
 Dependencies=@Variant(\x00\x00\x00\t\x00\x00\x00\x00\x01\x00\x00\x00\x0b\x00\x00\x00\x00\x02\x00\x00\x00\x14\x00l\x00a\x00b\x00_\x003\x00_\x001\x000\x00_\x002\x00\x00\x00\x14\x00l\x00a\x00b\x00_\x003\x00_\x001\x000\x00_\x002)
 Dependency Action=Build
 EnvironmentGroup=
-Executable=file:///home/alexander/workspace/kdevelop/Lab/lab_3_10_2
+Executable=file:///home/stablestud/Documents/workspace/kdevelop/Lab/lab_3_10_2
 External Terminal=konsole --noclose --workdir %workdir -e %exe
 Project Target=lab_3_10_2,lab_3_10_2
 Use External Terminal=true
@@ -35,4 +35,4 @@ Working Directory=
 isExecutable=false
 
 [Project]
-VersionControlSupport=
+VersionControlSupport=kdevgit

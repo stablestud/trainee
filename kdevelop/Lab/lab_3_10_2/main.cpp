@@ -35,22 +35,35 @@ struct Collection {
 
 void AddToCollection ( Collection &col, int element )
 {
-        col.elno++;
-        cout << col.elno << endl;
-        int *aux = col.elements;
-        if ( col.elements != NULL ) { 
-                delete[] col.elements;
+
+        if ( col.elements == NULL ) {
+                col.elements = new int [ 1 ];
+                col.elements [ 0 ] = element;
+                col.elno++;
+                return;
         }
-        col.elements = new int [ col.elno ];
-        col.elements = aux;
-        col.elements [ col.elno - 1 ] = element;
+
+        int *aux = new int [ col.elno ];
+
+        for ( int i = 0; i < col.elno; i++)
+                aux [ i ] = col.elements [ i ];
+
+        delete[] col.elements;
+
+        col.elements = new int [ col.elno + 1 ];
+
+        for ( int i = 0; i < col.elno; i++)
+                col.elements [ i ] = aux [ i ];
+        col.elements [ col.elno ] = element;
+        col.elno++;
+        return;
 }
 
 void PrintCollection ( Collection col )
 {
         cout << "[ ";
         for ( int i = 0; i < col.elno; i++ )
-                cout << col.elements[i] << " ";
+                cout << col.elements [ i ] << " ";
         cout << "]" << endl;
 }
 

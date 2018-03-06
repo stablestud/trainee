@@ -14,7 +14,6 @@ void make(s *p, float x = 10) {
 int main() {
         s *ss = new s;
         make(ss);
-        cout << sizeof ( float* ) / sizeof (float) * 10 << endl;
         cout << *(*ss).f;
         delete ss->f;
         delete ss;

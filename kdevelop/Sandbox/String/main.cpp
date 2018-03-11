@@ -5,6 +5,7 @@ using namespace std;
 
 int main ( void )
 {
+        /*
         std::string string_one { "Ok, so I'm a variable?" };
         std::string string_two = "I'm Bob";
         std::string string_three ( "\"Savage mode accepted\"" );
@@ -27,7 +28,12 @@ int main ( void )
         cout << new_one << endl;
         new_one = string_two + " and me";
         cout << new_one << endl;
-
+        */
+        
+        string str1, str2;
+        str1 ( "ABCDEF" );
+        str2 ( str1.substr ( 1, 1 ) + str1.substr ( 4 ) + str1.substr() );
+        cout << str2 << endl;
 
 
         // cout << "Sleeping 4 seconds ..." << endl;

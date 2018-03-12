@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 2.6)
 project(stack)
 
-add_executable(stack main.cpp)
+add_executable(stack stack.cpp)
 
 install(TARGETS stack RUNTIME DESTINATION bin)

@@ -1,3 +1,4 @@
+
 /**
  * @Author: stablestud
  * @Date: 2018/03/11
@@ -17,9 +18,7 @@ void push ( int element, int* stack, int* stack_nr_elements )
 
 int pop ( int* stack, int* stack_nr_elements )
 {
-        int element = stack [ --( *stack_nr_elements ) ];
-        stack [ *stack_nr_elements ] = 0;
-        return element;
+        return stack [ --( *stack_nr_elements ) ];
 }
 
 int main ( int argc, char **argv )
@@ -36,14 +35,11 @@ int main ( int argc, char **argv )
         push ( 56109, stack, &stack_nr_elements );
         push ( 48109, stack, &stack_nr_elements );
 
-        cout << "I'm at: " << stack_nr_elements << endl;
-
         // Reads out stack till its empty
         while ( stack_nr_elements ) {
                 cout << pop ( stack, &stack_nr_elements ) << endl;
         }
-
-        cout << "I'm at: " << stack_nr_elements << endl;
+        
         return 0;
 }
 // kate: indent-mode cstyle; indent-width 8; replace-tabs on; 

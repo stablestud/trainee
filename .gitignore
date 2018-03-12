@@ -34,6 +34,6 @@
 **/RemoteSystemsTempFiles/
 **/.metadata/
 **/language.settings.xml
-**/build/
+**/build*/
 **/.directory
 **/.kdev4/

@@ -1,41 +1,22 @@
 #include <iostream>
-
 using namespace std;
-
-void push ( int element, int* stack, int* stack_nr_elements )
-{
-        stack[(*stack_nr_elements)++] = element;
-        return;
-}
-
-int pop ( int* stack, int* stack_nr_elements )
-{
-        int element = stack[--(*stack_nr_elements)];
-        stack[*stack_nr_elements] = 0;
-        return element;
-}
-
-int main ( void )
-{
-        int stack[100] = { 0 };         // Creates stack recklessly with size of 100
-        int stack_nr_elements = 0;      // Stores number of stored elements
-        
-        // Add values to stack
-        push ( 67, stack, &stack_nr_elements );
-        push ( 109, stack, &stack_nr_elements );
-        push ( 309, stack, &stack_nr_elements );
-        push ( 109123, stack, &stack_nr_elements );
-        push ( 107779, stack, &stack_nr_elements );
-        push ( 56109, stack, &stack_nr_elements );
-        push ( 48109, stack, &stack_nr_elements );
-        
-        cout << "I'm at: " << stack_nr_elements << endl;
-        
-        // Reads out stack till its empty
-        while ( stack_nr_elements ) {
-                cout << pop ( stack, &stack_nr_elements ) << endl;
-        }
-        
-        cout << "I'm at: " << stack_nr_elements << endl;
+class Class1 {
+public:
+        Class1(int val) { this -> value = val; }
+        Class1(Class1 const &source) { value = source.value + 100; }
+        int value;
+};
+class Class2 {
+public:
+        Class2(int val) { this -> value = val; }
+        int value;
+};
+int main(void) {
+        Class1 object11 { 100 }, object12 { object11 };
+        Class2 object21(200), object22 ( object21 );
+        cout << object12.value << endl;
+        cout << object11.value << endl;
+        cout << object22.value << endl;
+        cout << object21.value << endl;
         return 0;
 }

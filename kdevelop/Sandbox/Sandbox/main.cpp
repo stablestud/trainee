@@ -1,22 +1,59 @@
 #include <iostream>
+
 using namespace std;
-class Class1 {
+
+class ClassSupreme
+{
+protected:
+        static int level;
 public:
-        Class1(int val) { this -> value = val; }
-        Class1(Class1 const &source) { value = source.value + 100; }
-        int value;
+        ClassSupreme ( void )
+        {
+                cout << "Initializing ClassSupreme..." << endl;
+        }
+
+        ~ClassSupreme ( void )
+        {
+                cout << "Killing ClassSupreme..." << endl;
+        }
+
 };
-class Class2 {
+
+class SubClassSupreme : ClassSupreme
+ {
+ public:
+        SubClassSupreme ( void )
+        {
+                cout << "Initializing SubClassSupreme... total level: " << ClassSupreme::level++ << endl;
+        }
+
+        ~SubClassSupreme ( void )
+        {
+                cout << "Killing SubClassSupreme..." << endl;
+        }
+};
+
+class SubSubClassSupreme : SubClassSupreme
+{
 public:
-        Class2(int val) { this -> value = val; }
-        int value;
+        SubSubClassSupreme ( void )
+        {
+                cout << "Initializing SubSubClassSupreme... total level: " << endl;
+        }
+
+        ~SubSubClassSupreme ( void )
+        {
+                cout << "Killing SubSubClassSupreme..." << endl;
+        }
 };
-int main(void) {
-        Class1 object11 { 100 }, object12 { object11 };
-        Class2 object21(200), object22 ( object21 );
-        cout << object12.value << endl;
-        cout << object11.value << endl;
-        cout << object22.value << endl;
-        cout << object21.value << endl;
+
+int ClassSupreme::level = 0;
+
+int main ( void )
+{
+        ClassSupreme A;
+        SubClassSupreme b;
+        SubSubClassSupreme a;
+
         return 0;
 }

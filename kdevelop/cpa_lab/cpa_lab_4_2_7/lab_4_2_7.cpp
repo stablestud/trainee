@@ -4,8 +4,13 @@ using namespace std;
 
 bool is_close ( double a, double b, double tolerance )
 {
-        // Your code goes here
-        return false;
+        if (( fabs ( a ) > fabs ( b ) - fabs ( tolerance )) && ( fabs ( a ) < fabs ( b ) + fabs ( tolerance ))) {
+                cout << "a: " << fabs ( a ) << " b: " << fabs ( b ) << endl;
+                return true;
+        } else {
+                cout << "a: " << fabs ( a ) << " b: " << fabs ( b ) << endl;
+                return false;
+        }
 }
 
 int main ( void )

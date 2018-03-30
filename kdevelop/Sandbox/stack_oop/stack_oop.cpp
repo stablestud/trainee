@@ -87,8 +87,8 @@ public:
 
 int main ( void )
 {
-        stablestud::stack_oop todo ( 3 );
-        stablestud::sum_stack_oop todoz ( 3 );
+        stablestud::stack_oop todo = 3 ;
+        stablestud::sum_stack_oop todoz = 3 ;
         todo.push ( 83 );
         todoz.push ( 99 );
         todo.push ( 21 );
@@ -96,7 +96,7 @@ int main ( void )
         todo.push ( 673 );
         todoz.push ( 99 );
         cout << "Sum: " << todoz.getSum() << endl;
-        stablestud::sum_stack_oop topa9 ( &todoz );
+        stablestud::sum_stack_oop topa9 = &todoz;
         topa9.push ( 12 );
         cout << "--todoz-- " << todoz.getSum() << endl;
         while ( todoz.getSum() )

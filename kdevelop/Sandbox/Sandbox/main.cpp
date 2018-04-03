@@ -2,18 +2,20 @@
 
 using namespace std;
 
-namespace Container {
-        namespace {
-                int x;
-        }
-
-        struct p {
-                int x : 1;
-        };
-}
+void f ( int** );
 
 int main ( void )
 {
+        int* creme = nullptr;
+        if ( creme == nullptr )
+                f(&creme);
+        cout << *creme << endl;
+}
 
-        return 0;
+void f ( int** x )
+{
+        if ( *x == nullptr )
+                cout << "Oh no a nullptr!" << endl;
+        *x = new int;
+        **x = 3;
 }

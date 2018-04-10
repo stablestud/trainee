@@ -1,5 +1,5 @@
 #include <iostream>
-#include <iostream>
+#include <string>
 
 using std::string;
 using std::cin;
@@ -8,52 +8,69 @@ using std::cerr;
 using std::getline;
 using std::endl;
 
+
+/*
 struct DIGIT {
-        // check digit
         bool check ( char character )
         {
-                if ( character ) // TODO check if character in range of digits in ASCI/ANSI code
+                if ( character >= '0' && character <= '9')
                         return true;
                 else
                         return false;
         }
 };
 
+
+/* * * * * * * * * * * * * * * * 
+ *  Latein alpahbet mask (A)   *
+ * * * * * * * * * * * * * * * */
 struct ALPHABET {
-        // Look for char from ALPHABET
         bool check ( char character )
         {
-                if ( character ) // TODO check if in ALPHABET
-                        return true;
+                if (( character >= 'A' && character <= 'Z' ) || ( character >= 'a' && character <= 'z' ))
+			return true;
                 else
                         return false;
         }
 };
 
-struct JOKER {
-        // Every character but empty
-        // Maybe return always true?
-        // Maybe I dont need this structure then?
+
+/* * * * * * * * * * * * * * *
+ *  Any character mask (?)   *
+ * * * * * * * * * * * * * * */ 
+struci JOKER {
         bool check ( char character )
         {
                 return character;
         }
 };
 
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * 
+ *   Upper-/Lowercase mask (any lowercase letter)  *
+ * * * * * * * * * * * * * * * * * * * * * * * * * */
 struct CASE {
-        u_char literal; // TODO compare with character
-        // Check if lower/Upper-case character exists
+        char literal;
+
         bool check ( char character ) {
-                if ( character ) // TODO check if character in ALPHABET
-                        if ( character ) // TODO check if Upper/lower case & compare with literal
-                                return true;
-                        else    return false;
-                else return false;
+		/* If uppercase, check if fits with lowercase */
+                if ( character >= 'A' && character <= 'Z' ) {
+                        if ( character + 32 == literal )
+				return true;
+			else return false;
+
+		/* If lowercase, check if fits with uppercase */
+		} else if ( character >= 'a' && character <= 'z' ) { 
+			if ( character - 32 == literal )
+				return true;
+			else return false;
+
+		} else return false;
         }
 };
 
 struct REST {
-        u_char literal;
+        char literal;
         // Check if char equals this character
         bool check ( char character )
         {

@@ -28,7 +28,6 @@ unsigned int searchForBlock ( struct BLOCK** current )
                         /* Cut the rest from the end of the block */
                         (*current)->String.erase ( i );
 
-//                         cout << "End of " << (*current)->type << " block found at " << i << " from begin!" << endl;
                         /* Return the position in the string,  *
                          * to avoid rescanning by parent block */
                         return (*current)->String.length() + 1U;
@@ -47,12 +46,9 @@ unsigned int searchForBlock ( struct BLOCK** current )
                                 delete[] aux.subBlockContainer;
                         }
 
-//                         cout << "Family " << (*current) << ": Creating new block at array " << (*current)->subBlockCount << ", as " << (*current)->String[i] << " block, " << i << " from parent begin, " << (*current)->String.substr ( i + 1 ) + " is the rest" << ", nullptr, 0" << endl;
-
                         /* If a sub-block appeared, create new block inside the parent. */
                         (*current)->subBlockContainer[(*current)->subBlockCount] = new BLOCK { (*current)->String[i], i, (*current)->String.substr ( i + 1U ), new BLOCK*, 0U };
 
-//                         cout << "Running recursive call..." << endl;
                         /* Recursive call: run searchForBlock in sub-block */
                         int returnValue = searchForBlock ( &(*current)->subBlockContainer[(*current)->subBlockCount] );
 
@@ -71,7 +67,6 @@ unsigned int searchForBlock ( struct BLOCK** current )
         }
 
         if ((*current)->type == 0U ) {
-//                 cout << "End of block search" << endl;
         }
         return 0; // Check if return 0, then means it was not found and delete the not found array_block
 }

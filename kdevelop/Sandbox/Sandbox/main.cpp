@@ -2,11 +2,15 @@
 
 using namespace std;
 
+struct X {
+        static int i;
+};
+
+
+int X::i = 10;
 
 int main ( void )
 {
-        char x = 'A';
-        if ( x + 32 == 'a' || x - 23 == 'A' )
-                cout << "x" << endl;
+        X tree;
         return 0;
 }

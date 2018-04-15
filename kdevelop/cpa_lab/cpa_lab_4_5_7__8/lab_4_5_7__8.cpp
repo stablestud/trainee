@@ -17,6 +17,9 @@ PARAM* readValues ( char*, int, int& );
 void readSentence ( PARAM*, int, char*, int );
 
 int main ( void ) {
+        
+        cout << "Enter the params: ";
+        
         char values [56];
 
         cin.getline( values, 55);
@@ -29,7 +32,7 @@ int main ( void ) {
                         break;
                 }
         if ( !length ) {
-                cerr << "Values are too long, max string length: 20 characters!" << endl;
+                cerr << "Values are too long, max string length: 55 characters!" << endl;
                 exit ( EXIT_FAILURE );
         }
 
@@ -38,14 +41,16 @@ int main ( void ) {
 
         for ( int i = 0; i <= delimPos; i++ )
                 cout << holder[i].param << ": " << holder[i].value << endl;
+        
+        cout << "Now please enter the String: ";
 
-        char sentence [251];
+        char sentence [51];
 
-        cin.getline( sentence, 250);
+        cin.getline( sentence, 50);
 
         length = 0;
 
-        for ( int i = 0; i < 251; i++ )
+        for ( int i = 0; i < 51; i++ )
                 if ( sentence[i] != '\0' && values[i+1] == '\0' ) {
                         length = i + 1;
                         break;
@@ -62,22 +67,32 @@ int main ( void ) {
 
 void readSentence(PARAM* list, int size, char* sentence, int length )
 {
-        bool inThing = false;
         int position;
-        int howLong;
+        int endposition;
+        bool inCase = false;
+        bool found = false;
+        for ( int i = length - 1; i >= 0; i-- ) {
+                if ( sentence[i] == ']' ) {
+                        position = i;
+                        inCase = true;
+                } else if ( sentence[i] == '[' && inCase ) {
+                        for ( int x = 0; x < size && !found; x++ ) {
+                                for ( int j = 0; list[x].param[j] != '\0' && j <= position - i - 1; j++ ) {
+                                        if ( sentence[i + 1 + j] != list[x].param[j] )
+                                                break;
+                                        else if ( sentence[i + 2 + j] == '\0' ) {
+                                                /* Now replace string with right param */
+                                                char* aux = sentence;
+                                                sentence = new char[length - ( position + i + 1 )];
+                                                
+                                                for ( int k = 0; k < length - position + i + 1; k++ ) {
+                                                        sentence[k] = 
 
-        for ( int i = length; i > 0; i-- ) {
-                if ( sentence[i] == '[' || sentence[i] == ']' ) {
-                        if ( sentence[i] == ']' ) {
-                                position = i;
-                                inThing = true;
-                        } else if ( sentence[i] == '[' ) {
-                                howLong = position - i;
-                                inThing = false;
+                                                }
 
-                                /* check if fits to set */
-                                for ( int i = 0; i < size; i++) {
-                                        for ( i )
+                                                found = true;
+                                                break;
+                                        }
                                 }
                         }
                 }

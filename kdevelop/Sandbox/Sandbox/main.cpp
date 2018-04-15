@@ -1,16 +1,23 @@
 #include <iostream>
 
-using namespace std;
-
 struct X {
-        static int i;
+        int* pos;
 };
 
+void func ( X* damn )
+{
+        int* aux = damn->pos;
 
-int X::i = 10;
+//         damn->pos = new int;
+
+        delete[] aux;
+}
 
 int main ( void )
 {
-        X tree;
+        X G;
+
+        func ( &G );
+
         return 0;
 }

@@ -39,13 +39,13 @@ int main ( void )
         cin.getline ( input->string, 80 );
 
         updateStringLength ( &input );
-        
+        cout << "Before erasePart in main()" << endl; 
         erasePart ( &input, 0U, 1U );
-        
+        cout << "Before printString1 in main()" << endl; 
         printString ( &input );
-        
+        cout << "\nBefore removeSpaces in main()" << endl; 
         removeSpaces ( &input );
-
+        cout << "Before printString2 in main()" << endl;
         printString ( &input );
 
         cout << endl;
@@ -131,11 +131,11 @@ void containerPushBack ( STRING_CONTAINER* ccontainer, STRING* container )
                 delete[] aux;
 }
 
-
+/* BUG with allocation and removeSpaces() */
 void erasePart ( STRING** container, unsigned pos, unsigned scope )
 {
         char* aux = (*container)->string;
-        
+         
         /* If scope is zero select the rest of the string */
         if ( scope == 0 )
                 scope = (*container)->length - pos;
@@ -147,7 +147,7 @@ void erasePart ( STRING** container, unsigned pos, unsigned scope )
                         (*container)->string[k++] = aux[i];
 
         updateStringLength ( container );
-
+        cout << "erase length: " << (*container)->length << endl;
         if ( aux != nullptr )
                 delete[] aux;
 }
@@ -156,13 +156,16 @@ void erasePart ( STRING** container, unsigned pos, unsigned scope )
 void removeSpaces ( STRING** container )
 {
         STRING_POS* stringPos;
-
-        for ( int i = 0; i < (*container)->length; i++ )
+        cout << "Before for-loop in removeSpaces()" << endl;
+        for ( int i = (*container)->length - 1; i >= 0; i-- )
                 if ( (*container)->string[i] == ' ' )
-                        intPushBack ( stringPos, i );
+                        erasePart ( container, i , 1 );
+//        for ( int i = 0; i < (*container)->length; i++ )
+//                if ( (*container)->string[i] == ' ' )
+//                        intPushBack ( stringPos, i );
 
-        for ( int i = 0; i < stringPos->length; i++ )
-                cout << stringPos->pos[i] << endl;
+//        for ( int i = 0; i < stringPos->length; i++ )
+//                cout << stringPos->pos[i] << endl;
 }
 
 void printString ( STRING** container )

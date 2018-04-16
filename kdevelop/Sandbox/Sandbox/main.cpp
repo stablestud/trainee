@@ -1,16 +1,17 @@
 #include <iostream>
 
 struct X {
-        int* pos;
+        int pos = 2;
 };
 
-void func ( X* damn )
+void func ( X* damn, int times = 0 )
 {
-        int* aux = damn->pos;
+	std::cout << times <<  " Hello ! :" << damn->pos << std::endl;	
+	damn->pos += 4;
+	times++;
 
-//         damn->pos = new int;
-
-        delete[] aux;
+	if ( times < 4 )
+		func ( damn, times );
 }
 
 int main ( void )

@@ -1,24 +1,15 @@
 #include <iostream>
 
-struct X {
-        int pos = 2;
-};
-
-void func ( X* damn, int times = 0 )
-{
-	std::cout << times <<  " Hello ! :" << damn->pos << std::endl;	
-	damn->pos += 4;
-	times++;
-
-	if ( times < 4 )
-		func ( damn, times );
-}
-
 int main ( void )
 {
-        X G;
+        char street[8];
 
-        func ( &G );
+        for ( int i = 0; i < 8; i++ )
+                street[i] = 'X';
 
+        std::cin >> street;
+
+        for ( int i = 0; i < 10; i++ )
+                std::cout << "[" << i << "]: '" <<  street[i] << "'" << std::endl;
         return 0;
 }

@@ -17,7 +17,6 @@ struct PARAM {
         PARAM* next = nullptr;
 };
 
-
 void updateStringLength ( STRING_STRUCT* string );
 void removeSpaces ( STRING_STRUCT* string );
 void printString ( STRING_STRUCT* string );
@@ -27,6 +26,7 @@ void eraseFromString ( STRING_STRUCT* string, unsigned position, int scope );
 PARAM* appendDelimeter ( PARAM* current );
 void printDelimeter ( PARAM* current );
 PARAM* delimeter ( STRING_STRUCT* string );
+
 
 int main ( void )
 {/*
@@ -38,11 +38,11 @@ int main ( void )
 	removeSpaces ( &inputParam );
 
         PARAM* delimetered = delimeter ( &inputParam );
-        
+
         printDelimeter ( delimetered );
-   */     
+   */
         STRING_STRUCT x;
-        
+
         x.string = new char[20];
         cin.getline ( x.string, 15 );
         updateStringLength ( &x );
@@ -66,7 +66,7 @@ void updateStringLength ( STRING_STRUCT* string )
 
 	if ( string->string == nullptr ) {
 		cerr << "updateStringLength: string is a nullptr, returning " \
-			"0 as length" << endl;	
+			"0 as length" << endl;
 		string->length = 0U;
 		return;
 	}
@@ -107,7 +107,7 @@ void removeSpaces ( STRING_STRUCT* string )
 	 * string it should not go over it, e.g. should  *
 	 * not include '\0',				 */
 	for ( unsigned i = 0U; i < string->length; i++ )
-		if ( string->string[i] != ' ' ) 
+		if ( string->string[i] != ' ' )
 			newLength++;
 
 	char* aux = string->string;
@@ -162,7 +162,7 @@ void debugPrintString ( STRING_STRUCT* string )
 
 
 void charPushBack ( STRING_STRUCT* string, char character )
-{ 
+{
         if ( string == nullptr ) {
                 cerr << "charPushBack: got a nullptr, can't continue" << endl;
                 return;
@@ -182,7 +182,7 @@ void charPushBack ( STRING_STRUCT* string, char character )
                 delete[] aux;
 
         string->string[string->length] = character;
-        
+
         string->length++;
 }
 
@@ -233,7 +233,7 @@ void eraseFromString ( STRING_STRUCT* string, unsigned position, int scope )
                         cerr << "eraseFromString: negative scope is greater " \
                                 "than the position, can't delete more " \
                                 "then the existing string" << endl;
-                        return; 
+                        return;
                 }
 
                 newLength = string->length + static_cast<unsigned>(scope);
@@ -274,7 +274,7 @@ void printDelimeter ( PARAM* current )
         if ( current == nullptr ) {
                 cerr << "printDelimeter: got a nullptr, can't continue" << endl;
                 return;
-        }  
+        }
 
         printString ( current->param );
         //debugPrintString ( current->param );
@@ -321,7 +321,7 @@ PARAM* delimeter ( STRING_STRUCT* string )
                         } else {
                                 charPushBack ( current->value, string->string[i] );
                         }
-                        
+
                         gotInput = true;
                 }
         }

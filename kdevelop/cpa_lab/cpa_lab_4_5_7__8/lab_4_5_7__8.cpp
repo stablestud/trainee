@@ -18,8 +18,8 @@ struct PARAM {
 };
 
 struct PLACEHOLDER {
-	unsigned startPos;
-	unsigned endPos;
+	unsigned beginPos;
+	unsigned length;
 	STRING_STRUCT* replaceWith = nullptr;
 	PLACEHOLDER* next = nullptr;
 };
@@ -337,24 +337,50 @@ PARAM* delimeter ( STRING_STRUCT* string )
 }
 
 
-PARAM* findPlaceholders ( STRING_STRUCT* string, PARAM* parameters )
+PLACEHOLDER* findPlaceholders ( STRING_STRUCT* string, PARAM* parameters )
 {
 	PLACEHOLDER* placeholder = new PLACEHOLDER;
-	PLACEHOLDER* current = placeholder;
+	PLACEHOLDER* currentPlaceholder = placeholder;
 	bool begin = false;
 
-	for ( int i = 0; i < string->length; i++ ) {
+	for ( unsigned i = 0U; i < string->length; i++ ) {
 		if ( string->string[i] == '[' && !begin ) {
 			begin = true;
-			current->beginPos = i;
+
+			if ( current == nullptr )
+				currentPlaceholder = new PLACEHOLDER;
+
+			current->beginPos = i + 1U;
 		} else if ( string->string[i] == ']' && begin ) {
 			begin = false;
-			current->endPos = i;
+			
+			currentPlaceholder->length = i - current->beginPos;
 
-			/* Compare with existing parameters */
-			for ( int j = 0; j < current->endPos - current->beginPos - 1; j++ ) {
+			/* Compare with existing parameters length */
+			PARAM* currentParam = parameters;
+
+			do {
+				if ( currentParam->length == currentPlaceholder ) {
+					for ( unsigned j = 0U; j < currentPlaceholder; j++ ) {
+						if ( string->length[currentPlaceholder->beginPos + j] != currentParam->string[j] )
+							break;
+						else if ( j == phLength - 1U )
+							currentPlaceholder->replaceWith = string->string;
+					}
 				
-	}	
+					if ( currentParam->replaceWith != nullptr )
+						break;
+				}
+
+				currentParam = currentParam->next;
+
+			} while ( currentParam != nullptr ); 
+			
+			currentPlaceholder = currentPlaceholder->next;
+		}		
+	}
+
+	return placeholder;	
 }
 
 

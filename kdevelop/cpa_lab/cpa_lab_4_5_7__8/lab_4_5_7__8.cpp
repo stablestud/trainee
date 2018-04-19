@@ -36,6 +36,8 @@ PARAM* delimeter ( STRING_STRUCT* string );
 void debugPrintPlaceholder ( PLACEHOLDER* placeholders );
 void removeInvPlaceholder ( PLACEHOLDER* current );
 PLACEHOLDER* findPlaceholders ( STRING_STRUCT* string, PARAM* parameters );
+unsigned calcNewSentenceLength ( STRING_STRUCT* sentence, PLACEHOLDER* placeholder );
+STRING_STRUCT* replacePlaceholder ( STRING_STRUCT* string, PLACEHOLDER* placeholder );
 
 
 int main ( void )
@@ -61,8 +63,9 @@ int main ( void )
         updateStringLength ( &sentence );
 
         PLACEHOLDER* placeholders = findPlaceholders ( &sentence, delimetered );
-        debugPrintPlaceholder ( placeholders );
-
+        //debugPrintPlaceholder ( placeholders );
+        cout << "Current Sentence length: " << sentence.length << endl;
+        cout << "New Sentence length: " << calcNewSentenceLength ( &sentence, placeholders ) << endl;
         return 0;
 }
 
@@ -159,8 +162,7 @@ void debugPrintString ( STRING_STRUCT* string )
 {
         if ( string == nullptr ) {
                 cerr << "debugPrintString: got a nullptr, can't continue" << endl;
-                return;
-        }
+                return; }
 
         if ( string->string == nullptr || string->length == 0U )
                 return;
@@ -353,8 +355,10 @@ void debugPrintPlaceholder ( PLACEHOLDER* placeholders )
                 
                 if ( placeholders->replaceWith != nullptr ) {
                         cout << "Replace with: ";
+
                         for ( unsigned i = 0U; i < placeholders->replaceWith->length; i++ )
                                 cout << placeholders->replaceWith->string[i];
+
                         cout << endl;
                 } else  
                         cerr << "placeholders->replaceWith: is a nullptr!" << endl;
@@ -363,8 +367,12 @@ void debugPrintPlaceholder ( PLACEHOLDER* placeholders )
                         cout << "Next is not a nullptr" << endl;
                 else    
                         cout << "Next is a nullptr" << endl;
+
                 if ( placeholders->next != nullptr )
                         cout << "Next address: " << placeholders->next << endl;
+
+                cout << endl;
+
                 placeholders = placeholders->next;
         }
 }
@@ -372,8 +380,6 @@ void debugPrintPlaceholder ( PLACEHOLDER* placeholders )
 
 void removeInvPlaceholder ( PLACEHOLDER* current )
 {
-        static int c = 0;
-        cout << "----" << c++ << "----" << endl;
         if ( current->next->replaceWith == nullptr ) {
                 delete current->next;
                 current->next = nullptr;
@@ -444,4 +450,26 @@ PLACEHOLDER* findPlaceholders ( STRING_STRUCT* string, PARAM* parameters )
 }
 
 
-//STRING_STRUCT* replacePlaceholder ( STRING_STRUCT* string, PARAM* parameters )
+unsigned calcNewSentenceLength ( STRING_STRUCT* sentence, PLACEHOLDER* placeholder )
+{
+        unsigned newLength = sentence->length;
+
+        while ( placeholder != nullptr ) {
+                newLength -= placeholder->length + 2;
+
+                newLength += placeholder->replaceWith->length;
+
+                placeholder = placeholder->next;
+        }
+
+        return newLength;
+}
+
+
+STRING_STRUCT* replacePlaceholder ( STRING_STRUCT* string, PLACEHOLDER* placeholder )
+{       
+        unsigned newLength = calcNewSentenceLength ( string, placeholder );
+        STRING_STRUCT* newSentence = new STRING_STRUCT { new char [newLength], newLength };        
+
+        return newSentence;
+}

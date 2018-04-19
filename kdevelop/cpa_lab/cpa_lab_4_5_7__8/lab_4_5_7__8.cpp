@@ -17,13 +17,20 @@ struct PARAM {
         PARAM* next = nullptr;
 };
 
+struct PLACEHOLDER {
+	unsigned startPos;
+	unsigned endPos;
+	STRING_STRUCT* replaceWith = nullptr;
+	PLACEHOLDER* next = nullptr;
+};
+
 void updateStringLength ( STRING_STRUCT* string );
 void removeSpaces ( STRING_STRUCT* string );
 void printString ( STRING_STRUCT* string );
 void debugPrintString ( STRING_STRUCT* string );
 void charPushBack ( STRING_STRUCT* string, char character );
 void eraseFromString ( STRING_STRUCT* string, unsigned position, int scope );
-PARAM* appendDelimeter ( PARAM* current );
+PARAM* extendDelimeter ( PARAM* current );
 void printDelimeter ( PARAM* current );
 PARAM* delimeter ( STRING_STRUCT* string );
 
@@ -255,15 +262,15 @@ void eraseFromString ( STRING_STRUCT* string, unsigned position, int scope )
 }
 
 
-PARAM* appendDelimeter ( PARAM* current )
+PARAM* extendDelimeter ( PARAM* current )
 {
         if ( current == nullptr ) {
-                cerr << "appendDelimeter: got a nullptr, can't continue" << endl;
+                cerr << "extendDelimeter: got a nullptr, can't continue" << endl;
                 return current;
         }
 
         if ( current->next != nullptr )
-                return appendDelimeter ( current->next );
+                return extendDelimeter ( current->next );
         else
                 return current->next = new PARAM;
 }
@@ -312,7 +319,7 @@ PARAM* delimeter ( STRING_STRUCT* string )
                         gotInput = false;
                 } else {
                         if ( delimeterExtend ) {
-                                current = appendDelimeter ( container );
+                                current = extendDelimeter ( container );
                                 delimeterExtend = false;
                         }
 
@@ -327,4 +334,38 @@ PARAM* delimeter ( STRING_STRUCT* string )
         }
 
         return container;
+}
+
+
+PARAM* findPlaceholders ( STRING_STRUCT* string, PARAM* parameters )
+{
+	PLACEHOLDER* placeholder = new PLACEHOLDER;
+	PLACEHOLDER* current = placeholder;
+	bool begin = false;
+
+	for ( int i = 0; i < string->length; i++ ) {
+		if ( string->string[i] == '[' && !begin ) {
+			begin = true;
+			current->beginPos = i;
+		} else if ( string->string[i] == ']' && begin ) {
+			begin = false;
+			current->endPos = i;
+
+			/* Compare with existing parameters */
+			for ( int j = 0; j < current->endPos - current->beginPos - 1; j++ ) {
+				
+	}	
+}
+
+
+STRING_STRUCT* replacePlaceholder ( STRING_STRUCT* string, PARAM* parameters )
+{
+	PLACEHOLDER* placeholder;
+
+	for ( int i = 0; i < string->length; i++ ) {
+		if ( string->string[i] == '[' )
+							
+	}
+
+
 }

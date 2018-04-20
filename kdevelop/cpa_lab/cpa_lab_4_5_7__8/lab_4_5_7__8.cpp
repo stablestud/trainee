@@ -18,10 +18,10 @@ struct PARAM {
 };
 
 struct PLACEHOLDER {
-	unsigned beginPos;
-	unsigned length;
-	STRING_STRUCT* replaceWith = nullptr;
-	PLACEHOLDER* next = nullptr;
+    unsigned beginPos;
+    unsigned length;
+    STRING_STRUCT* replaceWith = nullptr;
+    PLACEHOLDER* next = nullptr;
 };
 
 void updateStringLength ( STRING_STRUCT* string );
@@ -37,35 +37,53 @@ void debugPrintPlaceholder ( PLACEHOLDER* placeholders );
 void removeInvPlaceholder ( PLACEHOLDER* current );
 PLACEHOLDER* findPlaceholders ( STRING_STRUCT* string, PARAM* parameters );
 unsigned calcNewSentenceLength ( STRING_STRUCT* sentence, PLACEHOLDER* placeholder );
-STRING_STRUCT* replacePlaceholder ( STRING_STRUCT* string, PLACEHOLDER* placeholder );
+STRING_STRUCT* replacePlaceholder ( STRING_STRUCT* sentence, PLACEHOLDER* placeholder );
+void deleteString ( STRING_STRUCT** structure );
+//void cleanParam
+void deletePlaceH ( PLACEHOLDER** placeholder );
 
 
 int main ( void )
 {
-	STRING_STRUCT inputParam;
-	inputParam.string = new char [80];
-        cout << "Input parameters like so:" << endl;
-        cout << "param=value; param2=value2;" << endl;
-        cout << "Parameters: ";
-	cin.getline ( inputParam.string, 80 );
-	updateStringLength ( &inputParam );
+    STRING_STRUCT inputParam;
 
-	removeSpaces ( &inputParam );
+    inputParam.string = new char [80];
+        cout << "Input parameters like so:" << endl;
+        cout << "param=value; param2 = value2;" << endl;
+        cout << "Parameters: ";
+    cin.getline ( inputParam.string, 80 );
+    updateStringLength ( &inputParam );
+
+    removeSpaces ( &inputParam );
 
         PARAM* delimetered = delimeter ( &inputParam );
 
+        delete[] inputParam.string;
+
         printDelimeter ( delimetered );
 
-        STRING_STRUCT sentence;
-        sentence.string = new char [50];
-        cout << "Sentence: ";
-        cin.getline ( sentence.string, 50 );
-        updateStringLength ( &sentence );
+        STRING_STRUCT* sentence = new STRING_STRUCT;
+        sentence->string = new char [500];
 
-        PLACEHOLDER* placeholders = findPlaceholders ( &sentence, delimetered );
+        cout << "Sentence: ";
+
+        cin.getline ( sentence->string, 500 );
+
+        updateStringLength ( sentence );
+
+        PLACEHOLDER* placeholders = findPlaceholders ( sentence, delimetered );
+
         //debugPrintPlaceholder ( placeholders );
-        cout << "Current Sentence length: " << sentence.length << endl;
-        cout << "New Sentence length: " << calcNewSentenceLength ( &sentence, placeholders ) << endl;
+
+        STRING_STRUCT* newSentence = replacePlaceholder ( sentence, placeholders );
+
+        if ( newSentence == nullptr )
+                printString ( sentence );
+        else
+                printString ( newSentence );
+        cout << endl;
+
+        deletePlaceH ( &placeholders );
         return 0;
 }
 
@@ -77,28 +95,28 @@ void updateStringLength ( STRING_STRUCT* string )
                 return;
         }
 
-	if ( string->string == nullptr ) {
-		cerr << "updateStringLength: string is a nullptr, returning " \
-			"0 as length" << endl;
-		string->length = 0U;
-		return;
-	}
+    if ( string->string == nullptr ) {
+        cerr << "updateStringLength: string is a nullptr, returning " \
+            "0 as length" << endl;
+        string->length = 0U;
+        return;
+    }
 
-	unsigned length = 0U;
+    unsigned length = 0U;
 
-	/* Go as long no '\0' has been found, length will be	*
-	 * the actual size without the '\0’			*/
-	for (; string->string[length] != '\0'; length++ );
+    /* Go as long no '\0' has been found, length will be    *
+     * the actual size without the '\0’         */
+    for (; string->string[length] != '\0'; length++ );
 
-	string->length = length;
+    string->length = length;
 
 }
 
 
-/* RemoveSpaces() - edits the value that was given	*
- * Remove spaces the effective way, by not adding      	*
- * them to the new array, instead of removing from	*
- * the current array                                   	*/
+/* RemoveSpaces() - edits the value that was given  *
+ * Remove spaces the effective way, by not adding       *
+ * them to the new array, instead of removing from  *
+ * the current array                                    */
 void removeSpaces ( STRING_STRUCT* string )
 {
         if ( string == nullptr ) {
@@ -106,40 +124,40 @@ void removeSpaces ( STRING_STRUCT* string )
                 return;
         }
 
-	if ( string->string == nullptr || string->length == 0U ) {
-		cerr << "removeSpaces: parameter string- or length" \
-			" is nullptr / zero" << endl;
-			return;
-	}
+    if ( string->string == nullptr || string->length == 0U ) {
+        cerr << "removeSpaces: parameter string- or length" \
+            " is nullptr / zero" << endl;
+            return;
+    }
 
-	unsigned newLength = 0U;
+    unsigned newLength = 0U;
 
         /* Let's search for spaces and count them        *
          * so a array with the right size can be created *
-	 * string->Length must be be size of the actual  *
-	 * string it should not go over it, e.g. should  *
-	 * not include '\0',				 */
-	for ( unsigned i = 0U; i < string->length; i++ )
-		if ( string->string[i] != ' ' )
-			newLength++;
+     * string->Length must be be size of the actual  *
+     * string it should not go over it, e.g. should  *
+     * not include '\0',                 */
+    for ( unsigned i = 0U; i < string->length; i++ )
+        if ( string->string[i] != ' ' )
+            newLength++;
 
-	char* aux = string->string;
+    char* aux = string->string;
 
-	/* Create an array by one greater then the	*
-	 * actual array size to save the '\0' sign as	*
-	 * 'length' does not scope the end-sign		*/
-	string->string = new char[newLength + 1U];
+    /* Create an array by one greater then the  *
+     * actual array size to save the '\0' sign as   *
+     * 'length' does not scope the end-sign     */
+    string->string = new char[newLength + 1U];
 
-	for ( unsigned i = 0U, k = 0U; i < string->length; i++ )
-		if ( aux[i] != ' ' )
-			string->string[k++] = aux[i];
+    for ( unsigned i = 0U, k = 0U; i < string->length; i++ )
+        if ( aux[i] != ' ' )
+            string->string[k++] = aux[i];
 
-	/* Add the end-string-sign to the last position	*/
-	string->string[newLength] = '\0';
+    /* Add the end-string-sign to the last position */
+    string->string[newLength] = '\0';
 
-	string->length = newLength;
+    string->length = newLength;
 
-	delete[] aux;
+    delete[] aux;
 }
 
 
@@ -150,11 +168,11 @@ void printString ( STRING_STRUCT* string )
                 return;
         }
 
-	if ( string->string == nullptr || string->length == 0U )
+    if ( string->string == nullptr || string->length == 0U )
                 return;
 
-	for ( unsigned i = 0U; i < string->length; i++ )
-		cout << string->string[i];
+    for ( unsigned i = 0U; i < string->length; i++ )
+        cout << string->string[i];
 }
 
 
@@ -162,7 +180,9 @@ void debugPrintString ( STRING_STRUCT* string )
 {
         if ( string == nullptr ) {
                 cerr << "debugPrintString: got a nullptr, can't continue" << endl;
-                return; }
+                return;
+        }
+
 
         if ( string->string == nullptr || string->length == 0U )
                 return;
@@ -199,6 +219,8 @@ void charPushBack ( STRING_STRUCT* string, char character )
         string->string[string->length] = character;
 
         string->length++;
+
+        string->string[string->length] = '\0';
 }
 
 
@@ -226,7 +248,7 @@ void eraseFromString ( STRING_STRUCT* string, unsigned position, int scope )
         unsigned newLength;
         char* newString;
 
-        if ( scope > 0 ) { /* When scope is positive */
+        if ( scope > 0 ) { /* When scope is positive, delete from postion */
                 if ( static_cast<unsigned>(scope) > string->length - position ) {
                         cerr << "eraseFromString: positive scope is greater " \
                                 "than the available string, can't delete more" \
@@ -243,7 +265,7 @@ void eraseFromString ( STRING_STRUCT* string, unsigned position, int scope )
                         if ( k >= newLength )
                                 break;
                 }
-        } else { /* When scope is negative */
+        } else { /* When scope is negative, delete in front of position */
                 if ( scope + static_cast<int>(position) < 0 ) {
                         cerr << "eraseFromString: negative scope is greater " \
                                 "than the position, can't delete more " \
@@ -352,7 +374,7 @@ void debugPrintPlaceholder ( PLACEHOLDER* placeholders )
                 cout << "----------------[ " << count++ << " ]-----------------" << endl;
                 cout << "beginPos: " << placeholders->beginPos << endl;
                 cout << "length: " << placeholders->length << endl;
-                
+
                 if ( placeholders->replaceWith != nullptr ) {
                         cout << "Replace with: ";
 
@@ -360,12 +382,12 @@ void debugPrintPlaceholder ( PLACEHOLDER* placeholders )
                                 cout << placeholders->replaceWith->string[i];
 
                         cout << endl;
-                } else  
+                } else
                         cerr << "placeholders->replaceWith: is a nullptr!" << endl;
-                
+
                 if ( placeholders->next != nullptr )
                         cout << "Next is not a nullptr" << endl;
-                else    
+                else
                         cout << "Next is a nullptr" << endl;
 
                 if ( placeholders->next != nullptr )
@@ -378,8 +400,13 @@ void debugPrintPlaceholder ( PLACEHOLDER* placeholders )
 }
 
 
+/* Remove incomplete placeholders, by recursion */
 void removeInvPlaceholder ( PLACEHOLDER* current )
 {
+        if ( current->next == nullptr ) {
+                return;
+        }
+
         if ( current->next->replaceWith == nullptr ) {
                 delete current->next;
                 current->next = nullptr;
@@ -388,61 +415,68 @@ void removeInvPlaceholder ( PLACEHOLDER* current )
 }
 
 
+/* Find placeholders [xxx] and save their position into a linked list */
 PLACEHOLDER* findPlaceholders ( STRING_STRUCT* string, PARAM* parameters )
 {
-	PLACEHOLDER* placeholder = nullptr;
-	PLACEHOLDER** currentPlaceholder = &placeholder;
-	bool begin = false;
+        if ( parameters == nullptr )
+                cerr << "findPlaceholders: parameters is a nullptr, can't continue" << endl;
+
+    PLACEHOLDER* placeholder = nullptr;
+    PLACEHOLDER** currentPlaceholder = &placeholder;
+    bool begin = false;
         bool found = false;
+        bool cfound = false;
 
-	for ( unsigned i = 0U; i < string->length; i++ ) {
-		if ( string->string[i] == '[' && !begin ) {
-			begin = true;
+    for ( unsigned i = 0U; i < string->length; i++ ) {
+        if ( string->string[i] == '[' ) {
+            begin = true;
 
-			if ( *currentPlaceholder == nullptr )
-				*currentPlaceholder = new PLACEHOLDER;
-                        
-			(*currentPlaceholder)->beginPos = i + 1U;
-		} else if ( string->string[i] == ']' && begin ) {
-			begin = false;
+            if ( *currentPlaceholder == nullptr )
+                *currentPlaceholder = new PLACEHOLDER;
 
-			(*currentPlaceholder)->length = i - (*currentPlaceholder)->beginPos;
+            (*currentPlaceholder)->beginPos = i + 1U;
+        } else if ( string->string[i] == ']' && begin ) {
+            begin = false;
 
-			PARAM* currentParam = parameters;
+            (*currentPlaceholder)->length = i - (*currentPlaceholder)->beginPos;
 
-			do {
-                                /* Compare with existing parameters (first the length) */
-				if ( currentParam->param->length == (*currentPlaceholder)->length ) {
+            PARAM* currentParam = parameters;
 
-					for ( unsigned j = 0U; j < (*currentPlaceholder)->length; j++ ) {
+            do {
+                                /* Compare with existing parameters (first the length, then the content) */
+                if ( currentParam->param->length == (*currentPlaceholder)->length ) {
 
-						if ( string->string[(*currentPlaceholder)->beginPos + j] != currentParam->param->string[j] )
-							break;
-
-						else if ( j == (*currentPlaceholder)->length - 1U ) {
-							(*currentPlaceholder)->replaceWith = currentParam->value;
+                    for ( unsigned j = 0U; j < (*currentPlaceholder)->length; j++ ) {
+                        if ( string->string[(*currentPlaceholder)->beginPos + j] != currentParam->param->string[j] )
+                            break;
+                        else if ( j == (*currentPlaceholder)->length - 1U ) {
+                            (*currentPlaceholder)->replaceWith = currentParam->value;
                                                         currentPlaceholder = &(*currentPlaceholder)->next;
 
-                                                        found = true;
+                                                        cfound = true;
                                                         break;
                                                 }
-					}
+                    }
                                 }
 
-                                if ( found )
+                                if ( cfound )
                                         break;
 
-				currentParam = currentParam->next;
+                currentParam = currentParam->next;
 
-			} while ( currentParam != nullptr );
-		}
-	}
-        
-        if ( begin )
-                removeInvPlaceholder ( placeholder ); 
+            } while ( currentParam != nullptr );
+        }
 
-        if ( found ) 
-                return placeholder;	
+                if ( cfound ) {
+                        found = true;
+                        cfound = false;
+                }
+    }
+
+        removeInvPlaceholder ( placeholder );
+
+        if ( found )
+                return placeholder;
         else {
                 delete placeholder;
                 return nullptr;
@@ -455,8 +489,7 @@ unsigned calcNewSentenceLength ( STRING_STRUCT* sentence, PLACEHOLDER* placehold
         unsigned newLength = sentence->length;
 
         while ( placeholder != nullptr ) {
-                newLength -= placeholder->length + 2;
-
+                newLength -= placeholder->length + 2U;
                 newLength += placeholder->replaceWith->length;
 
                 placeholder = placeholder->next;
@@ -466,10 +499,62 @@ unsigned calcNewSentenceLength ( STRING_STRUCT* sentence, PLACEHOLDER* placehold
 }
 
 
+/* Instead of erasing existing content from the array and insert new ones,       *
+ * create new array of calculated and fixed size and add the characters,         *
+ * this should be faster, as it doesn't reallocate the array.                    */
 STRING_STRUCT* replacePlaceholder ( STRING_STRUCT* string, PLACEHOLDER* placeholder )
-{       
-        unsigned newLength = calcNewSentenceLength ( string, placeholder );
-        STRING_STRUCT* newSentence = new STRING_STRUCT { new char [newLength], newLength };        
+{
+        if ( placeholder == nullptr )
+                return nullptr;
 
+        /* Get calculated length of the new sentence to create the fixed size array */
+        unsigned newLength = calcNewSentenceLength ( string, placeholder );
+
+        /* newLength + 1 for the termination character '\0' */
+        STRING_STRUCT* newSentence = new STRING_STRUCT { new char [newLength + 1], newLength };
+
+        /* Copy over character till placeholder occurence */
+        for ( unsigned i = 0U, k = 0U; i < string->length; i++ ) {
+                if ( placeholder != nullptr ) {
+                        /* When 'a wild placeholder appeared!', catch it and add it's string to the new array */
+                        if ( i >= placeholder->beginPos - 1U && i <= placeholder->beginPos + placeholder->length + 1U ) {
+                                for ( unsigned j = 0U; j < placeholder->replaceWith->length; j++ )
+                                        newSentence->string[k++] = placeholder->replaceWith->string[j];
+
+                                i = placeholder->beginPos + placeholder->length;
+                                placeholder = placeholder->next;
+                        } else
+                                /* Not a good way but I wanted to try out the shortcut to the pokecenter */
+                                goto normalString;
+                } else
+                normalString:
+                        newSentence->string[k++] = string->string[i];
+        }
+
+        newSentence->string[newLength] = '\0';
         return newSentence;
+}
+
+
+void deleteString ( STRING_STRUCT** structure )
+{
+        if ( (*structure)->string != nullptr )
+                delete[] (*structure)->string;
+
+        delete[] *structure;
+}
+
+
+/* Delete all dynamically created placeholder structures and its sub variables */
+void deletePlaceH ( PLACEHOLDER** placeholder )
+{
+        if ( (*placeholder)->replaceWith != nullptr ) {
+                deleteString ( &(*placeholder)->replaceWith );
+        }
+
+        /* recursive call: enter sub element and run the same function */
+        if ( (*placeholder)->next != nullptr )
+                deletePlaceH ( &(*placeholder)->next );
+
+        delete *placeholder;
 }

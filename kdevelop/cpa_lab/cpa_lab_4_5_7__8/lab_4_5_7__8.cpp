@@ -53,43 +53,39 @@ int main ( void )
         cout << "Parameters: ";
         cin.getline ( inputParam.string, 80 );
         updateStringLength ( &inputParam );
-
-        removeSpaces ( &inputParam );
+        
+        /* To remove spaces from parameter input, uncomment this */
+        //removeSpaces ( &inputParam );
 
         PARAM* delimetered = delimeter ( &inputParam );
-
         delete[] inputParam.string;
-
         printDelimeter ( delimetered );
 
         STRING_STRUCT* sentence = new STRING_STRUCT;
         sentence->string = new char [500];
 
         cout << "Sentence: ";
-
         cin.getline ( sentence->string, 500 );
-
         updateStringLength ( sentence );
 
         PLACEHOLDER* placeholders = findPlaceholders ( sentence, delimetered );
-
-        debugPrintPlaceholder ( placeholders );
+        /* To print the created placeholder, uncomment this */
+        //debugPrintPlaceholder ( placeholders );
 
         STRING_STRUCT* newSentence = replacePlaceholder ( sentence, placeholders );
-
-        //deleteParam ( &delimetered );
-
         if ( newSentence == nullptr )
                 printString ( sentence );
         else
                 printString ( newSentence );
         cout << endl;
 
+        deleteParam ( &delimetered );
         deletePlaceH ( &placeholders );
         return 0;
 }
 
 
+/* Get's the string length by looking for termination sign '\0', saving value into structure */
 void updateStringLength ( STRING_STRUCT* string )
 {
         if ( string == nullptr ) {
@@ -556,15 +552,13 @@ void deleteString ( STRING_STRUCT** structure )
         if ( *structure == nullptr )
                 return;
 
-        if ( (*structure)->string != nullptr ) {
-                cout << "LETS DIE " << endl;
-                cout << (*structure)->string[0]<<endl;
-                cout << (*structure)->length << endl;
+        if ( (*structure)->string != nullptr )
                 delete (*structure)->string;
-                }
-        cout << "Delete myself" << endl;
+
         delete *structure;
-        cout << "Done" << endl;
+
+        /* Set to nullptr to avoid redeletion */
+        *structure = nullptr;
 }
 
 
@@ -574,19 +568,25 @@ void deleteParam ( PARAM** param )
                 return;
 
         if ( (*param)->param != nullptr ) {
-                if ( (*param)->param->string != nullptr )
+                if ( (*param)->param->string != nullptr ) {
                         deleteString ( &(*param)->param );
+                        /* Set to nullptr, as a marker to avoid deletion of the same object */
+                        (*param)->param = nullptr;
+                }
         }
 
         if ( (*param)->value != nullptr ) {
-                if ( (*param)->value->string != nullptr )
+                if ( (*param)->value->string != nullptr ) {
                         deleteString ( &(*param)->value );
+                        (*param)->param = nullptr;
+                }
         }
+
         /* MAKES NOS ENSE SOMEHOW APRAENT DELETS CHILDS ARRAYS MAYBE DELETE FIRST FROM CHILD THEN PARENT? */
-        //if ( (*param)->next != nullptr )
+        if ( (*param)->next != nullptr )
                 deleteParam ( &(*param)->next );
 
-
+        delete *param;
 }
 
 
@@ -595,15 +595,11 @@ void deletePlaceH ( PLACEHOLDER** placeholder )
 {
         if ( *placeholder == nullptr )
                 return;
-        cout << "ENTERED" << endl;
-        if ( (*placeholder)->replaceWith != nullptr ) {
-                cout << "OK" << endl;
-                deleteString ( &(*placeholder)->replaceWith );
-        }
-        cout << "REPLACEWITH STILL HAS CONTENT?" << endl;
+
         /* recursive call: enter sub element and run the same function */
-        //if ( (*placeholder)->next != nullptr )
-                //deletePlaceH ( &(*placeholder)->next );
+        if ( (*placeholder)->next != nullptr ) {
+                deletePlaceH ( &(*placeholder)->next );
+        }
 
         delete *placeholder;
 }

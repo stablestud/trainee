@@ -22,6 +22,7 @@ int main ( void )
 				primedigit = false;
 				break;
 			}
+
 		/* Aslong the maximum possible divider has not been reached
 		 * run the loop */
 		} while ( j++ <= bTeiler );

@@ -7,7 +7,9 @@
 
 int main ( void )
 {
-	for ( int i = 0; i <= 100; i++ ) {
+	int i = 1;
+
+	do {
 		/* Sets the maximum possible divider */
 		int bTeiler = i / 2;
 		int j = 2;
@@ -26,6 +28,7 @@ int main ( void )
 
 		if ( primedigit )
 			std::cout << "PRIMEDIGIT: " << i << std::endl;
-	}
+
+	} while ( i++ < 100 );
 }
 

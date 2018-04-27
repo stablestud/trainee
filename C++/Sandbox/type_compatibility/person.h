@@ -10,7 +10,8 @@ protected:
 	std::string name;
 public:
 	person ( std::string name );
-	void meme ( void );
+	virtual void meme ( void );
+        virtual ~person ( void );
 };
 
 #endif

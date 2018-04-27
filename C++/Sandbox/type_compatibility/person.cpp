@@ -1,11 +1,17 @@
-#include <person.h>
+#include "person.h"
 
-person::person ( std::string n )
+person::person ( std::string name )
 {
-	person::name = n;
+	person::name = name;
+        std::cout << name << ": person constructed!" << std::endl;
 }
 
-person::meme ( void )
+person::~person ( void )
 {
-	std::cout << person::name << "Hallo." << std::endl;
+        std::cout << person::name << ": person deconstructed!" << std::endl;
+}
+
+void person::meme ( void )
+{
+	std::cout << person::name << ": Hallo. (person)" << std::endl;
 }

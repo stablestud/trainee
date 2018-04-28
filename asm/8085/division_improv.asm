@@ -12,18 +12,33 @@ reset:	mvi a, 0
 	mvi d, 0
 	mvi e, 0
 
-; d / e = b
+; a / e = b
 set:	mvi a, 200
-	mvi e, 77
+	mvi e, 10
 
+; a saves the dividend, also the rest
+; e is the divisor
+; d is 0, to as comparison
+; b saves the count
+
+; loop:
+; if a is smaller than e, jump to rest
+; subtract a with e
+; increment b by one
+; if a == 0, jump to end, b holds the result of division
+; else redo loop, a holds the decremented value
 loop: 	cmp e	
 	jc rest
 	sub e 	
 	inr b
 	cmp d
-	jz end
+	jz done
 	jmp loop
 
-rest:	mov c, a
+rest:	out 1
+	jmp end
+
+done:	mov a, b
+	out 0
 
 end:	hlt

@@ -1,0 +1,10 @@
+#include <iostream>
+#include <string>
+using namespace std;
+    
+int main() {
+        string s = "0123456789";
+        cout << s.substr(3,7).substr(2).substr();
+
+        return 0;
+}

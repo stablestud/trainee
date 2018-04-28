@@ -6,8 +6,8 @@ class worker : public person
 {
 private:
         int id = 007;
-        ~worker ( void );
 public:
+        ~worker ( void );
 	worker ( std::string name );
 	void meme ( void );
 };

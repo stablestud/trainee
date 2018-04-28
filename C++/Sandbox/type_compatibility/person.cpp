@@ -13,5 +13,5 @@ person::~person ( void )
 
 void person::meme ( void )
 {
-	std::cout << person::name << ": Hallo. (person)" << std::endl;
+	std::cout << person::name << ": Hello. (person)" << std::endl;
 }

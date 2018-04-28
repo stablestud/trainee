@@ -1,0 +1,4 @@
+delete auto variable with delete &var
+copy constructor
+compare virtual and non virtual member functions, super and sub-class
+modularize classes ( class.h, class.cpp )

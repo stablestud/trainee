@@ -1,6 +1,7 @@
 #include <iostream>
+#include "membership.h"
 
-int main(int argc, char **argv) {
-    std::cout << "Hello, world!" << std::endl;
-    return 0;
+int main ( void ) {
+        std::cout << "Hello, world!" << std::endl;
+        return 0;
 }

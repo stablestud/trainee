@@ -1,4 +1,10 @@
-void* declaration ( also duck it if required )
-Can I swap an unitialized string?
-int / float - is the result an int or float
-int + float + int ( or any other mixture ) - same as above
+function pointers
+enums
+unions
+typedef
+using
+public and private in struct, initializers (e.g constructors), virtual, this ->
+competitive programming
+
+asm:
+branch prediction hints x86

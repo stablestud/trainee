@@ -1,13 +1,11 @@
-#include <string>
-
 class membership
 {
 private: 
         unsigned id;
         std::string name;
-        int months;
+        int months = 0;
 public:
-        membership ( unsigned id = 0, std::string name = "" );
+        membership ( unsigned id, std::string name );
         void extend ( int months );
         void cancel ( void );
 };

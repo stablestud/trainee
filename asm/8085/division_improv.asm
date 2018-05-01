@@ -16,7 +16,7 @@ reset:	mvi a, 0
 set:	mvi a, 200
 	mvi e, 10
 
-; a saves the dividend, also the rest
+; a saves the dividend, or the rest
 ; e is the divisor
 ; d is 0, to as comparison
 ; b saves the count

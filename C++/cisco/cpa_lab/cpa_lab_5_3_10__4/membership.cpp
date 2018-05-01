@@ -1,3 +1,4 @@
+#include <string>
 #include "membership.h"
 
 membership::membership ( unsigned id, std::string name )

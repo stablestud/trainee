@@ -1,23 +1,12 @@
 #include <iostream>
-using namespace std;
 
-namespace S {
-        int A = 1;
-}
+int main ( void )
+{
+        int mai[3] { 1, 2, 3 };
 
-namespace S {
-        int B = A + 2 ;
-}
-
-int main(void) {
-        S::A = S::A + 1;
-
-        {
-                using namespace S;
-                ++B;
+        for ( int i = 0; i < 3; i++) {
+                std::cout << "&(mai + " << i << ") hat die addresse: " << &mai + i << std::endl;
+                std::cout << "mai + " << i << " zeight auf: " << mai + i << std::endl;
+                std::cout << std::endl;
         }
-
-        cout << S::B << S::A;
-
-        return 0;
 }

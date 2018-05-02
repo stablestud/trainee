@@ -5,6 +5,8 @@ typedef
 using
 public and private in struct, initializers (e.g constructors), virtual, this ->
 competitive programming
+copying constructors that initializes variables like a subconstructer (e.g
+class ( src &x ) : variables ( x ) {}
 
 asm:
 branch prediction hints x86

@@ -1,24 +1,17 @@
+#include <string>
 #include <iostream>
 #include <vector>
-#include <string>
 #include "membership.h"
 
-int main ( void ) {
-	std::string input;
-	while ( input != "quit" ) {
-		std::getline ( std::cin, input );
-
-		if (( input.find ( "create" ) != std::string::npos ) && ( input.find_first_of ( "create" ) == 0 ))
-			std::cout << "Found create!" << std::endl;
-	}
-
-        return 0;
-}
-
-void create ( void )
+int main ( void )
 {
+	std::string input;
+	std::vector<membership*> array (1) = { NULL };	
 
-
-
-
+	while ( input != "quit" && input != "q" ) {
+		std::getline ( std::cin, input );
+		
+		if ( input.find ( "create" ) != std::string::npos && input.find_first_of ( "create" ) == 0 ) {
+				
+	}
 }

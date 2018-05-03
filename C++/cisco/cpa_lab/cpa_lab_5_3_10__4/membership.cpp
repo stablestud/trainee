@@ -5,6 +5,7 @@ membership::membership ( unsigned id, std::string name )
 {
         membership::id = id;
         membership::name = name;
+	membership::month = 0;
 }
 
 void membership::extend ( int months )

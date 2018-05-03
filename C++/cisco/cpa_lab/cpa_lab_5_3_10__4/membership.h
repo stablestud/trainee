@@ -3,7 +3,7 @@ class membership
 private: 
         unsigned id;
         std::string name;
-        int months = 0;
+        int months;
 public:
         membership ( unsigned id, std::string name );
         void extend ( int months );

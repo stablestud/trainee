@@ -1,19 +1,25 @@
 #include <string>
+#include <iostream>
 #include "membership.h"
 
 membership::membership ( unsigned id, std::string name )
 {
-        membership::id = id;
-        membership::name = name;
-	membership::month = 0;
+        this -> id = id;
+        this -> name = name;
+	this -> months = 0;
 }
 
 void membership::extend ( int months )
 {
-        membership::months += months;
+        this -> months += months;
 }
 
 void membership::cancel ( void )
 {
-        membership::months = 0;
+        this -> months = 0;
+}
+
+void membership::print ( void )
+{
+        std::cout << "[" << this -> id << "] " << this -> name << ": " << this -> months << std::endl;
 }

@@ -2,6 +2,6 @@
 
 int main ( void )
 {
-	int x[1] = { 'X' };
-	std::cout << (char)*(x+1);
+        int x;
+        std::cout << (unsigned char)x << (unsigned char)*(&x + 3);
 }

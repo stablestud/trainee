@@ -24,6 +24,8 @@ int main ( void )
 	std::vector<membership*> storage (0);	
 
 	while ( true ) {
+		std::cout << std::endl << std::endl;
+                printInfo ( storage );
                 std::cout << "[action] [id] <name/months>" << std::endl;
                 std::getline ( std::cin, input );
                 
@@ -32,17 +34,27 @@ int main ( void )
                 if ( x.action == "quit" || x.action == "q" )
                         break;
 
-                if ( !x.id )
+                if ( !x.id ) {
+			std::cerr << "Id 0 is not valid!" << std::endl;
                         continue;
+		}
+		
 
-		if ( x.action == "create" ) 
+		if ( x.action == "create" ) {
                         storage.push_back ( new membership ( x.id, x.name ) );
-                else if ( x.action == "delete" ) 
+			continue;
+		}
+
+		if ( findId ( x.id, storage ) == -1 )
+			continue;
+
+                if ( x.action == "delete" ) 
                         storage.erase ( storage.begin() + findId ( x.id, storage ) );
                 else if ( x.action == "extend" )
                         storage.at ( findId ( x.id, storage ) ) -> extend ( x.extend );
+		else if ( x.action == "cancel" )
+			storage.at ( findId ( x.id, storage ) ) -> cancel();
                  
-                printInfo ( storage );
         }
 }
 
@@ -83,23 +95,23 @@ void processInput ( std::string& input )
 
         input = input.substr ( input.find_first_of ( " " ) + 1 );
         
-        int blockSize = ( input.find_first_of ( " " ) == 0 ) ? input.size() : input.find_first_of ( " " );
+        int blockSize = ( (int)input.find_first_of ( " " ) == -1 ) ? input.size() : input.find_first_of ( " " );
 
 	/* Process each digit one by one *
 	 * 10^pos * digit 		 */
         for ( int i = 0, j = blockSize - 1; i < blockSize; i++, j-- )
                 x.id += exponentiation ( j ) * charToInt ( input[i] );
 
-        if ( x.id == 0 )
-                std::cerr << "Id 0 is not valid!" << std::endl;
-	
-	/* Name */
-	if ( action == "create" )	
-		x.name = input.substr ( blockSize );
 
-	std::cout << "action: " << x.action << std::endl;
-	std::cout << "id: " << x.id << std::endl;
-	std::cout << "name: " << x.name << std::endl;
+	/* Name */
+	if ( x.action == "create" ) {	
+		input = input.substr ( blockSize + 1 );
+		x.name = input;
+	} else if ( x.action == "extend" ) {
+		input = input.substr ( blockSize + 1 );
+		for ( unsigned i = 0, j = input.length() - 1; i < input.length(); i++, j-- )
+			x.extend += exponentiation ( j ) * charToInt ( input[i] );
+	}
 }
 
 int charToInt ( char& character )

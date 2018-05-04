@@ -6,6 +6,8 @@
 void printInfo ( std::vector<membership*> storage );
 int findId ( unsigned id, std::vector<membership*> storage );
 void processInput ( std::string& input );
+int charToInt ( char& character );
+int exponentiation ( int exponent );
 
 struct PROC_INPUT
 {
@@ -78,16 +80,60 @@ void processInput ( std::string& input )
                         input.erase ( i, 1 );
 
         x.action = input.substr ( 0, input.find_first_of ( " " ) );
-        
+
         input = input.substr ( input.find_first_of ( " " ) + 1 );
         
-        /* 10^POS but caution: can't multiply by 10 here, as 10*0 is not 1 as required, need for research */
         int blockSize = ( input.find_first_of ( " " ) == 0 ) ? input.size() : input.find_first_of ( " " );
-        for ( int i = 0; i < blockSize; i++ )
-                x.id += 10;
-        
-        std::cout << input << std::endl;
+
+	/* Process each digit one by one *
+	 * 10^pos * digit 		 */
+        for ( int i = 0, j = blockSize - 1; i < blockSize; i++, j-- )
+                x.id += exponentiation ( j ) * charToInt ( input[i] );
 
         if ( x.id == 0 )
                 std::cerr << "Id 0 is not valid!" << std::endl;
+	
+	/* Name */
+	if ( action == "create" )	
+		x.name = input.substr ( blockSize );
+
+	std::cout << "action: " << x.action << std::endl;
+	std::cout << "id: " << x.id << std::endl;
+	std::cout << "name: " << x.name << std::endl;
+}
+
+int charToInt ( char& character )
+{
+	switch ( character ) {
+		case '1':
+			return 1;
+		case '2':
+			return 2;	
+		case '3':
+			return 3;
+		case '4':
+			return 4;
+		case '5':
+			return 5;
+		case '6':
+			return 6;
+		case '7':
+			return 7;
+		case '8':
+			return 8;
+		case '9':
+			return 9;
+		default:
+			return 0;
+	}
+}
+
+int exponentiation ( int exponent )
+{
+	int value = 1;
+
+	for ( int i = 0; i < exponent; i++ )
+		value *= 10;
+	
+	return value;
 }

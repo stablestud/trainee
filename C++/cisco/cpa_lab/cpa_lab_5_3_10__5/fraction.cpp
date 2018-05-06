@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include "fraction.h"
 
 Fraction::Fraction ( int numerator, int denominator )
@@ -7,14 +8,17 @@ Fraction::Fraction ( int numerator, int denominator )
 	this -> denominator = denominator;
 }
 
-/*std::string Fraction::toString ( void )
+std::string Fraction::toString ( void )
 {
-	std::string output;
+        int prefix = numerator / denominator;
+        std::string sprefix = ( prefix ) ? std::to_string ( prefix ) + " " : "";
+        int suffix = numerator % denominator; 
+        std::string ssuffix = ( suffix ) ? std::to_string ( suffix ) + "/" + std::to_string ( denominator ) + " " : "";
 
-	return output;
-}*/
+	return sprefix + ssuffix + "is " + std::to_string ( this -> toDouble() ) + " in decimal.";
+}
 
 double Fraction::toDouble ( void )
 {
-	return (double)denominator / numerator;
+	return (double)numerator / denominator;
 }

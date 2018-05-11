@@ -52,8 +52,8 @@ Fraction Fraction::minus ( Fraction that )
 
 Fraction Fraction::times ( Fraction that )
 {
-	that.numerator = this -> numerator * that.numerator;
-	that.denominator = this -> denominator * that.denominator;
+	this -> numerator = this -> numerator * that.numerator;
+	this -> denominator = this -> denominator * that.denominator;
 
 	return that;
 }
@@ -62,3 +62,17 @@ Fraction Fraction::by ( Fraction that )
 {
 	return that;
 }
+
+void Fraction::reduce ( void )
+{
+	int smaller, greater;
+
+	if ( this -> numerator < this -> denominator ) {
+		smaller = this -> numerator;
+		greater = this -> denominator;
+	} else {
+		smaller = this -> denominator;
+		greater = this -> numerator;
+	}
+
+	for ( 

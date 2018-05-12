@@ -13,5 +13,3 @@ public:
 	Fraction times ( Fraction that );
 	Fraction by ( Fraction that );
 };
-
-int gcd ( int, int );

@@ -17,15 +17,16 @@ int main ( void )
 }
 
 /* Read & filter input, allow to be delimetered by comma and space */
-void readInput ( void )
+void readInput ( std::string input, double * one, double * two )
 {
 	
 }
 
 std::string cleanString ( std::string input )
 {
+	/* Remove all unnecessary characters except 0-9 and - and . */
 	for ( unsigned i = 0; i < input.length(); i++ )
-		if ( input[i] < '0' || input[i] > '9' )
+		if ( ( input[i] < '0' || input[i] > '9' ) && input[i] != '.' && input[i] != '-' )
 			input[i] = ' ';
 			
 	for ( unsigned i = input.length(); i > 0; i-- )

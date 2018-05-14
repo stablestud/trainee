@@ -21,8 +21,8 @@ double Point2D::toDouble ( void )
 double Point2D::distanceTo ( Point2D that )
 {
 	/* Calculate the length of each side */
-	int y = this -> y - that.returnY();
-	int x = this -> x - that.returnX();
+	double y = this -> y - that.returnY();
+	double x = this -> x - that.returnX();
 
 	return std::sqrt ( y * y + x * x );
 }

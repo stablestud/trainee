@@ -3,6 +3,7 @@
 #include "Point2D.h"
 
 std::string cleanString ( std::string input );
+unsigned findFirstOf ( std::string input, char character );
 
 int main ( void )
 {
@@ -11,15 +12,31 @@ int main ( void )
 
 	input = cleanString ( input );
 
-	std::cout << input << std::endl;
+	double x1, y1;
 
+	x1 = std::stod ( input.substr ( 0, findFirstOf ( input, ' ' )));
+	input = input.substr ( findFirstOf ( input, ' ' ) + 1 );
+
+	y1 = std::stod ( input );
+
+	Point2D f1 ( x1, y1 );
+
+	/* Second line */
+	std::getline ( std::cin, input );	
+
+	input = cleanString ( input );
+
+	double x2, y2;
+
+	x2 = std::stod ( input.substr ( 0, findFirstOf ( input, ' ' )));
+	input = input.substr ( findFirstOf ( input, ' ' ) + 1 );
+
+	y2 = std::stod ( input );
+
+	Point2D f2 ( x2, y2 );
+
+	std::cout << "f1 to f2: " << f1.distanceTo ( f2 ) << std::endl;	
 	return 0;
-}
-
-/* Read & filter input, allow to be delimetered by comma and space */
-void readInput ( std::string input, double * one, double * two )
-{
-	
 }
 
 std::string cleanString ( std::string input )
@@ -37,4 +54,14 @@ std::string cleanString ( std::string input )
 		input.erase ( 0, 1 );
 
 	return input;
+}
+
+unsigned findFirstOf ( std::string input, char character )
+{
+	for ( unsigned i = 0; i < input.length(); i++ )
+		if ( input[i] == character )
+			return i;
+
+	std::cout << "Nicht gefunden " << input.length() << " " << input << std::endl;
+	return 0;
 }

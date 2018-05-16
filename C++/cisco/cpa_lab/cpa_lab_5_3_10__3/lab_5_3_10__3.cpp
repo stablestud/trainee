@@ -231,4 +231,3 @@ int main ( void )
         } while ( command != "quit" && command != "q" && errorCount <= 5 );
         return 0;
 }
-// kate: indent-mode cstyle; indent-width 8; replace-tabs on;

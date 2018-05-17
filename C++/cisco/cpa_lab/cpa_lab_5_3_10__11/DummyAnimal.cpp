@@ -1,3 +1,3 @@
 #include "DummyAnimal.h"
 
-DummyAnimal::DummyAnimal ( void ) const : FarmAnimal ( 10 ) {};
+DummyAnimal::DummyAnimal ( void ) : FarmAnimal ( 10 ) {}

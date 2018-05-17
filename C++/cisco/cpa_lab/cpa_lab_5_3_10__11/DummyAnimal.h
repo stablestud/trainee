@@ -6,7 +6,7 @@
 class DummyAnimal : public FarmAnimal
 {
 public:
-	DummyAnimal ( void ) const;
+	DummyAnimal ( void );
 };
 
 #endif /* DUMMYANIMAL_H */

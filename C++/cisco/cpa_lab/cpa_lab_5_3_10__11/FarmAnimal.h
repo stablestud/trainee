@@ -8,6 +8,7 @@ private:
 public:
 	FarmAnimal ( double water_consumption );
 	double getWaterConsumption ( void );
+	void setWaterConsumption ( double new_water_consumption );
 };
 
 #endif /* FARMANIMAL_H */

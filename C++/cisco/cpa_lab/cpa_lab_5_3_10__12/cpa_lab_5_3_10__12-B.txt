@@ -1,0 +1,91 @@
+CPA: Programming
+Essentials in C++
+
+C++ INSTITUTE - PROGRAM YOUR FUTURE
+
+Lab 5.3.12 Inheritance basics: part 2
+Objectives
+Familiarize the student with:
+inheritance syntax and operation;
+sharing functionality between objects using inheritance.
+
+Scenario
+Let's continue with our farm example from the previous lab.
+Create classes representing cows, sheep and horses:
+a sheep will consume about 1.1 liters of water per day per 10 kg of weight;
+a horse will consume about 6.8 liters of water per day per 100 kg of weight;
+a cow will consume about 8.6 liters of water per day per 100 kg of weight.
+Your program should read lines of text in the following form: "[animal] [weigth]".
+When your program encounters an empty line, it should print the total water consumption and exit.
+
+© 2017 C++ Institute. All rights reserved. Last updated: March 07, 2017 | www.cppinstitute.org
+
+Page 1 of 3
+
+Lab 5.3.12 Inheritance basics: part 2
+#include <iostream>
+using namespace std;
+class FarmAnimal{
+public:
+FarmAnimal(double water_consumption);
+double getWaterConsumption();
+// ...
+private:
+double water_consumption;
+};
+FarmAnimal::FarmAnimal(double water_consumption) {
+this->water_consumption = water_consumption;
+}
+double FarmAnimal::getWaterConsumption() {
+return water_consumption;
+}
+class ConsumptionAccumulator
+{
+public:
+ConsumptionAccumulator();
+double getTotalConsumption();
+void addConsumption(Animal "animal);
+private:
+double total_consumption;
+};
+ConsumptionAccumulator::ConsumptionAccumulator() :
+total_consumption(0)
+{
+}
+double ConsumptionAccumulator::getTotalConsumption()
+{
+return total_consumption;
+}
+void ConsumptionAccumulator::addConsumption(Animal "animal)
+{
+total_consumption += animal.getWaterConsumption();
+}
+
+int main()
+{
+ConsumptionAccumulator accumulator;
+// read user input
+// create appropriate objects and add them to the accumulator
+cout << accumulator.getTotalConsumption();
+return 0;
+}
+
+© 2017 C++ Institute. All rights reserved. Last updated: March 07, 2017 | www.cppinstitute.org
+
+Page 2 of 3
+
+Lab 5.3.12 Inheritance basics: part 2
+
+Example input
+cow 500
+sheep 80
+horse 400
+
+Example output
+79
+
+© 2017 C++ Institute. All rights reserved. Last updated: March 07, 2017 | www.cppinstitute.org
+
+Page 3 of 3
+
+

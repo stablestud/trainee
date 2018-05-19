@@ -15,7 +15,7 @@ public:
 	bool pop_front ( int& value );
 	bool pop_back ( int& value );
 	int at ( unsigned index );
-	void insert_at ( unsigned index );
+	void insert_at ( unsigned index, int value );
 	void remove_at ( unsigned index );
 	unsigned getSize ( void );
 };

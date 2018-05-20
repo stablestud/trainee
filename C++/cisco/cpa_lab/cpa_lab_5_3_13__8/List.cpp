@@ -31,8 +31,7 @@ List::List ( List& list )
 
 		this -> tail = current;
 	} else {
-		this -> head = nullptr;
-		this -> tail = nullptr;
+		this -> head = this -> tail = nullptr;
 		this -> size = 0U;
 	}
 }
@@ -103,8 +102,7 @@ bool List::pop_back ( int& value )
 
 		if ( this -> head == this -> tail ) {
 			delete this -> tail;
-			this -> head = nullptr;
-			this -> tail = nullptr;
+			this -> head = this -> tail = nullptr;
 		} else {
 			Node* new_tail = this -> tail -> prev;
 

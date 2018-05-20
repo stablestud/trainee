@@ -1,3 +1,3 @@
 all:
 	mkdir -p bin/
-	g++ -Wall *.cpp -o bin/lab_5_3_13__5
+	g++ -Wall *.cpp -o bin/lab_5_3_13__6

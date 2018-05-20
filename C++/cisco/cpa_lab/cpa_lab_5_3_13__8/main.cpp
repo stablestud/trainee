@@ -8,6 +8,7 @@ void popAll ( List& list );
 int main ( void )
 {
 	List list1;
+
 	list1.push_front(1);
 	list1.push_front(2);
 	list1.push_front(3);
@@ -15,7 +16,9 @@ int main ( void )
 	std::cout << "list1" << std::endl;
 	printList(list1);
 	std::cout << std::endl;
+
 	List list2(list1);
+
 	std::cout << "list2" << std::endl;
 	printList(list2);
 	std::cout << std::endl;
@@ -42,9 +45,7 @@ void popAll ( List& list )
 
 	while ( list.getSize() ) {
 		if ( list.pop_front ( value ) )
+	//	if ( list.pop_back ( value ) )
 			std::cout << "value: " << value << ", size: " << list.getSize() << std::endl;
-		
-		//if ( list.pop_back ( value ) )
-		//	std::cout << "value: " << value << ", size: " << list.getSize() << std::endl;
 	}
 }

@@ -23,7 +23,9 @@ List::List ( List& list )
 
 		for ( unsigned i = 1U; i < list.getSize(); i++ ) {
 			current -> next = new Node ( list.at ( i ) );
+			Node* prevptr = current;
 			current = current -> next;
+			current -> prev = prevptr;
 			this -> size++;
 		}
 
@@ -44,6 +46,8 @@ void List::push_front ( int value )
 
 	if ( nullptr == this -> tail )
 		this -> tail = highest;
+	else
+		this -> head -> next -> prev = this -> head;
 
 	this -> size++;
 }
@@ -57,6 +61,7 @@ void List::push_back ( int value )
 		this -> head = this -> tail;
 	} else {
 		this -> tail -> next = lowest;
+		this -> tail -> next -> prev = this -> tail;
 		this -> tail = this -> tail -> next;
 	} 
 
@@ -75,6 +80,9 @@ bool List::pop_front ( int& value )
 
 		Node* old_head = this -> head;
 		this -> head = this -> head -> next;
+
+		if ( nullptr != this -> head )
+			this -> head -> prev = nullptr;
 
 		delete old_head;
 
@@ -98,17 +106,13 @@ bool List::pop_back ( int& value )
 			this -> head = nullptr;
 			this -> tail = nullptr;
 		} else {
+			Node* new_tail = this -> tail -> prev;
 
-			Node* head_pos = this -> head;
-				
-			while ( head_pos -> next != this -> tail )
-				head_pos = head_pos -> next;
-
-			head_pos -> next = nullptr;
+			this -> tail -> prev -> next = nullptr;
 
 			delete this -> tail;
 
-			this -> tail = head_pos;
+			this -> tail = new_tail;
 		}
 
 		return true;
@@ -143,22 +147,28 @@ void List::insert_at ( unsigned index, int value )
 
 		if ( 0U == index ) { 
 			insert -> next = this -> head;
-			this -> head = insert;
 
-			if ( nullptr == this -> tail )
+			if ( nullptr != this -> head )
+				this -> head -> prev = insert;
+			else
 				this -> tail = insert;
+
+			this -> head = insert;
 
 		} else if ( this -> getSize() == index ) {
 			this -> tail -> next = insert;
+			insert -> prev = this -> tail;
 			this -> tail = insert;
 		} else {
-			Node* prev = this -> head;
+			Node* previous = this -> head;
 
 			for ( unsigned i = 0U; i < index - 1U; i++ )
-				prev = prev -> next;
+				previous = previous -> next;
 
-			insert -> next = prev -> next;
-			prev -> next = insert;
+			insert -> next = previous -> next;
+			insert -> prev = previous;
+			previous -> next = insert;
+			insert -> next -> prev = insert;
 		}
 
 		this -> size++;
@@ -173,35 +183,35 @@ void List::remove_at ( unsigned index )
 	else {
 		/* If first element in list */
 		if ( 0U == index ) {
-			if ( nullptr != this -> tail ) {
+			/* If more than one element */
+			if ( nullptr != this -> head -> next ) {
 				Node* new_head = this -> head -> next;
 				delete this -> head;
+				new_head -> prev = nullptr;
 				this -> head = new_head;
+			/* one element */
 			} else {
 				delete this -> head;
 				this -> head = this -> tail = nullptr;
 			}
 		/* If last element in list */
 		} else if ( this -> getSize() - 1 == index ) {
-			Node* new_tail = this -> head;
+			Node* old_tail = this -> tail;
 
-			while ( nullptr != new_tail -> next -> next )
-				new_tail = new_tail -> next;
+			this -> tail = this -> tail -> prev;
+			this -> tail -> next = nullptr;
 
-			new_tail -> next = nullptr;
-
-			delete this -> tail;
-			this -> tail = new_tail;
+			delete old_tail;
 		/* If inbetween */
 		} else {
-			Node* prev = this -> head,* remove;
+			Node* current = this -> head;
 
-			for ( unsigned i = 0U; i < index - 1U; i++ )  
-				prev = prev -> next;
-
-			remove = prev -> next;
-			prev -> next = remove -> next;
-			delete remove;
+			for ( unsigned i = 0U; i < index; i++ )  
+				current = current -> next;
+	
+			current -> prev -> next = current -> next;
+			current -> next -> prev = current -> prev;
+			delete current;
 		}
 
 		this -> size--;

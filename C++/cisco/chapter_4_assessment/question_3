@@ -16,4 +16,4 @@ int main() {
                 delete [] it[i];
 
         return 0;
-    }
+}

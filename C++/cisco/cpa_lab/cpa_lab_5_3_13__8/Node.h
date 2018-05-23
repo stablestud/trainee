@@ -1,11 +1,9 @@
 #ifndef NODE_H
 #define NODE_H
 
-class List;
-
 class Node
 {
-friend List;
+friend class List;
 private:
 	int value;
 	Node* next;

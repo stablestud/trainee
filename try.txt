@@ -19,6 +19,7 @@ Initiate value in class with same name as superclass
 Const class field initialize with different data tye
 static <-> friend / also must static be declared as public?
 GLobal Scope operator :: only to global variables or to the highest one? e.g. created in main()
+Can a catch re-throw the exception?
 
 asm:
 branch prediction hints x86

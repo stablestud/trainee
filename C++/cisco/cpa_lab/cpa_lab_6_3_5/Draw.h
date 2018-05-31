@@ -1,7 +1,7 @@
 #ifndef DRAW_H
 #define DRAW_H
 
-typedef struct POS {
+typedef struct {
 	int x;
 	int y;
 } pos;

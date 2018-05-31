@@ -1,14 +1,10 @@
 #ifndef DRAW_H
 #define DRAW_H
 
-#include <iostream>
-
-struct POS {
+typedef struct POS {
 	int x;
 	int y;
-};
-
-typedef struct POS pos;
+} pos;
 
 class Tree
 {

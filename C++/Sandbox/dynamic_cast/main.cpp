@@ -3,7 +3,7 @@
 using namespace std;
 class Pet {
 protected:string name;
-public:   Pet(string name) { this -> name = name; }
+public:   Pet(string name) : name ( name ) { }
 	    void virtual MakeSound(void) { cout << name << " is silent :(" << endl; }
 };
 class Dog : public Pet {

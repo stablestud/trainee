@@ -36,6 +36,7 @@ int func ( int a, int b ) throw ( int, float ) {
         else throw a / b;
         } catch ( int bae) {
                 std::cout << bae << " got caugth! " << std::endl;
+		throw;
         }
         std::cout << "no more excep. " << std::endl;
         return a / b;

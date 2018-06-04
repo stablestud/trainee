@@ -9,10 +9,30 @@ typedef struct {
 class Figure {
 private:
 	// 0 = white, 1 = black
-	bool team;
+	const bool team;
 public:
 	Figure ( bool whatSide ) : team ( whatSide ) {};
-	Figure ( Figure &m );
+        virtual ~Figure ( void ) {};
+        virtual const unsigned getLevel ( void ) const;
+        virtual const char* getCharacter ( void ) const;
+        const bool getTeam ( void ) const;
+        virtual Figure* move ( Figure &m ) const;
+};
+
+class Knight : public Figure {
+public:
+        Knight ( bool whatSide ) : Figure ( whatSide ) {};
+        const unsigned getLevel ( void ) const;
+        const char* getCharacter ( void ) const;
+        Knight* move ( Figure &m ) const;
+};
+
+class King : public Figure {
+public:
+        King ( bool whatSide ) : Figure ( whatSide ) {};
+        const unsigned getLevel ( void ) const;
+        const char* getCharacter ( void ) const;
+        King* move ( Figure &m ) const;
 };
 
 /* Define a new game field where every cell get managed by the object. */

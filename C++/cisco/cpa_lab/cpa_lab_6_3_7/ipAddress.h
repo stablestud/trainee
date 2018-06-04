@@ -9,10 +9,8 @@ class IpAddress
 private:
         std::string ip;
 public:
-        IpAddress ( std::string ip ) : this -> ip ( ip ) const = 0;
-        IpAddress ( IpAddress& copyOf ) : this -> ip ( copyOf.getIp() ) const = 0;
-        std::string getIp ( void );
-        void print ( void );
+        IpAddress(std::string input) : ip(input) {};
+        IpAddress(IpAddress& source
 };
 
 class IpAddressChecked
@@ -20,4 +18,5 @@ class IpAddressChecked
 private:
         bool correct;
 public:
-        IpAddressChecked ( std::string ip ) : 1
+        IpAddressChecked(std::string ip) : IpAddress(ip) {};
+};

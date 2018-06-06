@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 
+/* Simple base class that holds the ip and it can print the ip */
 class IpAddress {
 private:
         const std::string ip;
@@ -14,6 +15,7 @@ public:
         virtual const void print(void) const;
 };
 
+/* Extended class that can also check if the ip is a valid ipv4 address */
 class IpAddressChecked : public IpAddress {
 private:
         const bool correct;

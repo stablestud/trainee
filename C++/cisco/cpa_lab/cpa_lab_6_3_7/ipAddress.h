@@ -4,19 +4,25 @@
 #include <iostream>
 #include <string>
 
-class IpAddress
-{
+class IpAddress {
 private:
-        std::string ip;
+        const std::string ip;
 public:
         IpAddress(std::string input) : ip(input) {};
-        IpAddress(IpAddress& source
+        IpAddress(IpAddress& source) : ip(source.returnIp()) {};
+        const std::string returnIp(void) const;
+        virtual const void print(void) const;
 };
 
-class IpAddressChecked
-{
+class IpAddressChecked : public IpAddress {
 private:
-        bool correct;
+        const bool correct;
 public:
-        IpAddressChecked(std::string ip) : IpAddress(ip) {};
+        IpAddressChecked(std::string ip) : IpAddress(ip), correct(check()) {};
+        IpAddressChecked(IpAddressChecked& source) : IpAddress(source.returnIp()), correct(source.returnCorrect()) {};
+        const bool returnCorrect(void) const;
+        const bool check(void) const;
+        const void print(void) const;
 };
+
+#endif

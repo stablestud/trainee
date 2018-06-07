@@ -1,7 +1,6 @@
 #ifndef STRINGVALIDATOR_H
 #define STRINGVALIDATOR_H
 
-#include <iostream>
 #include <string>
 
 /* Pure virtual/abstract class */
@@ -14,6 +13,7 @@ public:
 // Code apparently here
 class ExactValidator {
 public:
+	ExactValidator(std::string) : StringValidator(input) {};
         virtual bool isValid(std::string input);
 };
 

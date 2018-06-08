@@ -5,21 +5,26 @@
 
 /* Pure virtual/abstract class */
 class StringValidator {
+protected:
+        std::string container;
 public:
+        StringValidator() {};
+        StringValidator(std::string input) : container(input) {};
         virtual ~StringValidator() {};
         virtual bool isValid(std::string input) = 0;
 };
 
-// Code apparently here
-class ExactValidator {
+class ExactValidator : public StringValidator {
 public:
-	ExactValidator(std::string) : StringValidator(input) {};
+	ExactValidator(std::string input) : StringValidator(input) {};
         virtual bool isValid(std::string input);
 };
 
-class DummyValidator {
-public;
+class DummyValidator : public StringValidator {
+public:
+        DummyValidator() {};
         virtual bool isValid(std::string input);
 };
 
+void printValid(StringValidator&, std::string);
 #endif

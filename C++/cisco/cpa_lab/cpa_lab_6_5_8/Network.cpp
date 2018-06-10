@@ -10,7 +10,7 @@ std::string IpAddress::getIp()
 }
 
 
-Network::Network(IpAddress ip1, IpAddress ip2, IpAddress ip3) : arr{ip1, ip2, ip3} {};
+Network::Network(std::string ip1, std::string ip2, std::string ip3) : arr{ip1, ip2, ip3} {};
 
 void Network::printAddress()
 {

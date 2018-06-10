@@ -15,7 +15,7 @@ class Network {
 private:
         IpAddress arr[3];
 public:
-        Network(IpAddress ip1, IpAddress ip2, IpAddress ip3);
+        Network(std::string ip1, std::string ip2, std::string ip3);
         void printAddress();
 };
 

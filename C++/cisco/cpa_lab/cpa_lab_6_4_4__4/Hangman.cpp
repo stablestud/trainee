@@ -70,8 +70,8 @@ std::string Hangman::getWord()
 
 void printHangman(Hangman& game)
 {
-        std::cout << "-----------------------------------------------" << std::endl;
-        std::cout << "Lives: " << game.getLifes() << std::endl;
+        std::cout << std::endl << "-----------------------------------------------" << std::endl;
+        std::cout << "You've " << game.getLifes() << " tries left." << std::endl;
         std::cout << "Guessed characters: ";
 
         for (unsigned i = 0; i < game.getGuessed().getSize(); i++)
@@ -95,7 +95,7 @@ void printHangman(Hangman& game)
                 std::cout << " ";
         }
 
-        std::cout << std::endl << "-----------------------------------------------" << std::endl;
+        std::cout << std::endl << "-----------------------------------------------" << std::endl << std::endl;
         /* print string with __a___h__ e.g. */
 }
 

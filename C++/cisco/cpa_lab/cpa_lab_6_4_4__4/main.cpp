@@ -15,6 +15,7 @@ int main()
                 char character;
                 std::cout << "Type in a character to guess: ";
                 std::cin >> character;
+                std::cout << std::endl;
 
                 game.guess(character);
 

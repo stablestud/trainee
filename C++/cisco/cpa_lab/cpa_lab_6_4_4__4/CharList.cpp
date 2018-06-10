@@ -229,6 +229,7 @@ unsigned List::getSize ( void )
 {
 	return this -> size;
 }
+
 bool List::find ( char search, unsigned& pos )
 {
         if ( 0 == this -> size )

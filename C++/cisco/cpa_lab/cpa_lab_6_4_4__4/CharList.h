@@ -31,6 +31,8 @@ public:
 	bool insert_at ( unsigned index, char value );
 	bool remove_at ( unsigned index );
 	unsigned getSize ( void );
+        bool find ( char search, unsigned& pos );
+        bool find ( char search );
 };
 
 #endif /* INTLIST_H */

@@ -9,12 +9,15 @@ private:
         unsigned lifes;
         std::string word;
         List characters;
-        List guessedChars;
+        List guessed;
 public:
-        Hangman(std::string word) : lifes(8), word(word);
+        Hangman(std::string word);
         bool guess(char);
         bool finito();
         unsigned getLifes();
+        List getGuessed();
+        List getCharacters();
+        std::string getWord();
 };
 
 void printHangman (Hangman&);

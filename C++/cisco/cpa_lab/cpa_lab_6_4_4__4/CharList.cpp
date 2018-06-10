@@ -229,3 +229,23 @@ unsigned List::getSize ( void )
 {
 	return this -> size;
 }
+bool List::find ( char search, unsigned& pos )
+{
+        if ( 0 == this -> size )
+                return false;
+
+        for ( unsigned i = 0; i < this -> size; i++ ) {
+                if ( this -> at ( i ) == search ) {
+                        pos = i;
+                        return true;
+                }
+        }
+
+        return false;
+}
+
+bool List::find ( char search )
+{
+        unsigned aux;
+        return find ( search, aux );
+}

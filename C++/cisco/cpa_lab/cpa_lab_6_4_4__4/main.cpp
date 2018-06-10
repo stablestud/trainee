@@ -10,15 +10,23 @@ int main()
         std::cin >> word;
 
         Hangman game(word);
+
         do {
                 char character;
                 std::cout << "Type in a character to guess: ";
                 std::cin >> character;
-                if (game.guess(character))
-                        std::cout << "YES, that was RIGHT!" << std::endl;
-                else
-                        std::cout << "NO, that was wrong... -1 life" << std::endl;
+
+                game.guess(character);
 
                 printHangman(game);
-        } while (game.finito());
+        } while (!game.finito());
+
+        if (game.getLifes() > 0) {
+                std::cout << "You won!" << std::endl;
+        } else {
+                std::cout << "Oh no, you lost ..." << std::endl;
+        }
+
+        std::cout << "The word was: " << word << std::endl;
+        return 0;
 }

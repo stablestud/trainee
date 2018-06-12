@@ -13,15 +13,15 @@ class Hangman {
 private:
         unsigned lifes;
         std::string word;
-        List characters;
-        List guessed;
+        List searched_chars;
+        List guessed_chars;
 public:
         Hangman(std::string word);
         bool guess(char);
         bool finito();
         unsigned getLifes();
         List& getGuessed();
-        List& getCharacters();
+        List& getSearched();
         std::string& getWord();
 };
 

@@ -9,9 +9,10 @@
  */
 
 
-/* * * * * * * * * * * * * * * * * * *
- *  N O D E  --  D E F I N I T I O N *
- * * * * * * * * * * * * * * * * * * */
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+ *  N O D E  --  F U N C T I O N  D E F I N I T I O N S  *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 /*
  * Constructor: Node - default constructor
@@ -90,10 +91,9 @@ const Node* const Node::getPrev ( void )
 
 
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * L I S T -- F U N C T I O N  D E F I N I T I O N S                       *
- *                                                                         *
- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+/* * * * * * * * * * * * * * * * * * * * * * * * * * *
+ * L I S T -- F U N C T I O N  D E F I N I T I O N S *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 /*
  * Function: List - default ctor
@@ -155,7 +155,25 @@ List::List ( List& list ) throw ( std::bad_alloc ) : List()
 
 
 
-/* Function: push_front
+/*
+ * Overloaded operator: []
+ * - - - - - - - - - - - - -
+ * Synonym for function at()
+ *
+ * pos: extract element from pos(ition)
+ *
+ * returns: pointer to element from postion
+ */
+
+Node* List::operator[] ( unsigned pos ) throw ( std::out_of_range )
+{
+        return this -> at ( pos );
+}
+
+
+
+/*
+ * Function: push_front
  * - - - - - - - - - - - -
  * Add a value to the front (head) of the list
  *

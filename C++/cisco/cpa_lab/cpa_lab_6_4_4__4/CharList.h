@@ -39,6 +39,7 @@ public:
         const Node* const getPrev ( void );
 };
 
+
 /**
  * Class List
  *-------------------------------
@@ -75,40 +76,29 @@ public:
         List ( void );
         ~List ( void ) throw ( std::out_of_range );
         List ( List& ) throw ( std::bad_alloc );
+        Node* operator[] ( unsigned ) throw ( std::out_of_range );
 
-        /*
-         * Append (back) or prepend (front) values to the list
-         */
+        /* Append (back) or prepend (front) values to the list */
         void push_front ( const char ) throw ( std::bad_alloc );
         void push_back ( const char ) throw ( std::bad_alloc );
 
-        /*
-         * Drop value from list
-         */
+        /* Drop value from list */
         char pop_front ( void ) throw ( std::out_of_range );
         char pop_back ( void ) throw ( std::out_of_range );
 
-        /*
-         * Directly access the elements (Node) interface
-         */
+        /* Directly access the elements (Node*) interface */
         Node* at ( const unsigned ) throw ( std::out_of_range );
 
-        /*
-         * Manipulate list by removing or inserting inbetween the list
-         */
+        /* Manipulate list by removing or inserting inbetween the list */
         void insert_at ( const unsigned, const char ) throw ( std::bad_alloc, std::out_of_range );
         void remove_at ( const unsigned ) throw ( std::out_of_range );
 
-        /*
-         * Get the amount of stored elements in the list
-         */
+        /* Get the amount of stored elements from the list */
         const unsigned getSize ( void );
 
-        /*
-         * Search through the list, if found return true or false,
-         * Optionally with a reference to the position at what element it
-         * was found
-         */
+        /* Search through the list, if found return true or false,         *
+         * Optionally with a reference to the position at what element it  *
+         * was found                                                       */
         const bool find ( const char, unsigned& ) throw ( std::out_of_range );
         const bool find ( const char ) throw ( std::out_of_range );
 };

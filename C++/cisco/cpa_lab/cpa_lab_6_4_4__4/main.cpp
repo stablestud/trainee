@@ -1,5 +1,5 @@
-#include <string>
 #include <iostream>
+#include <string>
 #include "Hangman.h"
 
 int main()
@@ -10,6 +10,9 @@ int main()
         std::getline(std::cin, word);
 
         Hangman game(word);
+
+	for (unsigned i = 0; i < 66; i++)
+		std::cout << std::endl;
 
         printHangman(game);
 
@@ -29,9 +32,9 @@ int main()
                 std::cout << "  Y O U  W O N !" << std::endl;
                 std::cout << "~~~~~~~~~~~~~~~~~~" << std::endl;
         } else {
-                std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-                std::cout << "O H . . . N O , Y O U  L O O S E !" << std::endl;
-                std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+                std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+                std::cout << "O H . . . N O , Y O U  L O S T !" << std::endl;
+                std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
         }
 
         std::cout << std::endl;

@@ -1,7 +1,7 @@
 #ifndef HANGMAN_H
 #define HANGMAN_H
 
-/* 
+/*
  * @author stablestud
  * @date 2018
  */

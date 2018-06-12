@@ -27,19 +27,19 @@ class Node
 {
 friend class List;
 private:
-	char value;
-	Node* next;
-	Node* prev;
+        char value;
+        Node* next;
+        Node* prev;
 public:
         Node ( int );
         Node ( Node& );
         Node ( Node* );
-	const char getValue ( void );
+        const char getValue ( void );
         const Node* const getNext ( void );
         const Node* const getPrev ( void );
 };
 
-/** 
+/**
  * Class List
  *-------------------------------
  * Linked list with methods which aid in data management without to worry
@@ -68,43 +68,43 @@ public:
 class List
 {
 private:
-	Node* head;
-	Node* tail;
-	unsigned size;
+        Node* head;
+        Node* tail;
+        unsigned size;
 public:
-	List ( void );
-	~List ( void ) throw ( std::out_of_range );
-	List ( List& ) throw ( std::bad_alloc );
+        List ( void );
+        ~List ( void ) throw ( std::out_of_range );
+        List ( List& ) throw ( std::bad_alloc );
 
         /*
          * Append (back) or prepend (front) values to the list
          */
-	void push_front ( const char ) throw ( std::bad_alloc );
-	void push_back ( const char ) throw ( std::bad_alloc );
+        void push_front ( const char ) throw ( std::bad_alloc );
+        void push_back ( const char ) throw ( std::bad_alloc );
 
         /*
          * Drop value from list
          */
-	char pop_front ( void ) throw ( std::out_of_range );
-	char pop_back ( void ) throw ( std::out_of_range );
-
-        /* 
-         * Directly access the elements (Node) interface
-         */
-	Node* at ( const unsigned ) throw ( std::out_of_range );
+        char pop_front ( void ) throw ( std::out_of_range );
+        char pop_back ( void ) throw ( std::out_of_range );
 
         /*
-         * Manipulate list by removing or inserting inbetween the list 
+         * Directly access the elements (Node) interface
          */
-	void insert_at ( const unsigned, const char ) throw ( std::bad_alloc, std::out_of_range );
-	void remove_at ( const unsigned ) throw ( std::out_of_range );
+        Node* at ( const unsigned ) throw ( std::out_of_range );
+
+        /*
+         * Manipulate list by removing or inserting inbetween the list
+         */
+        void insert_at ( const unsigned, const char ) throw ( std::bad_alloc, std::out_of_range );
+        void remove_at ( const unsigned ) throw ( std::out_of_range );
 
         /*
          * Get the amount of stored elements in the list
          */
-	const unsigned getSize ( void );
+        const unsigned getSize ( void );
 
-        /* 
+        /*
          * Search through the list, if found return true or false,
          * Optionally with a reference to the position at what element it
          * was found

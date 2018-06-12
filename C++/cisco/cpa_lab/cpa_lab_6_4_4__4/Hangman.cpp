@@ -8,7 +8,7 @@ Hangman::Hangman(std::string word) : lifes(8), word(word)
                 if (!characters.find(word[i])) {
                         if (word[i] >= 'A' && word[i] <= 'Z')
                                 characters.push_back(word[i] + 'a' - 'A');
-                        else if (word[i] >= 'a' && word[i] <= 'z') 
+                        else if (word[i] >= 'a' && word[i] <= 'z')
                                 characters.push_back(word[i]);
                 }
         }
@@ -40,7 +40,7 @@ bool Hangman::guess(char character)
                 std::cout << "YES, " << character << " was RIGHT!" << std::endl;
                 return true;
         }
-                
+
         std::cout << "NO, " << character << " was WRONG!" << std::endl;
         lifes--;
 
@@ -51,7 +51,7 @@ bool Hangman::finito()
 {
         if (characters.getSize() == 0 || this->lifes == 0)
                 return true;
-        else 
+        else
                 return false;
 }
 

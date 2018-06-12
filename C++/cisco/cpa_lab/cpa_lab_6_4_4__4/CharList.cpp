@@ -5,7 +5,7 @@
 
 /*
  * @author stablestud
- * @author 2018
+ * @date 2018
  */
 
 
@@ -55,12 +55,12 @@ Node::Node (Node* node ) : Node ( node->getValue() ) {}
 
 const char Node::getValue ( void )
 {
-	return this -> value;
+        return this -> value;
 }
 
 
 
-/* 
+/*
  * Function: getNext
  * - - - - - - - - - -
  * Read-only Interface to get the address of the next Node
@@ -75,7 +75,7 @@ const Node* const Node::getNext ( void )
 
 
 
-/* 
+/*
  * Function: getPrev
  * - - - - - - - - - -
  * Read-only Interface to get the address of the previous Node
@@ -90,7 +90,7 @@ const Node* const Node::getPrev ( void )
 
 
 
-/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * C L A S S  L I S T -- F U N C T I O N  D E F I N I T I O N S            *
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
@@ -115,7 +115,7 @@ List::List ( void ) : head ( nullptr ),
 
 List::~List ( void ) throw ( std::out_of_range )
 {
-	while ( this -> getSize() )
+        while ( this -> getSize() )
                 this -> remove_at ( this -> getSize() - 1U );
 }
 
@@ -132,25 +132,25 @@ List::~List ( void ) throw ( std::out_of_range )
 
 List::List ( List& list ) throw ( std::bad_alloc ) : List()
 {
-	if ( list.getSize() ) {
-		/* Go from Node to Node and create a copy, and bind them */
-		this -> head = new Node ( list.at ( 0 ) );
-		this -> size = 1U;
+        if ( list.getSize() ) {
+                /* Go from Node to Node and create a copy, and bind them */
+                this -> head = new Node ( list.at ( 0 ) );
+                this -> size = 1U;
 
-		Node* current = this -> head;
+                Node* current = this -> head;
 
-		for ( unsigned i = 1U; i < list.getSize(); i++ ) {
-			current -> next = new Node ( list.at ( i ) );
-			Node* prevptr = current;
+                for ( unsigned i = 1U; i < list.getSize(); i++ ) {
+                        current -> next = new Node ( list.at ( i ) );
+                        Node* prevptr = current;
 
-			current = current -> next;
-			current -> prev = prevptr;
+                        current = current -> next;
+                        current -> prev = prevptr;
 
-			this -> size++;
-		}
+                        this -> size++;
+                }
 
-		this -> tail = current;
-	}
+                this -> tail = current;
+        }
 }
 
 
@@ -177,16 +177,16 @@ void List::push_front ( const char value ) throw ( std::bad_alloc )
                 throw;
         }
 
-	new_node -> next = this -> head;
+        new_node -> next = this -> head;
 
-	this -> head = new_node;
+        this -> head = new_node;
 
-	if ( 0 == this -> getSize() )
-		this -> tail = new_node;
-	else
-		this -> head -> next -> prev = this -> head;
+        if ( 0 == this -> getSize() )
+                this -> tail = new_node;
+        else
+                this -> head -> next -> prev = this -> head;
 
-	this -> size++;
+        this -> size++;
 }
 
 
@@ -215,16 +215,16 @@ void List::push_back ( const char value ) throw ( std::bad_alloc )
         }
 
         /* If no element before */
-	if ( 0 == this -> getSize() ) {
-		this -> head = this -> tail = new_node;
+        if ( 0 == this -> getSize() ) {
+                this -> head = this -> tail = new_node;
         /* Else */
-	} else {
-		this -> tail -> next = new_node;
-		new_node -> prev = this -> tail;
-		this -> tail = new_node;
-	}
+        } else {
+                this -> tail -> next = new_node;
+                new_node -> prev = this -> tail;
+                this -> tail = new_node;
+        }
 
-	this -> size++;
+        this -> size++;
 }
 
 
@@ -241,8 +241,8 @@ void List::push_back ( const char value ) throw ( std::bad_alloc )
 char List::pop_front ( void ) throw ( std::out_of_range )
 {
         /* List shouldn't be empty */
-	if ( 0 == this -> getSize() )
-		throw std::out_of_range ( "pop_front(): List is empty" );
+        if ( 0 == this -> getSize() )
+                throw std::out_of_range ( "pop_front(): List is empty" );
 
         char value = this -> head -> getValue();
 
@@ -267,7 +267,7 @@ char List::pop_front ( void ) throw ( std::out_of_range )
 
 
 
-/* 
+/*
  * Function: pop_back
  * - - - - - - - - - - -
  * Return a value from the back of the list (tail)
@@ -279,8 +279,8 @@ char List::pop_front ( void ) throw ( std::out_of_range )
 char List::pop_back ( void ) throw ( std::out_of_range )
 {
         /* List shouldn't be empty */
-	if ( 0 == this -> getSize() )
-		throw std::out_of_range ( "pop_back(): List is empty" );
+        if ( 0 == this -> getSize() )
+                throw std::out_of_range ( "pop_back(): List is empty" );
 
         char value = this -> tail -> getValue();
 
@@ -319,19 +319,19 @@ char List::pop_back ( void ) throw ( std::out_of_range )
 Node* List::at ( const unsigned pos ) throw ( std::out_of_range )
 {
         /* Shouldn't access non existing elements */
-	if ( this -> getSize() <= pos )
-                throw std::out_of_range ( "at(): Out of range" ); 
+        if ( this -> getSize() <= pos )
+                throw std::out_of_range ( "at(): Out of range" );
 
         Node* value;
 
-	if ( this -> getSize() - 1U == pos ) {
-		value = this -> tail;
-	} else {
-		value = this -> head;
+        if ( this -> getSize() - 1U == pos ) {
+                value = this -> tail;
+        } else {
+                value = this -> head;
 
-		for ( unsigned i = 0U; i < pos; i++ )
-			value = value ->  next;
-	}
+                for ( unsigned i = 0U; i < pos; i++ )
+                        value = value ->  next;
+        }
 
         return value;
 }
@@ -340,7 +340,7 @@ Node* List::at ( const unsigned pos ) throw ( std::out_of_range )
 
 /*
  * Function: insert_at
- * - - - - - - - - - - - 
+ * - - - - - - - - - - -
  * Insert a value into the list
  *
  * pos:   position of the list the value should be inserted
@@ -393,10 +393,10 @@ void List::insert_at ( const unsigned pos, char value ) throw ( std::bad_alloc,
  * pos: postion of element that should be deleted
  *
  * throws: out_of_range, relaying exception from function at()
- *         
+ *
  */
 
-void List::remove_at ( const unsigned pos ) throw ( std::out_of_range ) 
+void List::remove_at ( const unsigned pos ) throw ( std::out_of_range )
 {
         /* If first element */
         if ( 0U == pos ) {
@@ -428,7 +428,7 @@ void List::remove_at ( const unsigned pos ) throw ( std::out_of_range )
 
 const unsigned List::getSize ( void )
 {
-	return this -> size;
+        return this -> size;
 }
 
 

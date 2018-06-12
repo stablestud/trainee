@@ -1,242 +1,458 @@
+#include <exception>
+#include <stdexcept>
+#include <iostream>
 #include "CharList.h"
 
-char Node::getValue ( void )
+/*
+ * @author stablestud
+ * @author 2018
+ */
+
+
+/* * * * * * * * * * * * * * * * * * *
+ *  N O D E  --  D E F I N I T I O N *
+ * * * * * * * * * * * * * * * * * * */
+
+/*
+ * Constructor: Node - default constructor
+ * - - - - - - - - - - - - - - - - - - - - -
+ * Initializes the object with the supplied value
+ */
+
+Node::Node ( const int v ) : value ( v ),
+                       next ( nullptr ),
+                       prev ( nullptr ) {}
+
+
+
+/*
+ * Constructor: Node - copy constructor
+ * - - - - - - - - - - - - - - - - - - - -
+ * Initilizes the object value copied from another object
+ */
+
+Node::Node ( Node& node ) : Node ( node.getValue() ) {}
+
+
+
+/*
+ * Constructor: Node - parameter pointer constructor
+ * - - - - - - - - - - - - - - - - - - - - - - - - - -
+ * Initializes the object with a value read from object pointer
+ */
+
+Node::Node (Node* node ) : Node ( node->getValue() ) {}
+
+
+
+/*
+ * Function: getValue
+ * - - - - - - - - - - -
+ * Read-only Interface to get the value of the Node
+ *
+ * returns: value of the element (Node)
+ */
+
+const char Node::getValue ( void )
 {
 	return this -> value;
 }
 
-List::List ( void ) : head ( nullptr ), tail ( head ), size ( 0U ) {}
 
-List::~List ( void )
+
+/* 
+ * Function: getNext
+ * - - - - - - - - - -
+ * Read-only Interface to get the address of the next Node
+ *
+ * returns: address of the next Node
+ */
+
+const Node* const Node::getNext ( void )
 {
-	//while ( nullptr != this -> head ) {
-	for ( unsigned i = 0; i < this -> getSize(); i++ ) {
-		Node* eliminate = this -> head;
-		this -> head = this -> head -> next;
-		delete eliminate;
-	}
+        return this -> next;
 }
 
-List::List ( List& list )
+
+
+/* 
+ * Function: getPrev
+ * - - - - - - - - - -
+ * Read-only Interface to get the address of the previous Node
+ *
+ * returns: address of the previous Node
+ */
+
+const Node* const Node::getPrev ( void )
+{
+        return this -> prev;
+}
+
+
+
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+ * C L A S S  L I S T -- F U N C T I O N  D E F I N I T I O N S            *
+ *                                                                         *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+/*
+ * Function: List - default ctor
+ * - - - - - - - - - - - - - - - -
+ * Initialize a new empty object
+ */
+
+List::List ( void ) : head ( nullptr ),
+                      tail ( nullptr ),
+                      size ( 0U ) {}
+
+
+
+/*
+ * Deconstructor: List - dtor
+ * - - - - - - - - - - - - - - -
+ * Deletes all dynamically created objects after end of this object
+ */
+
+List::~List ( void ) throw ( std::out_of_range )
+{
+	while ( this -> getSize() )
+                this -> remove_at ( this -> getSize() - 1U );
+}
+
+
+
+/*
+ * Constructor: List - copy constructor
+ * - - - - - - - - - - - - - - - - - - - -
+ * Copies all values from the other List without copying the address,
+ * thus creating new objects which are being linked to each other.
+ *
+ * throws: if memory allocation fails
+ */
+
+List::List ( List& list ) throw ( std::bad_alloc ) : List()
 {
 	if ( list.getSize() ) {
 		/* Go from Node to Node and create a copy, and bind them */
 		this -> head = new Node ( list.at ( 0 ) );
 		this -> size = 1U;
+
 		Node* current = this -> head;
 
 		for ( unsigned i = 1U; i < list.getSize(); i++ ) {
 			current -> next = new Node ( list.at ( i ) );
 			Node* prevptr = current;
+
 			current = current -> next;
 			current -> prev = prevptr;
+
 			this -> size++;
 		}
 
 		this -> tail = current;
-	} else {
-		this -> head = this -> tail = nullptr;
-		this -> size = 0U;
 	}
 }
 
-void List::push_front ( char value )
+
+
+/* Function: push_front
+ * - - - - - - - - - - - -
+ * Add a value to the front (head) of the list
+ *
+ * value: value that should be added to the list
+ *
+ * throws: bad_alloc, if no memory can be allocated
+ */
+
+void List::push_front ( const char value ) throw ( std::bad_alloc )
 {
-	Node* highest = new Node ( value );
-	highest -> next = this -> head;
+        Node* new_node;
 
-	this -> head = highest;
+        /* Hope memory can fit a another element */
+        try {
+                new_node = new Node ( value );
+        } catch ( std::bad_alloc ) {
+                std::cerr << "push_front(): Couldn't allocate memory"
+                        << std::endl;
+                throw;
+        }
 
-	if ( nullptr == this -> tail )
-		this -> tail = highest;
+	new_node -> next = this -> head;
+
+	this -> head = new_node;
+
+	if ( 0 == this -> getSize() )
+		this -> tail = new_node;
 	else
 		this -> head -> next -> prev = this -> head;
 
 	this -> size++;
 }
 
-void List::push_back ( char value )
-{
-	Node* lowest = new Node ( value );
 
-	if ( nullptr == this -> tail ) {
-		this -> tail = lowest;
-		this -> head = this -> tail;
+
+/*
+ * Function: push_back
+ * - - - - - - - - - - -
+ * Add a value to the back (tail) of the list
+ *
+ * value: value that should be added to the list
+ *
+ * throws: bad_alloc, if no memory can allocated
+ */
+
+void List::push_back ( const char value ) throw ( std::bad_alloc )
+{
+        Node* new_node;
+
+        /* Hope memory can fit a another element */
+        try {
+                new_node = new Node ( value );
+        } catch ( std::bad_alloc ) {
+                std::cerr << "push_back(): Couldn't allocate memory"
+                        << std::endl;
+                throw;
+        }
+
+        /* If no element before */
+	if ( 0 == this -> getSize() ) {
+		this -> head = this -> tail = new_node;
+        /* Else */
 	} else {
-		this -> tail -> next = lowest;
-		this -> tail -> next -> prev = this -> tail;
-		this -> tail = this -> tail -> next;
+		this -> tail -> next = new_node;
+		new_node -> prev = this -> tail;
+		this -> tail = new_node;
 	}
 
 	this -> size++;
 }
 
-bool List::pop_front ( char& value )
+
+
+/*
+ * Function: pop_front
+ * - - - - - - - - - - -
+ * Return a value from the front of the list (head)
+ *
+ * returns: value that is on top of the list (head)
+ * throws:  out_of_range, if list is empty
+ */
+
+char List::pop_front ( void ) throw ( std::out_of_range )
 {
-	if ( nullptr == this -> head )
-		return false;
-	else {
-		value = this -> head -> getValue();
+        /* List shouldn't be empty */
+	if ( 0 == this -> getSize() )
+		throw std::out_of_range ( "pop_front(): List is empty" );
 
-		if ( this -> head == this -> tail )
-			this -> tail = nullptr;
+        char value = this -> head -> getValue();
 
-		Node* old_head = this -> head;
-		this -> head = this -> head -> next;
+        /* If last element */
+        if ( this -> head == this -> tail ) {
+                delete this -> head;
+                this -> head = this -> tail = nullptr;
+        /* Else */
+        } else {
+                Node* old_head = this -> head;
 
-		if ( nullptr != this -> head )
-			this -> head -> prev = nullptr;
+                this -> head = this -> head -> next;
+                this -> head -> prev = nullptr;
 
-		delete old_head;
+                delete old_head;
+        }
 
-		this -> size--;
+        this -> size--;
 
-		return true;
-	}
+        return value;
 }
 
-bool List::pop_back ( char& value )
+
+
+/* 
+ * Function: pop_back
+ * - - - - - - - - - - -
+ * Return a value from the back of the list (tail)
+ *
+ * returns: value that lais on the bottom of the list (tail)
+ * throws:  out_of_range, if list is empty
+ */
+
+char List::pop_back ( void ) throw ( std::out_of_range )
 {
-	if ( nullptr == this -> tail )
-		return false;
-	else {
-		value = this -> tail -> getValue();
+        /* List shouldn't be empty */
+	if ( 0 == this -> getSize() )
+		throw std::out_of_range ( "pop_back(): List is empty" );
 
-		this -> size--;
+        char value = this -> tail -> getValue();
 
-		if ( this -> head == this -> tail ) {
-			delete this -> tail;
-			this -> head = this -> tail = nullptr;
-		} else {
-			Node* new_tail = this -> tail -> prev;
+        /* If last element */
+        if ( this -> head == this -> tail ) {
+                delete this -> tail;
+                this -> tail = this -> head = nullptr;
+        /* Else */
+        } else {
+                Node* old_tail = this -> tail;
 
-			this -> tail -> prev -> next = nullptr;
+                this -> tail = this -> tail -> prev;
+                this -> tail -> next = nullptr;
 
-			delete this -> tail;
+                delete old_tail;
+        }
 
-			this -> tail = new_tail;
-		}
+        this -> size--;
 
-		return true;
-	}
+        return value;
 }
 
-char List::at ( unsigned index )
+
+
+/*
+ * Function: at
+ * - - - - - - - -
+ * Get the element of the list at position pos
+ *
+ * pos: position of the element that should be returned
+ *
+ * returns: pointer to pos element of type Node (Node*)
+ * throws:  out_of_range, if pos was greater than the list length
+ */
+
+Node* List::at ( const unsigned pos ) throw ( std::out_of_range )
 {
-	/* If element out of range */
-	if ( index >= this -> getSize() )
-		return 0;
+        /* Shouldn't access non existing elements */
+	if ( this -> getSize() <= pos )
+                throw std::out_of_range ( "at(): Out of range" ); 
 
-	/* If last element */
-	else if ( this -> getSize() - 1U == index )
-		return this -> tail -> getValue();
-	else {
-		Node* current = this -> head;
+        Node* value;
 
-		for ( unsigned i = 0U; i < index; i++ )
-			current = current -> next;
+	if ( this -> getSize() - 1U == pos ) {
+		value = this -> tail;
+	} else {
+		value = this -> head;
 
-		return current -> getValue();
+		for ( unsigned i = 0U; i < pos; i++ )
+			value = value ->  next;
 	}
+
+        return value;
 }
 
-bool List::insert_at ( unsigned index, char value )
+
+
+/*
+ * Function: insert_at
+ * - - - - - - - - - - - 
+ * Insert a value into the list
+ *
+ * pos:   position of the list the value should be inserted
+ * value: value that should be inserted
+ *
+ * throws:  bad_alloc,    memory allocation of the new element has failed
+ *          out_of_range, relaying exception from function at()
+ */
+
+void List::insert_at ( const unsigned pos, char value ) throw ( std::bad_alloc,
+                                                          std::out_of_range )
 {
-	/* Check if list is empty or index is larger then the list */
-	if ( index > this -> getSize() )
-		return false;
-	else {
-		Node* insert = new Node ( value );
+        /* Insert at position 0 */
+        if ( 0U == pos ) {
+                this -> push_front ( value );
+        /* Insert behind last element */
+        } else if ( this -> getSize() == pos ) {
+                this -> push_back ( value );
+        /* Somewhere inbetween */
+        } else {
+                Node* insert;
 
-		if ( 0U == index ) {
-			insert -> next = this -> head;
+                /* Hope memory can fit a another element */
+                try {
+                        insert = new Node ( value );
+                } catch ( std::bad_alloc& ba ) {
+                        std::cerr << "insert_at(): Couldn't allocate memory"
+                                << std::endl;
+                        throw;
+                }
 
-			if ( nullptr != this -> head )
-				this -> head -> prev = insert;
-			else
-				this -> tail = insert;
+                Node* previous = this -> at ( pos );
 
-			this -> head = insert;
+                insert -> next = previous;
+                insert -> prev = previous -> prev;
+                previous -> prev -> next = insert;
+                previous -> prev = insert;
 
-		} else if ( this -> getSize() == index ) {
-			this -> tail -> next = insert;
-			insert -> prev = this -> tail;
-			this -> tail = insert;
-		} else {
-			Node* previous = this -> head;
-
-			for ( unsigned i = 0U; i < index - 1U; i++ )
-				previous = previous -> next;
-
-			insert -> next = previous -> next;
-			insert -> prev = previous;
-			previous -> next = insert;
-			insert -> next -> prev = insert;
-		}
-
-		this -> size++;
-
-                return true;
-	}
+                this -> size++;
+        }
 }
 
-bool List::remove_at ( unsigned index )
+
+
+/*
+ * Function: remove_at
+ * - - - - - - - - - - -
+ * Remove an element from the list
+ *
+ * pos: postion of element that should be deleted
+ *
+ * throws: out_of_range, relaying exception from function at()
+ *         
+ */
+
+void List::remove_at ( const unsigned pos ) throw ( std::out_of_range ) 
 {
-	/* Check if index is out of range */
-	if ( this -> getSize() <= index )
-		return true;
-	else {
-		/* If first element in list */
-		if ( 0U == index ) {
-			/* If more than one element */
-			if ( nullptr != this -> head -> next ) {
-				Node* new_head = this -> head -> next;
-				delete this -> head;
-				new_head -> prev = nullptr;
-				this -> head = new_head;
-			/* one element */
-			} else {
-				delete this -> head;
-				this -> head = this -> tail = nullptr;
-			}
-		/* If last element in list */
-		} else if ( this -> getSize() - 1 == index ) {
-			Node* old_tail = this -> tail;
+        /* If first element */
+        if ( 0U == pos ) {
+                this -> pop_front();
+        /* If last element */
+        } else if ( this -> getSize() - 1 == pos ) {
+                this -> pop_back();
+        /* If inbetween */
+        } else {
+                Node* bye = this -> at ( pos );
 
-			this -> tail = this -> tail -> prev;
-			this -> tail -> next = nullptr;
+                bye -> prev -> next = bye -> next;
+                bye -> next -> prev = bye -> prev;
 
-			delete old_tail;
-		/* If inbetween */
-		} else {
-			Node* current = this -> head;
+                delete bye;
 
-			for ( unsigned i = 0U; i < index; i++ )
-				current = current -> next;
+                this -> size--;
+        }
 
-			current -> prev -> next = current -> next;
-			current -> next -> prev = current -> prev;
-			delete current;
-		}
-
-		this -> size--;
-
-                return true;
-	}
 }
 
-unsigned List::getSize ( void )
+
+
+/*
+ * Function: getSize
+ * - - - - - - - - - -
+ * Return the amount of stored elements in the list
+ */
+
+const unsigned List::getSize ( void )
 {
 	return this -> size;
 }
 
-bool List::find ( char search, unsigned& pos )
+
+
+/*
+ * Function: find
+ * - - - - - - - - -
+ * Find a value in the list
+ *
+ * search: value to search for
+ * pos:    reference that returns the position of the element
+ *         which holds the searched value
+ *
+ * returns: whether the value was found (true) or not (false)
+ * throws:  out_of_range, if list is empty, relaying from function at()
+ */
+
+const bool List::find ( const char search, unsigned& pos ) throw ( std::out_of_range )
 {
         if ( 0 == this -> size )
                 return false;
 
         for ( unsigned i = 0; i < this -> size; i++ ) {
-                if ( this -> at ( i ) == search ) {
+                if ( this -> at ( i ) -> getValue() == search ) {
                         pos = i;
                         return true;
                 }
@@ -245,8 +461,21 @@ bool List::find ( char search, unsigned& pos )
         return false;
 }
 
-bool List::find ( char search )
+
+
+/*
+ * Function: find
+ * - - - - - - - - -
+ * Overloaded find function, does not require a reference parameter
+ *
+ * search: value to search for
+ *
+ * returns: whether the value was found (true) or not (false)
+ * throws: out_of_range, relaying from overloaded function find(char, unsigned&)
+ */
+
+const bool List::find ( const char search ) throw ( std::out_of_range )
 {
-        unsigned aux;
-        return find ( search, aux );
+        unsigned temp;
+        return find ( search, temp );
 }

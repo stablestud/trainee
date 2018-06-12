@@ -1,6 +1,11 @@
 #ifndef HANGMAN_H
 #define HANGMAN_H
 
+/* 
+ * @author stablestud
+ * @date 2018
+ */
+
 #include "CharList.h"
 #include <string>
 
@@ -15,10 +20,11 @@ public:
         bool guess(char);
         bool finito();
         unsigned getLifes();
-        List getGuessed();
-        List getCharacters();
-        std::string getWord();
+        List& getGuessed();
+        List& getCharacters();
+        std::string& getWord();
 };
 
 void printHangman (Hangman&);
+
 #endif

@@ -8,7 +8,7 @@ Hangman::Hangman(std::string word) : lifes(8), word(word)
                 if (!characters.find(word[i])) {
                         if (word[i] >= 'A' && word[i] <= 'Z')
                                 characters.push_back(word[i] + 'a' - 'A');
-                        else 
+                        else if (word[i] >= 'a' && word[i] <= 'z') 
                                 characters.push_back(word[i]);
                 }
         }
@@ -20,8 +20,15 @@ bool Hangman::guess(char character)
         if (character >= 'A' && character <= 'Z')
                 character += 'a' - 'A';
 
+        if ( !(character >= 'a' && character <= 'z')) {
+                std::cout << "Only letters are valid!" << std::endl;
+                return false;
+        }
+
+
         if (guessed.find(character)) {
                 std::cout << character << " has been already tried!" << std::endl;
+                lifes--;
                 return false;
         }
 
@@ -34,8 +41,8 @@ bool Hangman::guess(char character)
                 return true;
         }
                 
-        lifes--;
         std::cout << "NO, " << character << " was WRONG!" << std::endl;
+        lifes--;
 
         return false;
 }
@@ -53,17 +60,17 @@ unsigned Hangman::getLifes()
         return this->lifes;
 }
 
-List Hangman::getGuessed()
+List& Hangman::getGuessed()
 {
         return this->guessed;
 }
 
-List Hangman::getCharacters()
+List& Hangman::getCharacters()
 {
         return this->characters;
 }
 
-std::string Hangman::getWord()
+std::string& Hangman::getWord()
 {
         return this->word;
 }
@@ -75,7 +82,7 @@ void printHangman(Hangman& game)
         std::cout << "Guessed characters: ";
 
         for (unsigned i = 0; i < game.getGuessed().getSize(); i++)
-                std::cout << game.getGuessed().at(i) << " ";
+                std::cout << game.getGuessed().at(i)->getValue() << " ";
 
         std::cout << std::endl;
         std::cout << "Word: ";

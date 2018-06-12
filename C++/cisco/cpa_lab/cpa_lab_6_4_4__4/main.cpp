@@ -7,9 +7,11 @@ int main()
         std::string word;
 
         std::cout << "Type in a word to play with: ";
-        std::cin >> word;
+        std::getline(std::cin, word);
 
         Hangman game(word);
+
+        printHangman(game);
 
         do {
                 char character;
@@ -23,10 +25,16 @@ int main()
         } while (!game.finito());
 
         if (game.getLifes() > 0) {
-                std::cout << "You won!" << std::endl;
+                std::cout << "~~~~~~~~~~~~~~~~~~" << std::endl;
+                std::cout << "  Y O U  W O N !" << std::endl;
+                std::cout << "~~~~~~~~~~~~~~~~~~" << std::endl;
         } else {
-                std::cout << "Oh no, you lost ..." << std::endl;
+                std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+                std::cout << "O H . . . N O , Y O U  L O O S E !" << std::endl;
+                std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
         }
+
+        std::cout << std::endl;
 
         std::cout << "The word was: " << word << std::endl;
         return 0;

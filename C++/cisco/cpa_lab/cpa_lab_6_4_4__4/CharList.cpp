@@ -91,7 +91,7 @@ const Node* const Node::getPrev ( void )
 
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
- * C L A S S  L I S T -- F U N C T I O N  D E F I N I T I O N S            *
+ * L I S T -- F U N C T I O N  D E F I N I T I O N S                       *
  *                                                                         *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 

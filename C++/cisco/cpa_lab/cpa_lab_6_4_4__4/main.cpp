@@ -6,7 +6,7 @@ int main()
 {
         std::string word;
 
-        std::cout << "Type in a word to play with: ";
+        std::cout << "Type in a sentence to play with: ";
         std::getline(std::cin, word);
 
         Hangman game(word);
@@ -32,9 +32,9 @@ int main()
                 std::cout << "  Y O U  W O N !" << std::endl;
                 std::cout << "~~~~~~~~~~~~~~~~~~" << std::endl;
         } else {
-                std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
-                std::cout << "O H . . . N O , Y O U  L O S T !" << std::endl;
-                std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+                std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
+                std::cout << "O H . . . N O ,  Y O U  L O S T !" << std::endl;
+                std::cout << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << std::endl;
         }
 
         std::cout << std::endl;

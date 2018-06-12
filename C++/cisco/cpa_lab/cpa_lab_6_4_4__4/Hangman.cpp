@@ -4,6 +4,7 @@
 
 Hangman::Hangman(std::string word) : lifes(8), word(word)
 {
+	/* Fix upper lower case U */
         for (unsigned i = 0; i < word.length(); i++) {
                 if (!characters.find(word[i])) {
                         if (word[i] >= 'A' && word[i] <= 'Z')
@@ -77,6 +78,10 @@ std::string& Hangman::getWord()
 
 void printHangman(Hangman& game)
 {
+	try {
+	for (unsigned i = 0; game.getCharacters().getSize(); i++)
+		std::cout << game.getCharacters().at(i)->getValue();
+	} catch (std::out_of_range ) {}
         std::cout << std::endl << "-----------------------------------------------" << std::endl;
         std::cout << "You've " << game.getLifes() << " tries left." << std::endl;
         std::cout << "Guessed characters: ";

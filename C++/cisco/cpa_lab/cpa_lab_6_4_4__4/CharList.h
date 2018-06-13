@@ -10,7 +10,7 @@
 
 /*
  * @author stablestud
- * @date 2018
+ * @date   13-06-2018
  */
 
 #include <exception>
@@ -76,7 +76,7 @@ public:
         List ( void );
         ~List ( void ) throw ( std::out_of_range );
         List ( List& ) throw ( std::bad_alloc );
-        Node* operator[] ( unsigned ) throw ( std::out_of_range );
+        char operator[] ( unsigned ) throw ( std::out_of_range );
 
         /* Append (back) or prepend (front) values to the list */
         void push_front ( const char ) throw ( std::bad_alloc );

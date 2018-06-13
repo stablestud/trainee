@@ -3,7 +3,7 @@
 
 /*
  * @author stablestud
- * @date 2018
+ * @date   13-06-2018
  */
 
 #include "CharList.h"

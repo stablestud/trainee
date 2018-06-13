@@ -5,7 +5,7 @@
 
 /*
  * @author stablestud
- * @date 2018
+ * @date   13-06-2018
  */
 
 
@@ -160,14 +160,14 @@ List::List ( List& list ) throw ( std::bad_alloc ) : List()
  * - - - - - - - - - - - - -
  * Synonym for function at()
  *
- * pos: extract element from pos(ition)
+ * pos: extract elements value from pos(ition)
  *
- * returns: pointer to element from postion
+ * returns: elements value
  */
 
-Node* List::operator[] ( unsigned pos ) throw ( std::out_of_range )
+char List::operator[] ( unsigned pos ) throw ( std::out_of_range )
 {
-        return this -> at ( pos );
+        return this -> at ( pos ) -> getValue();
 }
 
 

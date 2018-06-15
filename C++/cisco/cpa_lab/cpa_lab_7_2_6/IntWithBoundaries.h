@@ -1,15 +1,26 @@
-#ifdef INTWITHBOUNDARIES_H
+#ifndef INTWITHBOUNDARIES_H
 #define INTWITHBOUNDARIES_H
+
+#include <exception>
+#include <stdexcept>
+
+class IntWithBoundExcep : public std::logic_error {
+public:
+	IntWithBoundExcep ( const int );
+	const char* what ( void ) const noexcept;
+};
 
 class IntWithBoundaries {
 private:
 	int value;
+	int r_min;
+	int r_max;
 public:
-	IntWithBoundaries ( int v, int min, int max );
-	int add ( int v );
-	int minus ( int v );
-	int multiply ( int v );
-	int divide ( int v );
+	IntWithBoundaries ( int, int, int );
+	int add ( int );
+	int minus ( int );
+	int multiply ( int );
+	int divide ( int );
 	int getValue ( void );
 };
 

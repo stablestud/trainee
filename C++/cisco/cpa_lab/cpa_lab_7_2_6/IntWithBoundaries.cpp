@@ -2,16 +2,13 @@
 #include <stdexcept>
 #include "IntWithBoundaries.h"
 
-IntWithBoundExcep::IntWithBoundExcep ( int err_code ) : std::logic_error ( "ok" )
-{
-}
+IntWithBoundExcep::IntWithBoundExcep ( int err_code ) : std::logic_error ( "" ), err_code ( err_code ) {}
 
 const char* IntWithBoundExcep::what ( void ) const noexcept
 {
-	const char* c = std::logic_error::what();
 	const char* re;
 
-	switch ( *c ) {
+	switch ( err_code ) {
 	case 0x1:
 		re = "Min is greater than Max.";
 		break;
@@ -22,7 +19,7 @@ const char* IntWithBoundExcep::what ( void ) const noexcept
 		re = "Value can't be greater than Max.";
 		break;
 	default:
-		re = "Something went wrong. Please try again now.";
+		re = "Something went wrong. Please fix.";
 		break;
 	}
 
@@ -45,42 +42,26 @@ IntWithBoundaries::IntWithBoundaries ( int v, int min, int max )
 
 int IntWithBoundaries::add ( int v ) throw ( IntWithBoundExcep )
 {
-	int tmp = value;
-	tmp =+ v;
-
-	validate ( tmp );
-
-	return value = tmp;
+	validate ( value + v );
+	return value = v;
 }
 
 int IntWithBoundaries::minus ( int v ) throw ( IntWithBoundExcep )
 {
-	int tmp = value;
-	tmp =- v;
-
-	validate ( tmp );
-
-	return value = tmp;
+	validate ( value - v );
+	return value = v;
 }
 
 int IntWithBoundaries::multiply ( int v ) throw ( IntWithBoundExcep )
 {
-	int tmp = value;
-	tmp =* v;
-
-	validate ( tmp );
-
-	return value = tmp;
+	validate ( v = value * v );
+	return value = v;
 }
 
 int IntWithBoundaries::divide ( int v ) throw ( IntWithBoundExcep )
 {
-	int tmp = value;
-	tmp =/ v;
-
-	validate ( tmp );
-
-	return value = tmp;
+	validate ( v = value / v );
+	return value = v;
 }
 
 int IntWithBoundaries::getValue ( void ) const
@@ -88,11 +69,91 @@ int IntWithBoundaries::getValue ( void ) const
 	return value;
 }
 
-void IntWithBoundaries::validate ( int tmp ) const throw ( IntWithBoundExcep )
+void IntWithBoundaries::validate ( int v ) const throw ( IntWithBoundExcep )
 {
-	if ( tmp < r_min )
+	if ( v < r_min )
 		throw IntWithBoundExcep ( 0x2 );
 
-	if ( tmp > r_max )
+	if ( v > r_max )
 		throw IntWithBoundExcep ( 0x3 );
+}
+
+int IntWithBoundaries::operator+ ( int v ) const
+{
+	return value + v;
+}
+
+int IntWithBoundaries::operator- ( int v ) const
+{
+	return value - v;
+}
+
+int IntWithBoundaries::operator* ( int v ) const
+{
+	return value * v;
+}
+
+int IntWithBoundaries::operator/ ( int v ) const
+{
+	return value / v;
+}
+
+int IntWithBoundaries::operator+ ( IntWithBoundaries& v ) const
+{
+	return operator+ ( v.getValue() );
+}
+
+int IntWithBoundaries::operator- ( IntWithBoundaries& v ) const
+{
+	return operator- ( v.getValue() );
+}
+
+int IntWithBoundaries::operator* ( IntWithBoundaries& v ) const
+{
+	return operator* ( v.getValue() );
+}
+
+int IntWithBoundaries::operator/ ( IntWithBoundaries& v ) const
+{
+	return operator/ ( v.getValue() );
+}
+
+int IntWithBoundaries::operator+= ( int v ) throw ( IntWithBoundExcep )
+{
+	return add ( v );
+}
+
+int IntWithBoundaries::operator-= ( int v ) throw ( IntWithBoundExcep )
+{
+	return minus ( v );
+}
+
+int IntWithBoundaries::operator*= ( int v ) throw ( IntWithBoundExcep )
+{
+	return multiply ( v );
+}
+
+int IntWithBoundaries::operator/= ( int v ) throw ( IntWithBoundExcep )
+{
+	return divide ( v );
+}
+
+int IntWithBoundaries::operator+= ( IntWithBoundaries& v ) throw ( IntWithBoundExcep )
+{
+	return operator+= ( v.getValue() );
+}
+
+int IntWithBoundaries::operator-= ( IntWithBoundaries& v ) throw ( IntWithBoundExcep )
+{
+	return operator-= ( v.getValue() );
+}
+
+int IntWithBoundaries::operator*= ( IntWithBoundaries& v ) throw ( IntWithBoundExcep )
+{
+	return operator*= ( v.getValue() );
+}
+
+int IntWithBoundaries::operator/= ( IntWithBoundaries& v ) throw ( IntWithBoundExcep )
+{
+	return operator/= ( v.getValue() );
 }

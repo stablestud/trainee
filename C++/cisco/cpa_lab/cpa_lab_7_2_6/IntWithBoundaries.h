@@ -4,6 +4,7 @@
 #include <exception>
 #include <stdexcept>
 
+
 class IntWithBoundExcep : public std::logic_error {
 private:
 	int err_code;
@@ -11,6 +12,10 @@ public:
 	IntWithBoundExcep ( int );
 	const char* what ( void ) const noexcept;
 };
+
+class IntWithBoundaries;
+
+typedef IntWithBoundaries twb;
 
 class IntWithBoundaries {
 private:
@@ -33,14 +38,14 @@ public:
 	int operator- ( IntWithBoundaries& ) const;
 	int operator* ( IntWithBoundaries& ) const;
 	int operator/ ( IntWithBoundaries& ) const;
-	int operator+= ( int ) throw ( IntWithBoundExcep );
-	int operator-= ( int ) throw ( IntWithBoundExcep );
-	int operator*= ( int ) throw ( IntWithBoundExcep );
-	int operator/= ( int ) throw ( IntWithBoundExcep );
-	int operator+= ( IntWithBoundaries& ) throw ( IntWithBoundExcep );
-	int operator-= ( IntWithBoundaries& ) throw ( IntWithBoundExcep );
-	int operator*= ( IntWithBoundaries& ) throw ( IntWithBoundExcep );
-	int operator/= ( IntWithBoundaries& ) throw ( IntWithBoundExcep );
+	twb& operator+= ( int ) throw ( IntWithBoundExcep );
+	twb& operator-= ( int ) throw ( IntWithBoundExcep );
+	twb& operator*= ( int ) throw ( IntWithBoundExcep );
+	twb& operator/= ( int ) throw ( IntWithBoundExcep );
+	twb& operator+= ( IntWithBoundaries& ) throw ( IntWithBoundExcep );
+	twb& operator-= ( IntWithBoundaries& ) throw ( IntWithBoundExcep );
+	twb& operator*= ( IntWithBoundaries& ) throw ( IntWithBoundExcep );
+	twb& operator/= ( IntWithBoundaries& ) throw ( IntWithBoundExcep );
 };
 
 #endif /* INTWITHBOUNDARIES_H */

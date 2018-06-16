@@ -43,25 +43,25 @@ IntWithBoundaries::IntWithBoundaries ( int v, int min, int max )
 int IntWithBoundaries::add ( int v ) throw ( IntWithBoundExcep )
 {
 	validate ( value + v );
-	return value = v;
+	return value += v;
 }
 
 int IntWithBoundaries::minus ( int v ) throw ( IntWithBoundExcep )
 {
 	validate ( value - v );
-	return value = v;
+	return value -= v;
 }
 
 int IntWithBoundaries::multiply ( int v ) throw ( IntWithBoundExcep )
 {
 	validate ( v = value * v );
-	return value = v;
+	return value *= v;
 }
 
 int IntWithBoundaries::divide ( int v ) throw ( IntWithBoundExcep )
 {
 	validate ( v = value / v );
-	return value = v;
+	return value /= v;
 }
 
 int IntWithBoundaries::getValue ( void ) const
@@ -118,42 +118,50 @@ int IntWithBoundaries::operator/ ( IntWithBoundaries& v ) const
 	return operator/ ( v.getValue() );
 }
 
-int IntWithBoundaries::operator+= ( int v ) throw ( IntWithBoundExcep )
+twb& IntWithBoundaries::operator+= ( int v ) throw ( IntWithBoundExcep )
 {
-	return add ( v );
+	add ( v );
+	return *this;
 }
 
-int IntWithBoundaries::operator-= ( int v ) throw ( IntWithBoundExcep )
+twb& IntWithBoundaries::operator-= ( int v ) throw ( IntWithBoundExcep )
 {
-	return minus ( v );
+	minus ( v );
+	return *this;
 }
 
-int IntWithBoundaries::operator*= ( int v ) throw ( IntWithBoundExcep )
+twb& IntWithBoundaries::operator*= ( int v ) throw ( IntWithBoundExcep )
 {
-	return multiply ( v );
+	multiply ( v );
+	return *this;
 }
 
-int IntWithBoundaries::operator/= ( int v ) throw ( IntWithBoundExcep )
+twb& IntWithBoundaries::operator/= ( int v ) throw ( IntWithBoundExcep )
 {
-	return divide ( v );
+	divide ( v );
+	return *this;
 }
 
-int IntWithBoundaries::operator+= ( IntWithBoundaries& v ) throw ( IntWithBoundExcep )
+twb& IntWithBoundaries::operator+= ( IntWithBoundaries& v ) throw ( IntWithBoundExcep )
 {
-	return operator+= ( v.getValue() );
+	operator+= ( v.getValue() );
+	return *this;
 }
 
-int IntWithBoundaries::operator-= ( IntWithBoundaries& v ) throw ( IntWithBoundExcep )
+twb& IntWithBoundaries::operator-= ( IntWithBoundaries& v ) throw ( IntWithBoundExcep )
 {
-	return operator-= ( v.getValue() );
+	operator-= ( v.getValue() );
+	return *this;
 }
 
-int IntWithBoundaries::operator*= ( IntWithBoundaries& v ) throw ( IntWithBoundExcep )
+twb& IntWithBoundaries::operator*= ( IntWithBoundaries& v ) throw ( IntWithBoundExcep )
 {
-	return operator*= ( v.getValue() );
+	operator*= ( v.getValue() );
+	return *this;
 }
 
-int IntWithBoundaries::operator/= ( IntWithBoundaries& v ) throw ( IntWithBoundExcep )
+twb& IntWithBoundaries::operator/= ( IntWithBoundaries& v ) throw ( IntWithBoundExcep )
 {
-	return operator/= ( v.getValue() );
+	operator/= ( v.getValue() );
+	return *this;
 }

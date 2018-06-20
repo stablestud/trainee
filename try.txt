@@ -14,12 +14,12 @@ Copying constructor ( class* source ) - pointer instead of reference ( call with
 Composed class copying everything? Even with all implicitly constructors
 Const return value of functions / const pointer parameter
 GetChar(); - does it only work on Windows?
-Can all methods jave an semicolon?
+Can all methods have an semicolon?
 Initiate value in class with same name as superclass
 Const class field initialize with different data tye
 static <-> friend / also must static be declared as public?
-GLobal Scope operator :: only to global variables or to the highest one? e.g. created in main()
-Can a catch re-throw the exception?
+Are the overloaded operators forced to return the assumed type (e.g == forced to return boolean?)
+test the logical short-circuit evaluation tactic
 
 asm:
 branch prediction hints x86

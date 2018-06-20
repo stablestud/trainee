@@ -1,0 +1,21 @@
+* operator overloading
+	have only one type of overloaded operator (preferable int or double)
+	e.g.	cout << fraction1 + 4 << endl;	// returns what? returns Fraction, that gets overloaded again by << stream
+		int var = fraction1;		// Not possible as global overloaded operators are not allowed for =
+		fraction x = frac1 * frac2;	// Do this with constructors? 
+	What should each operator or the operations in general return?
+	e.g.	int		unpreferred as it cuts the floating point numbers, use double instead
+		double		Good for general use, double is standard type and so its accepted everywhere,
+				Operator have to accept then double also, possible to accept double only?
+		Fraction	Good as no conversion has to be done, no precision get lost, however its not
+				very compatible with other functions, maybe for such cases call frac1.toDouble() ?
+				But what If I want to use func1 in a arithmetic operation
+				e.g.	int var = 8 * func1	// The object will be returned and not an int value
+								// int * Fraction is overloadable
+								// Fraction * int also
+								// Int = Fraction is not!
+								// Fraction = int is overloadable
+				Is it possible to determine the required l-value to overload?
+				int = fraction is not possible
+				Fraction + Fraction
+				Fraction + int

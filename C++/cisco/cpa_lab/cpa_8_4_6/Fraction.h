@@ -1,6 +1,8 @@
 #ifndef FRACTION_H
 #define FRACTION_H
 
+#include <iostream>
+
 /* 
  * Fraction
  * - - - - - -
@@ -22,7 +24,6 @@ public:
 	Fraction() : numerator(0), denominator(1) {}
 	Fraction(int num) : numerator(num), denominator(1) {}
 	Fraction(int num, int denum) : numerator(num), denominator(denum) {}
-	Fraction(Fraction& f) : 
 	Fraction& add ( Fraction& );
 	Fraction& add ( double );
 	Fraction& subtract ( Fraction& );
@@ -51,7 +52,7 @@ public:
 	Fraction& operator/= (double);
 };
 
-ostream& operator<< (ostream&, Fraction&);
+std::ostream& operator<< (std::ostream&, Fraction&);
 double operator+ (double, Fraction&);
 double operator- (double, Fraction&);
 int operator* (int, Fraction&);

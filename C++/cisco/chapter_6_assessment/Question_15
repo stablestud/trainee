@@ -1,0 +1,16 @@
+#include <iostream>
+using namespace std;
+    
+class A { 
+        int *val;
+public:
+        A() { val = new int; *val = 0; }
+        int get() { ++(*val); return *val; } 
+};
+    
+int main() {
+        A a,b = a;
+        cout << a.get()
+        cout << b.get();
+        return 0;
+}

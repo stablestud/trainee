@@ -20,20 +20,22 @@
 
 class ipAddress {
 private:
-        short b1, b2, b3, b4;
+        short block[4] {};
 public:
-        explicit ipAddress(const char* const) throw(std::invalid_argument, std::domain_error);
+        ipAddress& setIp(const char* const) throw(std::invalid_argument, std::domain_error);
         std::string print(void) const;
-        ostrean& operator<< (ostream& stream, ipAddress) const;
+        ipAddress& operator<< (uint8_t) throw(std::domain_error);
+        void checkIp(short block) throw(std::domain_error);
 };
 
 class ipAddressRange : public ipAddress {
 private:
-        short range;
+        const uint8_t range;
         ipAddress* subnet;
 public:
-        explicit ipAddressRange(const char* const, short) throw(std::invalid_argument, std::domain_error);
+        explicit ipAddressRange(const char* const, const uint8_t) throw(std::invalid_argument, std::domain_error);
         void print(void) const;
 };
 
+std::ostream& operator<< (std::ostream&, ipAddress&);
 #endif /* IPADDRESS_H */

@@ -1,7 +1,7 @@
 /**
  * @author stablestud <dev@stablestud.org>
- * @date XX-XX-XXXX
- * 
+ * @date 06-06-2018
+ *
  * A small program that checks for validity of an ipv4 address
  **/
 #include <iostream>
@@ -24,7 +24,7 @@ int main(void)
         IpAddressChecked ip3(new_ip);
 
         std::cout << std::endl;
-        /* 
+        /*
         sendForPrint(ip1);
         sendForPrint(ip2);
         */

@@ -1,0 +1,3 @@
+float x;
+x = 2.5; // cin >> x;
+cout << scientific << "x";

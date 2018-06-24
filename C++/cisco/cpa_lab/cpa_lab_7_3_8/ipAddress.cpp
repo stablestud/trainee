@@ -30,20 +30,38 @@ ipAddress& ipAddress::setIp(const char* const ip) throw(std::invalid_argument, s
         if (dots != 3)
                 throw std::invalid_argument("Invalid count of dots!");
 
-
-        short ipP = 0;
+        int ipP = 0;
         
-        for (short i = 0; i < 4; i++) {
-                for (short j = 0; j < dotsP[i]; j++)
-                        block[i] *= 10 + ip[ipP++];
-                ipP = dotsP[i] + 1;
-                checkIp(block[i]);
-        }
+        for (short j = 0; j < dotsP[0]; j++)
+                block[0] = block[0] * 10 + ip[ipP++] - 48;
+
+        checkIp(block[0]);
+
+        ipP++;
+
+        for (short j = 0; j < dotsP[1] - dotsP[0] - 1; j++)
+                block[1] = block[1] * 10 + ip[ipP++] - 48;
+        
+        checkIp(block[1]);
+
+        ipP++;
+
+        for (short j = 0; j < dotsP[2] - dotsP[1] - 1; j++)
+                block[2] = block[2] * 10 + ip[ipP++] - 48;
+
+        checkIp(block[2]);
+
+        ipP++;
+
+        for (short j = 0; j < length - dotsP[2] - 1; j++)
+                block[3] = block[3] * 10 + ip[ipP++] - 48;
+
+        checkIp(block[3]);
 
         return *this;
 }
 
-ipAddress& ipAddress::operator<< (uint8_t b4) throw(std::domain_error)
+ipAddress& ipAddress::operator<< (int b4) throw(std::domain_error)
 {
         checkIp(block[3] += b4);
         return *this;
@@ -65,22 +83,33 @@ std::ostream& operator<< (std::ostream& stream, ipAddress& ip)
         return stream << ip.print();
 }
 
-ipAddressRange::ipAddressRange(const char* const ip, const uint8_t range) throw(std::invalid_argument, std::domain_error)
+ipAddressRange::ipAddressRange(const char* const ip, const int range) throw(std::invalid_argument, std::domain_error)
         : range(range)
 {
         if (1U & range) /* When uneven */
                 throw std::domain_error("Invalid range.");
 
-        std::cout << "Range:" << range << std::endl;
+        switch (range) {
+                case 1:
+                case 2:
+                case 4:
+                case 8:
+                case 16:
+                case 32:
+                case 64:
+                        break;
+                default:
+                        throw std::domain_error("Invalid range.");
+        }
+
         subnet = new ipAddress[range];
 
-        for (short i = 0; i < range; i++) {
-                subnet[i].setIp(ip) << i;               
-        }
+        for (int i = 0; i < range; i++)
+                subnet[i].setIp(ip) << (i + 1);               
 }
 
 void ipAddressRange::print(void) const
 {
-        for (short i = 0; i < range; i++)
-                std::cout << subnet[i] << std::endl;
+        for (int i = 0; i < range; i++)
+                std::cout << subnet[i] <<  std::endl;
 }

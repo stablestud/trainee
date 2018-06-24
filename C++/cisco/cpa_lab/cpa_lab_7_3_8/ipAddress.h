@@ -24,16 +24,16 @@ private:
 public:
         ipAddress& setIp(const char* const) throw(std::invalid_argument, std::domain_error);
         std::string print(void) const;
-        ipAddress& operator<< (uint8_t) throw(std::domain_error);
+        ipAddress& operator<< (int) throw(std::domain_error);
         void checkIp(short block) throw(std::domain_error);
 };
 
 class ipAddressRange : public ipAddress {
 private:
-        const uint8_t range;
+        const int range;
         ipAddress* subnet;
 public:
-        explicit ipAddressRange(const char* const, const uint8_t) throw(std::invalid_argument, std::domain_error);
+        explicit ipAddressRange(const char* const, const int) throw(std::invalid_argument, std::domain_error);
         void print(void) const;
 };
 

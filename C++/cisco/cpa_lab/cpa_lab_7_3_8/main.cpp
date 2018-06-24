@@ -5,7 +5,7 @@
 int main(void)
 {
         char ip[14];
-        uint8_t range;
+        int range;
 
         try {
                 std::cin >> ip >> range;

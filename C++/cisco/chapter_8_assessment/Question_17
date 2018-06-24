@@ -1,0 +1,19 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+class N {
+public:
+        float x;
+        N() { x = 0.0; }
+        N(float a) { x = a; }
+        N(N &n) { x = n.x; }
+        string operator==(float f) { if(int(x) == int(f)) return "true"; else return "false"; }
+};
+
+int main() {
+        N a(1.1);
+        cout << (a == 1.9);
+        return 0;
+}

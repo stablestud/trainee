@@ -1,21 +1,47 @@
 #include <iostream>
+#include <exception>
+#include <stdexcept>
+
 using namespace std;
 
 class A {
 public:
-        float v;
-        A(float x) : v(x) {}
+        virtual void foo()
+        {
+                cout << "A::foo()" << endl;
+        }
 };
     
-class B {
+class B : public A {
 public:
-        A a;
-        float b;
-        B(float x) : a(x + 1) { b = a.v; }
+        void foo()
+        {
+                cout << "B::foo()" << endl;
+        }
+        void bar()
+        {
+                cout << "B::bar()" << endl;
+        }
+};
+
+class C : public A {
+public:
+        void foo()
+        {
+                cout << "C::foo()" << endl;
+        }
 };
      
 int main() {
-        B b(2.0);
-        cout << b.b;
-        return 0;
+        A* y = new B;
+        C* x = new C;
+        A* z = new A;
+
+        try {
+                static_cast<C*>(y)->foo();
+                static_cast<B*>(dynamic_cast<A*>(x))->foo();
+                dynamic_cast<B*>(z)->bar();
+        } catch (...) {
+                cerr << "Caught!" << endl;
+        }
 }

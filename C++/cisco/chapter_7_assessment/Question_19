@@ -10,14 +10,14 @@ public:
 };
     
 void a() {
-        throw 0;
+        throw Int(1);
 }
     
 void b() {
         try {
                 a();
-        } catch(int i) {
-                throw Int(i + 1);
+        } catch(Int &i) {
+                throw Int(i.v + 1);
         }
 }
     

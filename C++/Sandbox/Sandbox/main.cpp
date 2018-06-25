@@ -2,18 +2,28 @@
 #include <string>
 using namespace std;
 
-class X {
+class A {
+        int a;
+protected:
+        float b;
 public:
-        string n; 
-        X(string s) : n(s) {}
-        void operator() (X x) {
-                cout << x.n;
+        char c;
+};
+
+class B : protected A {
+public:
+        B()
+        {
+                c = 9;
+                b = 7;
+        }
+        void print () {
+                std::cout << c << b << endl;
         }
 };
 
 int main(void) {
-        X x("a"),y("b");
-        x(y);
-        y(x);
+        B b;
+        b.print();
         return 0;
 }

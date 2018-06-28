@@ -1,9 +1,6 @@
 Function pointers
 Enums
 Unions
-Typedef
-Using
-Public and private in struct, initializers (e.g constructors), virtual, this ->
 Competitive programming
 Copying constructors that initializes variables like a subconstructer (e.g
 Class ( src &x ) : variables ( x ) {}
@@ -17,9 +14,6 @@ GetChar(); - does it only work on Windows?
 Can all methods have an semicolon?
 Initiate value in class with same name as superclass
 Const class field initialize with different data tye
-static <-> friend / also must static be declared as public?
-Are the overloaded operators forced to return the assumed type (e.g == forced to return boolean?)
-test the logical short-circuit evaluation tactic
 
 asm:
 branch prediction hints x86

@@ -1,29 +1,18 @@
-    #include <iostream>
+#include <iostream>
 
-    using namespace std;
+using namespace std;
 
-    int main()
+int main()
+{
+        int cnt = 10;
 
-    {
-
-            int cnt = 10;
-
-            do {
-
+        do {
                 cnt‑‑;
-
                 if (cnt % 3 == 2)
-
-                    break;
-
+                        break;
                 cout << cnt;
+        }
+        while(cnt);
 
-            }
-
-            while(cnt);
-
-            return 0;
-
-    }
-
-
+        return 0;
+}

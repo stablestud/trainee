@@ -1,53 +1,33 @@
-    #include <iostream>
+#include <iostream>
 
-    using namespace std;
+using namespace std;
 
-    class Uno {
+class Uno {
+public: char Char;
+};
 
-    public: char Char;
+int main () {
+        int swtch;
+        Uno u;
+        u.Char = '5';
+        swtch = 1; // cin >> swtch;
 
-    };
+        try
+        {
+                switch (swtch)
+                {
+                case 3:  throw 1;
+                case 2:  throw 3.f;
+                case 1:  throw u;
+                }
 
-    int main () {
+        }
+        catch (int e)
+        { cout << e; }
+        catch (Uno e)
+        { cout << e.Char; }
+        catch (...)
+        { cout << "?"; }
 
-      int swtch;
-
-      Uno u;
-
-      u.Char = '5';
-
-      swtch = 1; // cin >> swtch;
-
-      try
-
-      {
-
-              switch (swtch)
-
-              {
-
-              case 3:  throw 1;
-
-              case 2:  throw 3.f;
-
-              case 1:  throw u;
-
-              }
-
-      }
-
-      catch (int e)
-
-      { cout << e; }
-
-      catch (Uno e)
-
-      { cout << e.Char; }
-
-      catch (...)
-
-      { cout << "?"; }
-
-      return 0;
-
-    }
+        return 0;
+}

@@ -1,39 +1,23 @@
 #include <iostream>
+#include <string>
 
-    #include <string>
+using namespace std;
 
-    using namespace std;
+class Uno {
+public: ~Uno() { cout << "X"; }
+};
 
-    class Uno {
+void foo(Uno *d)
+{
+        Uno e;
+        *d = e;
+}
 
-    public: ~Uno() { cout << "X"; }
+int main()
+{
+        Uno *u = new Uno;
+        foo(u);
+        delete u;
 
-    };
-
-   
-
-    void foo(Uno *d)
-
-    {
-
-          Uno e;
-
-            *d = e;
-
-    }
-
-   
-
-    int main()
-
-    {
-
-            Uno *u = new Uno;
-
-            foo(u);
-
-          delete u;
-
-            return 0;
-
-    }
+        return 0;
+}

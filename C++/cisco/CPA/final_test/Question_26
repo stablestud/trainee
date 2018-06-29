@@ -1,21 +1,16 @@
-    #include <iostream>
+#include <iostream>
 
-    using namespace std;
+using namespace std;
 
-    int main()
+int main()
+{
+        int x = ‑2, y;
+        float f = 2.5, g;
 
-    {
+        g = x;
+        y = f;
 
-     int x = ‑2, y;
+        cout << (int)g / y;
 
-     float f = 2.5, g;
-
-     g = x;
-
-     y = f;
-
-     cout << (int)g / y;
-
-     return 0;
-
-    }
+        return 0;
+}

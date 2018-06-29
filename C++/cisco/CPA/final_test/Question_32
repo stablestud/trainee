@@ -1,21 +1,15 @@
-  #include <iostream>
+#include <iostream>
 
-    using namespace std;
+using namespace std;
 
-    bool compare(bool t, bool u)
+bool compare(bool t, bool u)
+{
+        return t < u;
+}
 
-    {
+int main()
+{
+        cout << compare(true,false);
 
-            return t < u;
-
-    }
-
-    int main()
-
-    {
-
-            cout << compare(true,false);
-
-            return 0;
-
-    }
+        return 0;
+}

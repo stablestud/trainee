@@ -1,19 +1,15 @@
-    #include <iostream>
+#include <iostream>
 
-    using namespace std;
+using namespace std;
 
-    int X = 5;
+int X = 5;
 
-    int main()
+int main()
+{
+        cout << "HI!";
 
-    {
+        if(X‑‑ > 0)
+                main();
 
-       cout << "HI!";
-
-       if(X‑‑ > 0)
-
-            main();
-
-       return 0;
-
-    }
+        return 0;
+}

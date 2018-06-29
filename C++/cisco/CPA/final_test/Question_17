@@ -1,31 +1,20 @@
-    #include <iostream>
+#include <iostream>
+#include <cstdarg>
 
-    #include <cstdarg>
+using namespace std;
 
-    using namespace std;
+int calculate(int &val, int arg)
+{
+        val *= arg;
+        return arg;
+}
 
-    int calculate(int &val, int arg)
+int main()
+{
+        int i = 1;
+        int j = calculate(i,2);
 
-    {
+        cout << i << j;
 
-            val *= arg;
-
-            return arg;
-
-    }
-
-   
-
-    int main()
-
-    {
-
-            int i = 1;
-
-            int j = calculate(i,2);
-
-            cout << i << j;
-
-            return 0;
-
-    }
+        return 0;
+}

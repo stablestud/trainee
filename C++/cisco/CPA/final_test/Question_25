@@ -1,51 +1,35 @@
-    #include <iostream>
+#include <iostream>
+#include <string>
 
-    #include <string>
+using namespace std;
 
-    using namespace std;
+const int size = 3;
 
-    const int size = 3;
+class Uno {
+public: int n;
+        Uno() { n = 1; }
+        Uno(int v) { n = v;}
+};
 
-    class Uno {
+class Due : public Uno {
+public:
+        int *arr;
+        Due() : Uno() {
+                arr = new int[n];
+        }
 
-    public: int n;
+        Due(int a) : Uno(a) {
+                arr = new int[n];
+        }
 
-            Uno() { n = 1; }
+        ~Due() { delete arr; }
+};
 
-            Uno(int v) { n = v;}
+int main () {
+        Due d(2);
+        Due e; 
 
-    };
+        cout << d.n + e.n;
 
-    class Due : public Uno {
-
-    public:
-
-            int *arr;
-
-            Due() : Uno() {
-
-              arr = new int[n];
-
-            }
-
-            Due(int a) : Uno(a) {
-
-              arr = new int[n];
-
-            }
-
-            ~Due() { delete arr; }
-
-    };
-
-    int main () {
-
-      Due d(2);
-
-      Due e; 
-
-      cout << d.n + e.n;
-
-      return 0;
-
-    }
+        return 0;
+}

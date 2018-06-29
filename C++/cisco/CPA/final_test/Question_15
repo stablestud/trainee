@@ -1,39 +1,25 @@
-    #include <iostream>
+#include <iostream>
+#include <string>
 
-    #include <string>
+using namespace std;
 
-    using namespace std;
+struct S
+{
+        char *p;
+};
 
-    struct S
+class C
+{
+        S s;
+public:
+        C() { s.p = new char; *s.p = 'A'; }
+        void p() { cout << ++(*s.p); }
+};
 
-    {
+int main()
+{
+        C *c = new C();
+        c‑>p();
 
-      char *p;
-
-    };
-
-    class C
-
-    {
-
-      S s;
-
-    public:
-
-      C() { s.p = new char; *s.p = 'A'; }
-
-      void p() { cout << ++(*s.p); }
-
-    };
-
-    int main()
-
-    {
-
-      C *c = new C();
-
-      c‑>p();
-
-      return 0;
-
-    }
+        return 0;
+}

@@ -1,41 +1,25 @@
-    #include <iostream>
+#include <iostream>
 
-    using namespace std;
+using namespace std;
 
-    int k = ‑1;
+int k = ‑1;
 
-    class Class
+class Class
+{
+        public: char *adr;
+        Class() { adr = new char[k]; }
+        ~Class() { delete [] adr; }
+};
 
-    {
+int fun(void)
+{
+        Class object;
+        return 0.5f;
+}
 
-    public: char *adr;
+int main()
+{
+        fun();
 
-            Class() { adr = new char[k]; }
-
-            ~Class() { delete [] adr; }
-
-    };
-
-   
-
-    int fun(void)
-
-    {
-
-            Class object;
-
-            return 0.5f;
-
-    }
-
-   
-
-    int main()
-
-    {
-
-            fun();
-
-            return 0;
-
-    }
+        return 0;
+}

@@ -1,29 +1,20 @@
-    #include <iostream>
+#include <iostream>
 
-    using namespace std;
+using namespace std;
 
-    struct S {
+struct S {
+        int  a;
+        char b;
 
-      int  a;
+        struct {
+                float a;
+                int   b;
+        } c;
+};
 
-      char b;
+int main (int argc, const char *argv[])
+{
+        S s = { 1, 2, 3, 4 };
 
-      struct {
-
-              float a;
-
-              int   b;
-
-      } c;
-
-    };
-
-    int main (int argc, const char *argv[])
-
-    {
-
-      S s = { 1, 2, 3, 4 };
-
-      cout << s.c.a << s.c.b;
-
-    }
+        cout << s.c.a << s.c.b;
+}

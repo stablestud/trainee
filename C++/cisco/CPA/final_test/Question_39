@@ -1,25 +1,16 @@
-    #include <iostream>
+#include <iostream>
 
-    using namespace std;
+using namespace std;
 
-    int main()
+int main()
+{
+        char *abc;
 
-    {
+        abc = new char[26];
+        for(int i = 0; i < 26; i++)
+        abc[i] = 'a' + i;           
 
-            char *abc;
+        cout << *(abc + 2);
 
-       
-
-            abc = new char[26];
-
-            for(int i = 0; i < 26; i++)
-
-                abc[i] = 'a' + i;           
-
-            cout << *(abc + 2);
-
-            return 0;
-
-    }
-
-
+        return 0;
+}

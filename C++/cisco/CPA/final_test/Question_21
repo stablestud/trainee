@@ -1,38 +1,26 @@
+#include <iostream>
 
-    #include <iostream>
+using namespace std;
 
-    using namespace std;
+class Alpha {
+public: char out(){ return 'A'; }
+};
 
-    class Alpha {
+class Beta : public Alpha {
+public: virtual char out(){ return 'B'; }
+};
 
-    public: char out(){ return 'A'; }
+class Gamma : public Beta {
+public: char out(){ return 'G'; }   
+};
 
-    };
+int main()
+{
+        Alpha *a = new Alpha();
+        Alpha *b = new Beta();
+        Alpha *c = new Gamma();
 
-    class Beta : public Alpha {
+        cout << (a‑>out()) << (b‑>out()) << (c‑>out());
 
-    public: virtual char out(){ return 'B'; }
-
-    };
-
-    class Gamma : public Beta {
-
-    public: char out(){ return 'G'; }   
-
-    };
-
-    int main()
-
-    {
-
-            Alpha *a = new Alpha();
-
-            Alpha *b = new Beta();
-
-            Alpha *c = new Gamma();
-
-            cout << (a‑>out()) << (b‑>out()) << (c‑>out());
-
-            return 0;
-
-    }
+        return 0;
+}

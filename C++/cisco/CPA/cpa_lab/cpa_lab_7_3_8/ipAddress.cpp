@@ -4,7 +4,7 @@
 #include <iostream>
 #include "ipAddress.h"
 
-ipAddress& ipAddress::setIp(const char* const ip) throw(std::invalid_argument, std::domain_error)
+ipAddress& ipAddress::setIp(const char* const ip)
 {
         short length = 0;
 
@@ -61,13 +61,13 @@ ipAddress& ipAddress::setIp(const char* const ip) throw(std::invalid_argument, s
         return *this;
 }
 
-ipAddress& ipAddress::operator<< (int b4) throw(std::domain_error)
+ipAddress& ipAddress::operator<< (int b4)
 {
         checkIp(block[3] += b4);
         return *this;
 }
 
-void ipAddress::checkIp(short block) throw(std::domain_error)
+void ipAddress::checkIp(short block)
 {
         if (block > 256 || block < 0)
                 throw std::domain_error("Invalid Block caught!");
@@ -83,7 +83,7 @@ std::ostream& operator<< (std::ostream& stream, ipAddress& ip)
         return stream << ip.print();
 }
 
-ipAddressRange::ipAddressRange(const char* const ip, const int range) throw(std::invalid_argument, std::domain_error)
+ipAddressRange::ipAddressRange(const char* const ip, const int range)
         : range(range)
 {
         if (1U & range) /* When uneven */
@@ -97,6 +97,7 @@ ipAddressRange::ipAddressRange(const char* const ip, const int range) throw(std:
                 case 16:
                 case 32:
                 case 64:
+		case 128:
                         break;
                 default:
                         throw std::domain_error("Invalid range.");

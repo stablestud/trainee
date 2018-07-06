@@ -22,10 +22,10 @@ class ipAddress {
 private:
         short block[4] {};
 public:
-        ipAddress& setIp(const char* const) throw(std::invalid_argument, std::domain_error);
+        ipAddress& setIp(const char* const);
         std::string print(void) const;
-        ipAddress& operator<< (int) throw(std::domain_error);
-        void checkIp(short block) throw(std::domain_error);
+        ipAddress& operator<< (int);
+        void checkIp(short block);
 };
 
 class ipAddressRange : public ipAddress {
@@ -33,7 +33,7 @@ private:
         const int range;
         ipAddress* subnet;
 public:
-        explicit ipAddressRange(const char* const, const int) throw(std::invalid_argument, std::domain_error);
+        explicit ipAddressRange(const char* const, const int);
         void print(void) const;
 };
 

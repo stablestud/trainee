@@ -10,4 +10,11 @@ public:
 	ipAddress(const char* const s);
 };
 
+class ipHeader {
+private:
+	ipAddress* source, *destination;
+public:
+	ipHeader(const char* const, const char* const);
+};
+
 #endif /* IPADDRESS_H */

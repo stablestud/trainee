@@ -3,14 +3,28 @@
 
 #include "ipAddress.h"
 
+const char* iterate(std::string);
+
 int main(void)
 {
-	try {
-		ipAddress ip1("1.1.1.1");
-		ipAddress ip2("111.111.111.111");
-		ipAddress ip3("255.255.2l.251");
-		ipAddress ip4(".12.12.12");
-	} catch (std::exception &exc) {
-		std::cout << exc.what() << std::endl;
-	}
+	std::string source, destination;
+	std::cin >> source >> destination;
+	ipHeader ipH1(iterate(source), iterate(destination));
+	std::cin >> source >> destination;
+	ipHeader ipH2(iterate(source), iterate(destination));
+}
+
+const char* iterate(std::string s)
+{
+	while (s[s.length() - 1] == ',')
+		s.erase(s.length() - 1);
+
+	char* consti = new char[s.length() + 1];
+
+	for (unsigned i = 0; i < s.length(); i++)
+		consti[i] = s[i];
+
+	consti[s.length()] = '\0';
+	
+	return consti;
 }

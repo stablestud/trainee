@@ -1,0 +1,31 @@
+CPA: Programming
+Essentials in C++
+
+C++ INSTITUTE - PROGRAM YOUR FUTURE
+
+Lab 8.1.1 Operators: iostream and operators
+Objectives
+Familiarize the student with:
+writing operator code;
+writing iostream operators.
+
+Scenario
+Write a container class that holds the values of simple matrices (with a 2x2 size). Add operators (i.e. << and >>) to print this matrix on
+the screen and get the values of this matrix. Test this class with different values. Use only a constructor to create a matrix and use
+operators to get the values from the user and to print the matrices to the user.
+
+Example input
+3
+4
+5
+6
+
+Example output
+3 4
+5 6
+
+© 2017 C++ Institute. All rights reserved. Last updated: March 07, 2017 | www.cppinstitute.org
+
+Page 1 of 1
+
+

@@ -36,8 +36,8 @@ int main()
 			std::cout << iwbe.what() << std::endl;
 		}
 
-		std::cout << "value1 = " << value1.getValue() << std::endl;
-		std::cout << "value2 = " << value2.getValue() << std::endl;
+		std::cout << "value1 = " << (int)value1 << std::endl;
+		std::cout << "value2 = " << value2 << std::endl;
 
 	} catch ( IntWithBoundExcep& iwbe ) {
 		std::cout << iwbe.what() << std::endl;

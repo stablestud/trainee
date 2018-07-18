@@ -46,6 +46,7 @@ public:
 	twb& operator-= ( IntWithBoundaries& ) throw ( IntWithBoundExcep );
 	twb& operator*= ( IntWithBoundaries& ) throw ( IntWithBoundExcep );
 	twb& operator/= ( IntWithBoundaries& ) throw ( IntWithBoundExcep );
+	operator int();
 };
 
 #endif /* INTWITHBOUNDARIES_H */

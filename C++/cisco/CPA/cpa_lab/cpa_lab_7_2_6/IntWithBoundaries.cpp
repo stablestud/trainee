@@ -165,3 +165,11 @@ twb& IntWithBoundaries::operator/= ( IntWithBoundaries& v ) throw ( IntWithBound
 	operator/= ( v.getValue() );
 	return *this;
 }
+
+#include <iostream>
+
+IntWithBoundaries::operator int()
+{
+	std::cout << "Converted to INT. ";
+	return value;
+}

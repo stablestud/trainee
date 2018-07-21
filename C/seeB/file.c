@@ -88,7 +88,7 @@ int deQueFile(void)
 int printFile(F *fstruct)
 {
 	char *buffer = malloc(sizeof(char) * width);
-	int count;
+	int count, byte = 0;
 	errno = 0;
 
 	do {
@@ -98,11 +98,17 @@ int printFile(F *fstruct)
 			fprintf(stderr, "seeb: %s: %s\n", fstruct->name,
 				strerror(errno));
 			return 1;
-		} else {
+		} else if (count) {
+			printf("%06d: ", byte);
 			for (int i = 0; i < count; i++)
 				printf("%02X ", buffer[i]);
-			if (!errno && count)
+			printf("\t");
+			for (int i = 0; i < count; i++)
+				printf("%c", (buffer[i] > 31 ? buffer[i] : '.'));
+			if (!errno)
 				printf("\n");
+
+			byte += width;
 		}
 	} while (count);
 

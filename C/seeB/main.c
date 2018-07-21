@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
 		deQueFile();
 		--cfiles;
 
-		if (cfiles - i > 0)
+		if (cfiles > 0)
 			puts("");
 	}
 

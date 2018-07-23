@@ -100,11 +100,15 @@ int printFile(F *fstruct)
 			return 1;
 		} else if (count) {
 			printf("%06d: ", byte);
+
 			for (int i = 0; i < count; i++)
-				printf("%02X ", buffer[i]);
+				printf("%02X ", (unsigned char)buffer[i]);
+
 			printf("\t");
+
 			for (int i = 0; i < count; i++)
-				printf("%c", (buffer[i] > 31 ? buffer[i] : '.'));
+				printf("%c", (buffer[i] > 31 ? (buffer[i] < 126 ? buffer[i] : '.') : '.'));
+
 			if (!errno)
 				printf("\n");
 

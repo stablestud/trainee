@@ -5,28 +5,24 @@
 #include <errno.h>
 
 
-int main(int argc, char* argv[])
+double calc_circle_area(double radius, double unused1)
 {
-	if (argc != 2) {
-		fputs("I require exactly one filename"
-		"as parameter where I should write to.\n", stderr);
-		return 1;
-	}
+	return(3.14*radius*radius);
+}
 
-	FILE* outp = fopen(argv[1], "wb");
+calc_any_area(double (*pFunc)(double, double))
+{
+	double result = (*pFunc)(12.4, 0);     // call using function pointer
+	return(result);
+}
 
-	if (NULL == outp) {
-		fprintf(stderr, "sandbox: %s: %s\n", argv[1], strerror(errno));
-		return 1;
-	}
+void calcArea()
+{
+	double (*calc_area)(double, double)=&calc_circle_area;
+	calc_any_area(&calc_area);
+}
 
-	fprintf(outp, "%s %s %s", __TIME__, argv[1], "on"__DATE__);
-
-	char* input = malloc(sizeof(char) * 256);
-	while (!feof(stdin)) {
-		input[0] = '\0';
-		fgets(input, 256, stdin);
-		fwrite(input, 1, strlen(input), outp);
-	}
-	fclose(outp);
+int main(void)
+{
+	return 0;
 }

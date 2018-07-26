@@ -17,8 +17,10 @@ int main(int argc, char *argv[])
 	else if (returnv)
 		return 1;
 
-	if (!files)
+	if (!files) {
+		fputs("No files to open, exiting.\n", stderr);
 		return 1;
+	}
 
 	for (int i = 0, cfiles = files; i < files; i++) {
 		if (files > 1)

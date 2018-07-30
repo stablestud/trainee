@@ -4,4 +4,5 @@ int main(int argc, char** argv)
 {
 	storage = argv[0];
 	func(storage);
+	call();
 }

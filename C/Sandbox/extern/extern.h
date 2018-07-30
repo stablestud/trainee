@@ -10,5 +10,7 @@
 // rendering the use of the "extern" keyword useless
 extern void func(char*);
 extern char* storage;
+extern char array[];
+extern void call( void );
 
 #endif /* EXTERN_H */

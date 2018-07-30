@@ -24,6 +24,12 @@
 
 #define P(X) PRINT(X)
 
+#if __STDC_NO_VLA__
+#	warning "No variable length arrays."
+#else
+#	warning "Variable length arrays allowed."
+#endif
+
 int main(int argc, char* argv[])
 {
 	P(COMPL)

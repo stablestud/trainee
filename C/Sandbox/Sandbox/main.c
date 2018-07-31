@@ -8,11 +8,10 @@
 #include <limits.h>
 #include <stdalign.h>
 
-int main(void)
+int main( void )
 {
-	int iVar = 5;
-	int aVar = iVar + iVar++;
-	printf("%d\n", aVar);
+	char **strings = (void *)0x122311112;
 
-	return 0;
+	*strings = "Hello";
+	*(strings + 1) = "World";
 }

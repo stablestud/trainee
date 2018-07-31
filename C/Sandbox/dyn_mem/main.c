@@ -1,3 +1,4 @@
+#include <stdalign.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <limits.h>
@@ -7,20 +8,27 @@
 int main( int agrc, char *argv[] )
 {
 	int *mem = malloc( sizeof( int ));
+
 	/* calloc( count, size ) */
 	int *cal = calloc( 2, sizeof( int ));
 
-	int *new = malloc( sizeof( int ));
+	int *new = realloc( NULL, sizeof( int ));
+
+	/* aligned_alloc( alignment, size )
+	 * C11, in my testing it does not obbey the setting, probably because I'm reading
+	 * wrongly the alignment of the type */
+	int *align = aligned_alloc( 8, sizeof( int )); 
 
 	*mem = INT_MAX;
 	*(long *)cal = LONG_MAX;
 	*cal = INT_MAX;
 	*new = INT_MAX;
 
-	printf("*mem: %d\n", *mem );
-	printf("*cal: %d\n", *cal );
-	printf("*(long *)cal: %ld\n", *(long *)cal );
-	printf("*new: %p: %d\n", new, *new );
+	printf("*mem: %d, alignof: %zu\n", *mem, alignof( *mem ));
+	printf("*cal: %d, alignof: %zu\n", *cal, alignof( *cal ));
+	printf("*(long *)cal: %ld, alignof: %zu\n", *(long *)cal, alignof( *(long *)cal ));
+	printf("*new: %p: %d, alignof: %zu\n", new, *new, alignof( *new ));
+	printf("*align: %d, alignof: %zu\n", *align, alignof( *align ));
 
 	int *tmp = realloc( new, 28 ); 
 

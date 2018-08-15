@@ -105,31 +105,29 @@ print_newline:
 
 print_uint:
         push    rbx
+        mov     rbx, rsp
         mov     rax, rdi                        ; load quadword value to convert
         mov     rsi, 1D                         ; count char stored in r10
         xor     rcx, rcx                        ; count characters to print
         mov     r9,  0x30_30_30_30__30_30_30_30 ; converting bytes to ASCII
         xor     r10, r10                        ; temp storage for 8 characters
         mov     r11, 10D                        ; divisor
-        mov     rbx, rsp
-        sub     rsp, 16D
 .loop:
         shl     r10, 8D
         xor     rdx, rdx
         div     r11
         or      byte r10b, dl
-        inc     rcx
-        test    rax, rax
-        jz      .print
         shl     byte sil, 1D
-        mov     rdi, 20
-        jc      .empty
+        jc      .flush
+        inc     rcx
         jmp     .loop
-.empty:
+.flush:
         or      r10, r9
         push    r10
-        add     rsp, 16D
         mov     rsi, 1D
+        xor     r10, r10
+        test    rax, rax
+        jz      .print
         jmp     .loop
 .print:
         or      r10, r9
@@ -137,7 +135,8 @@ print_uint:
         mov     rax, 1D
         mov     rdx, rcx
         mov     rdi, 1D
-        lea     rsi, [rbx - 24D]
+        lea     rsi, [rbx]
+        sub     rsi, rdx
         syscall
         lea     rsp, [rbx]
         pop     rbx
@@ -146,7 +145,7 @@ print_uint:
 
 global _start
 _start:
-        mov     rdi, 0xFF_FF_FF_FF__FF_FF_FF_FF
+        mov     rdi, 0xFF_FF_FF_FF__;FF_FF_FF_FF
         call    print_uint
         call    print_newline
         call    exit

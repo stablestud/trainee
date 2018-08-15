@@ -1,6 +1,4 @@
-Function pointers
 Enums
-Unions
 Competitive programming
 Copying constructors that initializes variables like a subconstructer (e.g
 Class ( src &x ) : variables ( x ) {}

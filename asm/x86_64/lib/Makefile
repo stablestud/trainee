@@ -1,8 +1,8 @@
 all:	uint int
 uint:	lib.inc
-	nasm -felf64 -o lib.o lib.inc -DPRINT_UINT
-	ld -o print_uint lib.o
+	nasm -felf64 -o lib.o lib.inc -DSTRING_TO_UINT
+	ld -o string_to_uint lib.o
 
 int:	lib.inc
-	nasm -felf64 -o lib.o lib.inc -DPRINT_INT
-	ld -o print_int lib.o
+	nasm -felf64 -o lib.o lib.inc -DSTRING_TO_INT
+	ld -o string_to_int lib.o

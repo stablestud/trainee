@@ -328,45 +328,55 @@ string_to_uint:
 ;       rax - signed integer value
 
 string_to_int:
-        xor     rax, rax
-        mov     rdx, [rdi]
-        cmp     dl, 0x2D                ; is negative (-)?
-        jz      .sav_neg
-        cmp     dl, 0x30                ; check whether character is valid
-        jb      .abort
-        cmp     dl, 0x39
-        ja      .abort
-        add     al, dl
-.pre_loop:
         xor     r9, r9
-        mov     rcx, 1D
+        xor     rax, rax
+        mov     qword r8, [rdi]
+        cmp     byte r8b, 0x2D                  ; is negative (-)?
+        jz      .sav_neg
+        cmp     byte r8b, 0x30                  ; check whether character is valid
+        jb      .abort
+        cmp     byte r8b, 0x39
+        ja      .abort
+        xor     byte r8b, 0x30
+        add     byte al, r8b
+.pre_loop:
+        mov     r10, 1D
         mov     r11, 10D
-        shr     rdx, 8D
+        xor     rsi, rsi
+        shr     r8, 8D
 .loop:
-        cmp     dl, 0x30                ; check whether character is valid
-        jb      .ret
-        cmp     dl, 0x39
-        ja      .ret
+        cmp     r8b, 0x30                       ; check whether character is valid
+        jb      .app_neg
+        cmp     r8b, 0x39
+        ja      .app_neg
         mul     r11
-        xor     dl, 0x30
-        mov     sil, dl
+        xor     byte r8b, 0x30
+        mov     byte sil, r8b
         add     rax, rsi
         inc     r10
         cmp     r10, 8D
-        jz      .flush
-        shr     rdx, 8D
+        jae     .flush
+        shr     r8, 8D
         jmp     .loop
 .flush:
         xor     r10, r10
-        add     rdi, 8D
+        lea     rdi, [rdi + 8D]
+        mov     qword r8, [rdi]
         jmp     .loop
-.ret:
-        xor     rax, r9
-        ret
 .sav_neg:
-        mov     r9, -1D
+        not     r9
         jmp     .pre_loop
+.app_neg:
+        test    r9, r9
+        jns     .ret
+        neg     rax
+        js      .ret
+        jz      .ret
+        dec     rax
+.ret:
+        ret
 .abort:
+        mov     rax, -1D
         ret
         
 ; -[calliso]-
@@ -376,6 +386,7 @@ string_to_int:
 ;       this function
 ; modifies:
 ;       rax - return value of called function, if modified by function
+;       It resets other modification made by the function 
 ; returns:
 ;       rax - return value of called function, if modified by function
 
@@ -415,15 +426,30 @@ calliso:
         pop     rbx
         ret
 
-
-chgd:   db 'changed', 0x0A, 0D
-nchgd:  db 'not changed', 0x0A, 0D
-nneg:   db 'not negative', 0x0A, 0D
-neg:    db 'negative', 0x0A, 0D
-
-digits: db '0123456789', 0D
-
 global _start
 
+digits: db      '-18446744073709551615', 0D
+
 _start:
+        mov     rcx, 0xFF_FF_FF
+.loop:       
+        push    rcx
         mov     rdi, digits
+%ifdef STRING_TO_UINT
+        call    string_to_uint
+%elifdef STRING_TO_INT
+        call    string_to_int
+%else
+        mov     rdi, 1D
+        jmp     exit
+%endif
+        pop     rcx
+        loop    .loop
+        mov     rdi, rax
+%ifdef STRING_TO_UINT
+        call    print_uint
+%elifdef STRING_TO_INT
+        call    print_int
+%endif
+        mov     rdi, 0D
+        jmp     exit

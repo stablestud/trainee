@@ -379,6 +379,63 @@ string_to_int:
         mov     rax, -1D
         ret
         
+
+; -[string_equals]-
+; Compares two strings, if equal return 1, if not 0
+; takes:
+;	rdi - address to first string
+;	rsi - address to second string
+; modifies:
+;	rax, rdx, rdi, rsi, r8, r9
+; returns:
+;	rax - 1 if strings are equal, 0 if not
+
+string_equals:
+	xor	rdx, rdx
+	mov	r8, [rdi]
+	mov	r9, [rsi]
+.loop:
+	cmp	r8b, r9b
+	jne	.ret_false
+	cmp	r8b, 0D
+	je	.ret_true
+	inc	rdx
+	cmp	rdx, 8D
+	jae	.fetch
+	shr	r8, 8D
+	shr	r9, 8D
+	jmp	.loop
+.fetch:
+	lea	rdi, [rdi + 8D]
+	lea	rsi, [rsi + 8D]
+	mov	r8, [rdi]
+	mov	r9, [rsi]
+	xor	rdx, rdx
+	jmp	.loop
+.ret_true:
+	mov	rax, 1D
+	ret
+.ret_false:
+	xor	rax, rax
+	ret
+
+
+; -[string_copy]-
+; Copies string to destination
+; takes:
+;	rdi - address of string
+;	rsi - address of buffer (destination)
+;	rdx - length of buffer
+; modifies:
+; 	rax
+; returns:
+;	rax - buffers address if string can by copied, 0 otherwise
+
+string_copy:
+	; Determine length of the string, evaluate if it can be copied
+	ret
+
+
 ; -[calliso]-
 ; Call isolator, makes a call to the address pushed previously onto the stack
 ; takes:
@@ -428,28 +485,14 @@ calliso:
 
 global _start
 
-digits: db      '-18446744073709551615', 0D
+msg1:	db 'Password', 0D
+msg2:	db 'Password', 0D
 
 _start:
-        mov     rcx, 0xFF_FF_FF
-.loop:       
-        push    rcx
-        mov     rdi, digits
-%ifdef STRING_TO_UINT
-        call    string_to_uint
-%elifdef STRING_TO_INT
-        call    string_to_int
-%else
-        mov     rdi, 1D
-        jmp     exit
-%endif
-        pop     rcx
-        loop    .loop
-        mov     rdi, rax
-%ifdef STRING_TO_UINT
-        call    print_uint
-%elifdef STRING_TO_INT
-        call    print_int
-%endif
-        mov     rdi, 0D
-        jmp     exit
+	mov	rdi, msg1
+	mov	rsi, msg2
+	call	string_equals
+	mov	rdi, rax
+	call	print_uint
+	xor	rdi, rdi
+	call	exit

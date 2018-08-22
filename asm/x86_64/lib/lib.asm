@@ -433,6 +433,18 @@ string_equals:
 
 string_copy:
 	; Determine length of the string, evaluate if it can be copied
+	call	string_length
+	cmp	rax, rdx
+	ja	.ret_dnf
+	mov	r8, rax
+	mov	r9, [rdi]
+	mov	r10, [rsi]
+
+.ret:
+	mov	rax, rsi
+	ret
+.ret_dnf:
+	xor	rax, rax
 	ret
 
 

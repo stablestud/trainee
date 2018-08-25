@@ -427,7 +427,7 @@ string_equals:
 ;	rsi - address of buffer (destination)
 ;	rdx - length of buffer
 ; modifies:
-; 	rax
+; 	rax, rcx, rsi, rdi, r9, r10, r8
 ; returns:
 ;	rax - buffers address if string can by copied, 0 otherwise
 
@@ -437,40 +437,51 @@ string_equals:
 ; ra  - string length
 ; r9  - temp storage of string
 ; r10 - temp storage of buffer
+; r8  - temp temp buffer
 ; rcx - how many in current buffer, if equal of above 8 flush, else shr buffer 8D
 
 string_copy:
 	push	rbx
-	; Determine length of the string, evaluate if it can be copied
+	mov	rbx, rsi
 	call	string_length
-	xor	rcx, rcx
-	dec	rdx
+        inc     rax
 	cmp	rax, rdx
 	ja	.ret_dnf
-	mov	rbx, rsi
-.loop:
 	cmp	rax, 8D
-	jb	.loop_rest
-	mov	[rsi], [rdi]
+	jb	.pre_rest
+.loop:
+        mov     r9, [rdi]
+        test    rax, rax
+        jz      .ret
+	cmp	rax, 8D
+	jb	.rest
+	mov	[rsi], r9
 	lea	rdi, [rdi + 8D]
 	lea	rsi, [rsi + 8D]
-	sub	rcx, 8D
+	sub	rax, 8D
 	jmp	.loop
+.pre_rest:
+        mov     r9, [rdi]
 .rest:
-	mov	r9, [rdi]
 	xor	r10, r10
-.loop_rest:
 	mov	r10b, r9b
 	test	r9b, r9b
 	jz	.ret
-	inc	rcx
-	cmp	rcx, 8D
-	jae	.flush
+        mov     rcx, 8D
 	shr	r9, 8D
-	shr	r10, 8D
-	jmp	.loop
+.loop_rest:
+        xor     r8, r8
+	mov	r8b, r9b
+        shl     r8, cl
+        or      r10, r8
+	test	r9b, r9b
+	jz	.ret_rest
+        shl     rcx, 1D
+	shr	r9, 8D
+	jmp	.loop_rest
+.ret_rest:
+	mov	[rsi], r10
 .ret:
-	push	[rsi], r10
 	mov	rax, rbx
 	pop	rbx
 	ret
@@ -529,14 +540,32 @@ calliso:
 
 global _start
 
+msg0:   db 'jkl'
 msg1:	db 'Password', 0D
-msg2:	db 'Password', 0D
+msg2:   db '123456789876543210', 0D
+msg3:   db 'string_copy returned zero!', 0xA, 0D
+msg4:   db 'Early exit', 0xA, 0D
+msg5:   db 'Not zero', 0xA, 0D
+msg6:   db 'Zero', 0xA, 0D
+msg7:   db 'Below', 0xA, 0D
 
 _start:
-	mov	rdi, msg1
-	mov	rsi, msg2
-	call	string_equals
-	mov	rdi, rax
-	call	print_uint
-	xor	rdi, rdi
-	call	exit
+        xor     rax, rax
+        push    rax
+        push    rax
+        push    rax
+        push    rax
+        lea     rsi, [rsp]
+        mov     rdx, 32D
+        lea     rdi, [msg7]
+        call    string_copy
+        test     rax, rax
+        jnz     .nz
+        mov     rdi, msg3
+        call    print_string
+        mov     rdi, 1D
+        call    exit
+.nz:
+        mov     rdi, rax
+        call    print_string
+        call    exit

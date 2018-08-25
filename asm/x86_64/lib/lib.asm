@@ -431,20 +431,52 @@ string_equals:
 ; returns:
 ;	rax - buffers address if string can by copied, 0 otherwise
 
+; rdi - address string
+; rsi - address buffer
+; rdx - max buffer length
+; ra  - string length
+; r9  - temp storage of string
+; r10 - temp storage of buffer
+; rcx - how many in current buffer, if equal of above 8 flush, else shr buffer 8D
+
 string_copy:
+	push	rbx
 	; Determine length of the string, evaluate if it can be copied
 	call	string_length
+	xor	rcx, rcx
+	dec	rdx
 	cmp	rax, rdx
 	ja	.ret_dnf
-	mov	r8, rax
+	mov	rbx, rsi
+.loop:
+	cmp	rax, 8D
+	jb	.loop_rest
+	mov	[rsi], [rdi]
+	lea	rdi, [rdi + 8D]
+	lea	rsi, [rsi + 8D]
+	sub	rcx, 8D
+	jmp	.loop
+.rest:
 	mov	r9, [rdi]
-	mov	r10, [rsi]
-
+	xor	r10, r10
+.loop_rest:
+	mov	r10b, r9b
+	test	r9b, r9b
+	jz	.ret
+	inc	rcx
+	cmp	rcx, 8D
+	jae	.flush
+	shr	r9, 8D
+	shr	r10, 8D
+	jmp	.loop
 .ret:
-	mov	rax, rsi
+	push	[rsi], r10
+	mov	rax, rbx
+	pop	rbx
 	ret
 .ret_dnf:
 	xor	rax, rax
+	pop	rbx
 	ret
 
 

@@ -447,10 +447,10 @@ string_copy:
         inc     rax
 	cmp	rax, rdx
 	ja	.ret_dnf
-	cmp	rax, 8D
-	jb	.pre_rest
-.loop:
         mov     r9, [rdi]
+	cmp	rax, 8D
+	jb	.rest
+.loop:
         test    rax, rax
         jz      .ret
 	cmp	rax, 8D
@@ -459,27 +459,29 @@ string_copy:
 	lea	rdi, [rdi + 8D]
 	lea	rsi, [rsi + 8D]
 	sub	rax, 8D
-	jmp	.loop
-.pre_rest:
         mov     r9, [rdi]
+	jmp	.loop
 .rest:
 	xor	r10, r10
 	mov	r10b, r9b
-	test	r9b, r9b
-	jz	.ret
         mov     rcx, 8D
-	shr	r9, 8D
+	test	r9b, r9b
+	jz	.ret_rest
 .loop_rest:
+	shr	r9, 8D
         xor     r8, r8
 	mov	r8b, r9b
         shl     r8, cl
         or      r10, r8
+        add     rcx, 8D
 	test	r9b, r9b
 	jz	.ret_rest
-        shl     rcx, 1D
-	shr	r9, 8D
 	jmp	.loop_rest
 .ret_rest:
+        mov     rax, -1D
+        shl     rax, cl
+        and     rax, [rsi]
+        or      r10, rax
 	mov	[rsi], r10
 .ret:
 	mov	rax, rbx
@@ -540,32 +542,6 @@ calliso:
 
 global _start
 
-msg0:   db 'jkl'
-msg1:	db 'Password', 0D
-msg2:   db '123456789876543210', 0D
-msg3:   db 'string_copy returned zero!', 0xA, 0D
-msg4:   db 'Early exit', 0xA, 0D
-msg5:   db 'Not zero', 0xA, 0D
-msg6:   db 'Zero', 0xA, 0D
-msg7:   db 'Below', 0xA, 0D
-
 _start:
-        xor     rax, rax
-        push    rax
-        push    rax
-        push    rax
-        push    rax
-        lea     rsi, [rsp]
-        mov     rdx, 32D
-        lea     rdi, [msg7]
-        call    string_copy
-        test     rax, rax
-        jnz     .nz
-        mov     rdi, msg3
-        call    print_string
-        mov     rdi, 1D
-        call    exit
-.nz:
-        mov     rdi, rax
-        call    print_string
+        xor     rdi, rdi
         call    exit

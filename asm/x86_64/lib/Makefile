@@ -1,8 +1,8 @@
-all:	uint int
-uint:	lib.asm
-	nasm -felf64 -o lib.o lib.asm -DSTRING_TO_UINT
-	ld -o string_to_uint lib.o
+all:	own ref
+own:	lib.asm
+	nasm -felf64 -o lib.o lib.asm -DOWN
+	ld -o own_string_copy lib.o
 
-int:	lib.asm
-	nasm -felf64 -o lib.o lib.asm -DSTRING_TO_INT
-	ld -o string_to_int lib.o
+ref:	lib.asm
+	nasm -felf64 -o lib.o lib.asm -DREF
+	ld -o ref_string_copy lib.o

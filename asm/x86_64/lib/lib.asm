@@ -434,7 +434,7 @@ string_equals:
 ; rdi - address string
 ; rsi - address buffer
 ; rdx - max buffer length
-; ra  - string length
+; rax - string length
 ; r9  - temp storage of string
 ; r10 - temp storage of buffer
 ; r8  - temp temp buffer
@@ -443,13 +443,15 @@ string_equals:
 string_copy:
 	push	rbx
 	mov	rbx, rsi
-	call	string_length
-        inc     rax
-	cmp	rax, rdx
-	ja	.ret_dnf
+
+	mov	rax, 25D ;
+	;call	string_length
+        ;inc     rax
+	;cmp	rax, rdx
+	;ja	.ret_dnf
         mov     r9, [rdi]
-	cmp	rax, 8D
-	jb	.rest
+	;cmp	rax, 8D
+	;jb	.rest
 .loop:
         test    rax, rax
         jz      .ret
@@ -542,6 +544,80 @@ calliso:
 
 global _start
 
+msg0:	db	'This is a test string...', 0D
+
 _start:
-        xor     rdi, rdi
-        call    exit
+	mov	rcx, 0xFFFFFFF
+	xor	rax, rax
+	push	rax
+	push	rax
+	push	rax
+	push	rsp
+	mov	rdx, 32D
+.loop:
+	pop	rsi
+	push	rsi
+	mov	rdi, msg0
+	push	rcx
+	push	rdx
+%ifdef OWN
+	call	string_copy
+%elifdef REF
+	call	ref_string_copy
+%else
+	mod	rdi, 1D
+	jmp	_exit
+%endif
+	pop	rdx
+	pop	rcx
+	loop	.loop
+
+	mov	rdi, rax
+	call	print_string
+	xor	rdi, rdi
+	jmp	_exit
+
+
+; REFERENCE FUNCTIONS FOR PERFORMANCE TESTING
+
+; ref_string_length
+ref_string_length:
+	xor rax, rax
+.loop:
+	cmp byte [rdi+rax], 0D
+	je .end 
+	inc rax
+	jmp .loop 
+.end:
+	ret
+
+; ref_string_copy
+ref_string_copy:
+	;push rdi
+	;push rsi
+	;push rdx
+	;call string_length
+	;pop rdx
+	;pop rsi
+	;pop rdi
+	mov	rax, 25D ;
+
+	;cmp rax, rdx
+	;jae .too_long  ; we also need to store null-terminator
+
+	push rsi 
+
+	.loop: 
+	mov dl, byte[rdi]
+	mov byte[rsi], dl
+	inc rdi
+	inc rsi
+	test dl, dl
+	jnz .loop 
+
+	pop rax 
+	ret
+
+	.too_long:
+	xor rax, rax
+	ret

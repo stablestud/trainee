@@ -10,8 +10,9 @@ section .text
 ; returns:
 ;       nothing
 
-%define exit _exit
 global _exit
+
+%define exit _exit
 
 _exit:
         mov     eax, 60D
@@ -26,14 +27,17 @@ _exit:
 ;       rax
 ; returns:
 ;       rax - size of the string counted without \0 sign
-; TODO: Improve speed by loading the string into reg
+; TODO: 
+;	Improve speed by loading the string into reg
+
+%define strlen string_length
 
 string_length:
-        xor     rax, rax
+        xor     eax, eax
 .loop:
         cmp     byte [rdi + rax], 0D
         jz      .ret
-        inc     rax
+        inc     eax
         jmp     .loop
 .ret:
         ret
@@ -47,6 +51,8 @@ string_length:
 ;       rax, rdx, rsi, rdi, rcx, r11
 ; returns:
 ;       nothing
+
+%define putc print_char
 
 print_char:
         mov     eax, 1D
@@ -68,6 +74,8 @@ print_char:
 ; returns:
 ;       nothing
 
+%define puts print_string
+
 print_string:
         call    string_length
         lea     rsi, [rdi]
@@ -86,6 +94,8 @@ print_string:
 ;       rax, rdx, rdi, rsi, rcx, r11
 ; returns:
 ;       nothing
+
+%define putln print_newline
 
 print_newline:
         mov     eax, 1D
@@ -203,6 +213,8 @@ print_int:
 ; returns:
 ;       rax - character read from stdin
 
+%define getc read_char
+
 read_char:
         xor     rax, rax
         xor     rdi, rdi
@@ -223,7 +235,10 @@ read_char:
 ;       rax, rdx, rdi, rsi, rcx, r11
 ; returns:
 ;       rax - returns buffer starting address
-; TODO: Change rsi holds the size of the buffer
+; TODO:
+;	Change rsi holds the size of the buffer
+
+%define gets read_string
 
 read_string:
         mov     rdx, rsi
@@ -253,7 +268,8 @@ read_string:
 ;       rax, rdx, rdi, rsi, rcx, r8, r9, r10, r11
 ; returns:
 ;       rax - buffer starting address, or 0 if failed
-; TODO: Improve speed by saving characters into qword reg and if full
+; TODO: 
+;	Improve speed by saving characters into qword reg and if full
 ;       then push to stack, change rsi holds the size of buffer
 
 read_word:
@@ -295,26 +311,31 @@ read_word:
 ;       rax, rdx, rcx, rdi, rsi, r9, r10, r11
 ; returns:
 ;       rax - unsigned integer value
-; TODO: increase speed by reading qword into reg and evaluate rax from reg
+; TODO:
+;	increase speed by reading qword into reg and evaluate rax from reg
 ;       instead from memory, make failsafe by checking if string
 ;       consists only out of digits abort if not,
 ;       do not get the string length instead check if character is valid
 
 string_to_uint:
         call    string_length
+	mov	rsi, rax
+	test	rax, rax
+	jz	.ret
         mov     rcx, rax
         xor     rax, rax
         xor     r9, r9
         mov     r10, 10D
 .loop:
-        lea     rsi, [rdi + r9] ; lea rsi, [rsi + 1] is better
         mul     r10
         xor     r11, r11
-        mov     r11b, [rsi]
-        sub     r11, 0x30       ; how about and or xor?
+        mov     r11b, [rdi]
+        xor     r11, 0x30       ; how about and or xor?
         add     rax, r11
-        inc     r9
+        lea     rdi, [rdi + 1]
         loop    .loop
+.ret:
+	mov	rdx, rsi
         ret
 
 
@@ -323,13 +344,14 @@ string_to_uint:
 ; takes:
 ;       rdi - string address to read from, must be terminated with \0
 ; modifies:
-;       rax
+;       rax, rcx, rdx, rsi, rdi, r8, r9, r10, r11
 ; returns:
 ;       rax - signed integer value
 
 string_to_int:
         xor     r9, r9
         xor     rax, rax
+	xor	rcx, rcx
         mov     qword r8, [rdi]
         cmp     byte r8b, 0x2D                  ; is negative (-)?
         jz      .sav_neg
@@ -344,6 +366,7 @@ string_to_int:
         mov     r11, 10D
         xor     rsi, rsi
         shr     r8, 8D
+	inc	rcx
 .loop:
         cmp     r8b, 0x30                       ; check whether character is valid
         jb      .app_neg
@@ -353,6 +376,7 @@ string_to_int:
         xor     byte r8b, 0x30
         mov     byte sil, r8b
         add     rax, rsi
+	inc	rcx
         inc     r10
         cmp     r10, 8D
         jae     .flush
@@ -374,9 +398,11 @@ string_to_int:
         jz      .ret
         dec     rax
 .ret:
+	mov	rdx, rcx
         ret
 .abort:
         mov     rax, -1D
+	mov	rdx, rcx
         ret
         
 
@@ -541,6 +567,7 @@ calliso:
         pop     rcx
         pop     rbx
         ret
+
 
 global _start
 

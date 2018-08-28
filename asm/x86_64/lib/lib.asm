@@ -277,12 +277,12 @@ read_word:
         mov     r9, rsi
 .ignspace:
         call    read_char
+        xor     r10, r10
         test    rax, rax
         jz      .ret_zero
         cmp     rax, 0x20
         jbe     .ignspace
         mov     rcx, r9
-        xor     r10, r10
 .loop:
         lea     rdx, [r8 + r10]
         mov     byte [rdx], al
@@ -297,9 +297,11 @@ read_word:
         lea     rdx, [r8 + r10]
         mov     byte [rdx], 0D
         mov     rax, r8
+	mov	rdx, r10
         ret
 .ret_zero:
         mov     rax, 0D
+	mov	rdx, r10
         ret
 
 
@@ -311,11 +313,14 @@ read_word:
 ;       rax, rdx, rcx, rdi, rsi, r9, r10, r11
 ; returns:
 ;       rax - unsigned integer value
+;	rdx - number of characters processed
 ; TODO:
 ;	increase speed by reading qword into reg and evaluate rax from reg
 ;       instead from memory, make failsafe by checking if string
 ;       consists only out of digits abort if not,
 ;       do not get the string length instead check if character is valid
+
+%define parse_uint string_to_uint
 
 string_to_uint:
         call    string_length
@@ -347,6 +352,9 @@ string_to_uint:
 ;       rax, rcx, rdx, rsi, rdi, r8, r9, r10, r11
 ; returns:
 ;       rax - signed integer value
+;	rdx - number of characters processed
+
+%define parse_int string_to_int
 
 string_to_int:
         xor     r9, r9
@@ -416,6 +424,8 @@ string_to_int:
 ; returns:
 ;	rax - 1 if strings are equal, 0 if not
 
+%define strcmp string_equals
+
 string_equals:
 	xor	rdx, rdx
 	mov	r8, [rdi]
@@ -465,6 +475,8 @@ string_equals:
 ; r10 - temp storage of buffer
 ; r8  - temp temp buffer
 ; rcx - how many in current buffer, if equal of above 8 flush, else shr buffer 8D
+
+%define strncpy string_copy
 
 string_copy:
 	push	rbx
@@ -574,6 +586,15 @@ global _start
 msg0:	db	'This is a test string...', 0D
 
 _start:
+	xor rax, rax
+	push rax
+	mov rdi, rsp
+	mov rsi, 8
+	call read_string
+	mov rdi, rax
+	call print_string
+	jmp exit
+;
 	mov	rcx, 0xFFFFFFF
 	xor	rax, rax
 	push	rax

@@ -5,12 +5,14 @@ int main(int argc, char *argv[])
 {
 	char buffer[32] = {};
 
-	for (unsigned i = 0xFFFFFFF; i > 0; i--) {
-		strncpy(buffer, argv[1], 32);
-		__asm__ __volatile__("");
+	for (volatile unsigned i = 0xFFFFFFF; i > 0; i--) {
+			//strncpy(buffer, argv[1], 32);
+			buffer[0] = strlen(argv[1]);
+			__asm__ __volatile__("");
 	}
 
-	puts(buffer);
+	//puts(buffer);
+	printf("%d", buffer[0]);
 
 	return 0;
 }

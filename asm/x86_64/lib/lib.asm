@@ -1,5 +1,11 @@
-section .text
+section .data
 
+;times 4 db	0
+msg0:	db	'This is a test string... ', 0D
+times 8 db	0
+zero:	db	"Couldn't copy as string doesn't fit.", 0xA, 0D
+
+section .text
 
 ; -[exit]-
 ; Terminates the program
@@ -24,23 +30,187 @@ _exit:
 ; takes:
 ;       rdi - address of string
 ; modifies:
-;       rax
+;       rax, rdi, r8, r9, r10, r11, r12
 ; returns:
 ;       rax - size of the string counted without \0 sign
-; TODO: 
-;	Improve speed by loading the string into reg
 
+times 9 db	0		; Alignment padding
 %define strlen string_length
 
 string_length:
-        xor     eax, eax
+	mov	rax, rdi
+	mov	r10, 0x80_80_80_80__80_80_80_80
+	mov	r11, 0xFE_FE_FE_FE__FE_FE_FE_FF
+.loop_align:
+	test	al, 7D
+	jz	.cmp
+	cmp	byte [rax], 0D
+	je	.ret_align
+	add	rax, 1D
+	jmp	.loop_align
+times 6 db	0		; Alignment padding
 .loop:
-        cmp     byte [rdi + rax], 0D
-        jz      .ret
-        inc     eax
-        jmp     .loop
-.ret:
-        ret
+	lea	rax, [rax + 8D]
+.cmp:
+	mov	r9, [rax]
+	lea	r8, [r9 + r11]
+	not	r9
+	and	r9, r8
+	and	r9, r10
+	jz	.loop
+	sub	rax, rdi
+%ifdef REG
+	jmp	.reg_search
+%elifdef HYB
+	jmp	.hyb_search
+%elifdef TREE
+	jmp	.tree_search
+%else
+	mov	rdi, 1D
+	call	exit
+%endif
+; IMMEDIATE REG SEARCH
+.reg_search:
+	test	byte r9b, r9b
+	jnz	.R0
+	shr	r9, 8D
+	test	byte r9b, r9b
+	jnz	.R1
+	shr	r9, 8D
+	test	byte r9b, r9b
+	jnz	.R2
+	shr	r9, 8D
+	test	byte r9b, r9b
+	jnz	.R3
+	shr	r9, 8D
+	test	byte r9b, r9b
+	jnz	.R4
+	shr	r9, 8D
+	test	byte r9b, r9b
+	jnz	.R5
+	shr	r9, 8D
+	test	byte r9b, r9b
+	jnz	.R6
+	add	rax, 7D
+.R0:
+	ret
+.R1:
+	add	rax, 1D
+	ret
+.R2:
+	add	rax, 2D
+	ret
+.R3:
+	add	rax, 3D
+	ret
+.R4:
+	add	rax, 4D
+	ret
+.R5:
+	add	rax, 5D
+	ret
+.R6:
+	add	rax, 6D
+	ret
+.ret_align:
+	sub	rax, rdi
+	ret
+
+times 8 db	0
+; HYBRID IMMEDIATE REG SEARCH
+.hyb_search:
+	shl	r10, 32D
+	test	r9, r10
+	jnz	.hybH
+	test	byte r9b, r9b
+	jnz	.H0
+	shr	r9, 8D
+	test	byte r9b, r9b
+	jnz	.H1
+	shr	r9, 8D
+	test	byte r9b, r9b
+	jnz	.H2
+	add	rax, 3D
+	ret
+.hybH:
+	shr	r9, 32D
+	test	byte r9b, r9b
+	jnz	.H4
+	shr	r9, 8D
+	test	byte r9b, r9b
+	jnz	.H5
+	shr	r9, 8D
+	test	byte r9b, r9b
+	jnz	.H6
+	add	rax, 7D
+.H0:
+	ret
+.H1:
+	add	rax, 1D
+	ret
+.H2:
+	add	rax, 2D
+	ret
+.H4:
+	add	rax, 4D
+	ret
+.H5:
+	add	rax, 5D
+	ret
+.H6:
+	add	rax, 6D
+	ret
+
+times 3 db	0
+; TREE SEARCH
+.tree_search:
+	shl	r10, 32D
+	test	r9, r10
+	jnz	.H
+.L:
+	test	r9, 0x80_80
+	jz	.LH
+.LL:
+	test	r9b, r9b
+	jz	.LLH
+.LLL:
+	ret
+.LLH:
+	add	rax, 1D
+	ret
+.LH:
+	test	r9, 0x80_00_00
+	jz	.LHH
+.LHL:
+	add	rax, 2D
+	ret
+.LHH:
+	add	rax, 3D
+	ret
+.H:
+	shr	r10, 16D
+	test	r9, r10
+	jz	.HH
+.HL:
+	shr	r10, 8D
+	test	r9, r10
+	jz	.HLH
+.HLL:
+	add	rax, 4D
+	ret
+.HLH:
+	add	rax, 5D
+	ret
+.HH:
+	shl	r10, 8D
+	test	r9, r10
+	jz	.HHH
+.HHL:
+	add	rax, 6D
+	ret
+.HHH:
+	add	rax, 7D
+	ret
 
 
 ; -[print_char]-
@@ -81,7 +251,7 @@ print_string:
         lea     rsi, [rdi]
         mov     edi, 1D
         mov     rdx, rax 
-        mov     eax, 1D
+        mov     rax, 1D
         syscall
         ret
 
@@ -145,7 +315,7 @@ print_uint:
         jmp     .loop
 .fill:
         shl     byte sil, 1D
-        jc     .print
+        jc      .print
         shl     r10, 8D
         jmp     .fill
 .print:
@@ -250,7 +420,7 @@ read_string:
         mov     byte [rdi], 0D
         sub     rdi, 1D
         cmp     byte [rdi], 0x0A
-        jnz      .ret
+        jnz     .ret
         mov     byte [rdi], 0D
 .ret:
         lea     rax, [rsi]
@@ -467,29 +637,18 @@ string_equals:
 ; returns:
 ;	rax - buffers address if string can by copied, 0 otherwise
 
-; rdi - address string
-; rsi - address buffer
-; rdx - max buffer length
-; rax - string length
-; r9  - temp storage of string
-; r10 - temp storage of buffer
-; r8  - temp temp buffer
-; rcx - how many in current buffer, if equal of above 8 flush, else shr buffer 8D
-
 %define strncpy string_copy
 
 string_copy:
 	push	rbx
 	mov	rbx, rsi
-
-	mov	rax, 25D ;
-	;call	string_length
-        ;inc     rax
-	;cmp	rax, rdx
-	;ja	.ret_dnf
+	call	string_length
+        inc     rax
+	cmp	rax, rdx
+	ja	.ret_dnf
         mov     r9, [rdi]
-	;cmp	rax, 8D
-	;jb	.rest
+	cmp	rax, 8D
+	jb	.rest
 .loop:
         test    rax, rax
         jz      .ret
@@ -582,90 +741,39 @@ calliso:
 
 
 global _start
-
-msg0:	db	'This is a test string...', 0D
-
 _start:
-	xor rax, rax
-	push rax
-	mov rdi, rsp
-	mov rsi, 8
-	call read_string
-	mov rdi, rax
-	call print_string
-	jmp exit
-;
 	mov	rcx, 0xFFFFFFF
-	xor	rax, rax
+.loop2:
+	mov	rdi, zero
+	call	string_length
+	loop	.loop2
+	mov	rdi, rax
+	call	print_int
+	jmp	exit
+;
 	push	rax
 	push	rax
 	push	rax
-	push	rsp
-	mov	rdx, 32D
+	push	rax
 .loop:
-	pop	rsi
-	push	rsi
 	mov	rdi, msg0
+	mov	rsi, rsp
 	push	rcx
-	push	rdx
+	mov	rdx, 32D
 %ifdef OWN
 	call	string_copy
-%elifdef REF
-	call	ref_string_copy
 %else
-	mod	rdi, 1D
-	jmp	_exit
+	mov	rdi, 1D
+	jmp	exit
 %endif
-	pop	rdx
 	pop	rcx
 	loop	.loop
-
+	test	rax, rax
+	jz	.zero
 	mov	rdi, rax
 	call	print_string
-	xor	rdi, rdi
-	jmp	_exit
-
-
-; REFERENCE FUNCTIONS FOR PERFORMANCE TESTING
-
-; ref_string_length
-ref_string_length:
-	xor rax, rax
-.loop:
-	cmp byte [rdi+rax], 0D
-	je .end 
-	inc rax
-	jmp .loop 
-.end:
-	ret
-
-; ref_string_copy
-ref_string_copy:
-	;push rdi
-	;push rsi
-	;push rdx
-	;call string_length
-	;pop rdx
-	;pop rsi
-	;pop rdi
-	mov	rax, 25D ;
-
-	;cmp rax, rdx
-	;jae .too_long  ; we also need to store null-terminator
-
-	push rsi 
-
-	.loop: 
-	mov dl, byte[rdi]
-	mov byte[rsi], dl
-	inc rdi
-	inc rsi
-	test dl, dl
-	jnz .loop 
-
-	pop rax 
-	ret
-
-	.too_long:
-	xor rax, rax
-	ret
+	call	exit
+.zero:
+	mov	rdi, zero
+	call	print_string
+	jmp	exit

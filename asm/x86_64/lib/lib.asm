@@ -1,11 +1,7 @@
-section .data
-
-;times 4 db	0
-msg0:	db	'This is a test string... ', 0D
-times 8 db	0
-zero:	db	"Couldn't copy as string doesn't fit.", 0xA, 0D
-
 section .text
+
+msg0:	db	'This is a test string...', 0D
+zero:	db	"Couldn't copy as string doesn't fit.", 0xA, 0D
 
 ; -[exit]-
 ; Terminates the program
@@ -34,7 +30,6 @@ _exit:
 ; returns:
 ;       rax - size of the string counted without \0 sign
 
-times 9 db	0		; Alignment padding
 %define strlen string_length
 
 string_length:
@@ -59,18 +54,6 @@ times 6 db	0		; Alignment padding
 	and	r9, r10
 	jz	.loop
 	sub	rax, rdi
-%ifdef REG
-	jmp	.reg_search
-%elifdef HYB
-	jmp	.hyb_search
-%elifdef TREE
-	jmp	.tree_search
-%else
-	mov	rdi, 1D
-	call	exit
-%endif
-; IMMEDIATE REG SEARCH
-.reg_search:
 	test	byte r9b, r9b
 	jnz	.R0
 	shr	r9, 8D
@@ -114,102 +97,6 @@ times 6 db	0		; Alignment padding
 	ret
 .ret_align:
 	sub	rax, rdi
-	ret
-
-times 8 db	0
-; HYBRID IMMEDIATE REG SEARCH
-.hyb_search:
-	shl	r10, 32D
-	test	r9, r10
-	jnz	.hybH
-	test	byte r9b, r9b
-	jnz	.H0
-	shr	r9, 8D
-	test	byte r9b, r9b
-	jnz	.H1
-	shr	r9, 8D
-	test	byte r9b, r9b
-	jnz	.H2
-	add	rax, 3D
-	ret
-.hybH:
-	shr	r9, 32D
-	test	byte r9b, r9b
-	jnz	.H4
-	shr	r9, 8D
-	test	byte r9b, r9b
-	jnz	.H5
-	shr	r9, 8D
-	test	byte r9b, r9b
-	jnz	.H6
-	add	rax, 7D
-.H0:
-	ret
-.H1:
-	add	rax, 1D
-	ret
-.H2:
-	add	rax, 2D
-	ret
-.H4:
-	add	rax, 4D
-	ret
-.H5:
-	add	rax, 5D
-	ret
-.H6:
-	add	rax, 6D
-	ret
-
-times 3 db	0
-; TREE SEARCH
-.tree_search:
-	shl	r10, 32D
-	test	r9, r10
-	jnz	.H
-.L:
-	test	r9, 0x80_80
-	jz	.LH
-.LL:
-	test	r9b, r9b
-	jz	.LLH
-.LLL:
-	ret
-.LLH:
-	add	rax, 1D
-	ret
-.LH:
-	test	r9, 0x80_00_00
-	jz	.LHH
-.LHL:
-	add	rax, 2D
-	ret
-.LHH:
-	add	rax, 3D
-	ret
-.H:
-	shr	r10, 16D
-	test	r9, r10
-	jz	.HH
-.HL:
-	shr	r10, 8D
-	test	r9, r10
-	jz	.HLH
-.HLL:
-	add	rax, 4D
-	ret
-.HLH:
-	add	rax, 5D
-	ret
-.HH:
-	shl	r10, 8D
-	test	r9, r10
-	jz	.HHH
-.HHL:
-	add	rax, 6D
-	ret
-.HHH:
-	add	rax, 7D
 	ret
 
 
@@ -737,41 +624,32 @@ calliso:
         pop     rdx
         pop     rcx
         pop     rbx
-        ret
+        ret	
 
+times 4 db	0D
+test: db 'This is a test string...', 0D
+%define	STRING	test
 
 global _start
 _start:
 	mov	rcx, 0xFFFFFFF
-.loop2:
-	mov	rdi, zero
-	call	string_length
-	loop	.loop2
-	mov	rdi, rax
-	call	print_int
-	jmp	exit
-;
 	push	rax
 	push	rax
 	push	rax
 	push	rax
 .loop:
-	mov	rdi, msg0
+	mov	rdi, STRING
 	mov	rsi, rsp
 	push	rcx
 	mov	rdx, 32D
-%ifdef OWN
 	call	string_copy
-%else
-	mov	rdi, 1D
-	jmp	exit
-%endif
 	pop	rcx
 	loop	.loop
 	test	rax, rax
 	jz	.zero
 	mov	rdi, rax
 	call	print_string
+	call	print_newline
 	call	exit
 .zero:
 	mov	rdi, zero

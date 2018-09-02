@@ -1,6 +1,6 @@
-all:	setup lib c 
+all:	setup lib
 setup:
 	mkdir -p bin/
 lib:	setup lib.asm
 	nasm -felf64 -o lib.o lib.asm
-	ld -o bin/own_string_copy *.o
+	ld -o bin/lib lib.o

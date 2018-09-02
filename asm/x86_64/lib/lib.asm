@@ -1,8 +1,5 @@
 section .text
 
-msg0:	db	'This is a test string...', 0D
-zero:	db	"Couldn't copy as string doesn't fit.", 0xA, 0D
-
 ; -[exit]-
 ; Terminates the program
 ; takes:
@@ -26,7 +23,7 @@ _exit:
 ; takes:
 ;       rdi - address of string
 ; modifies:
-;       rax, rdi, r8, r9, r10, r11, r12
+;       rax, r8, r9, r10, r11
 ; returns:
 ;       rax - size of the string counted without \0 sign
 
@@ -43,7 +40,6 @@ string_length:
 	je	.ret_align
 	add	rax, 1D
 	jmp	.loop_align
-times 6 db	0		; Alignment padding
 .loop:
 	lea	rax, [rax + 8D]
 .cmp:
@@ -110,6 +106,7 @@ times 6 db	0		; Alignment padding
 ;       nothing
 
 %define putc print_char
+%define printc print_char
 
 print_char:
         mov     eax, 1D
@@ -132,6 +129,7 @@ print_char:
 ;       nothing
 
 %define puts print_string
+%define prints print_string
 
 print_string:
         call    string_length
@@ -153,6 +151,7 @@ print_string:
 ;       nothing
 
 %define putln print_newline
+%define println print_newline
 
 print_newline:
         mov     eax, 1D
@@ -173,6 +172,9 @@ print_newline:
 ;       rax, rdx, rcx, rsi, rdi, r9, r10, r11
 ; returns:
 ;       nothing
+
+%define printu print_uint
+%define printui print_uint
 
 print_uint:
         push    rbx
@@ -227,6 +229,8 @@ print_uint:
 ;       rax, rdx, rcx, rsi, rdi, r9, r11
 ; returns:
 ;       nothing
+
+%define printi print_int
 
 print_int:
         push    rbx
@@ -287,18 +291,17 @@ read_char:
 ; Read a string of fixed maximum size from stdin, removes \n from the end
 ; takes:
 ;       rdi - buffer address to save the string to plus space for \0 sign
-;       rsi - number of characters to read from stdin        
+;       rsi - size of the buffer
 ; modifies:
 ;       rax, rdx, rdi, rsi, rcx, r11
 ; returns:
 ;       rax - returns buffer starting address
-; TODO:
-;	Change rsi holds the size of the buffer
 
 %define gets read_string
 
 read_string:
         mov     rdx, rsi
+	push	rdi
         lea     rsi, [rdi]
         xor     rax, rax
         xor     rdi, rdi
@@ -310,6 +313,8 @@ read_string:
         jnz     .ret
         mov     byte [rdi], 0D
 .ret:
+	pop	rdi
+	mov	byte [rdi + rdx], 0D
         lea     rax, [rsi]
         ret
 
@@ -320,26 +325,25 @@ read_string:
 ; takes:
 ;       rdi - buffer address to save the string to, requires one more space than
 ;             the size of the string for \0 sign
-;       rsi - number of characters to read from stdin
+;       rsi - size of buffer
 ; modifies:
 ;       rax, rdx, rdi, rsi, rcx, r8, r9, r10, r11
 ; returns:
 ;       rax - buffer starting address, or 0 if failed
-; TODO: 
-;	Improve speed by saving characters into qword reg and if full
-;       then push to stack, change rsi holds the size of buffer
+
+%define getw read_word
 
 read_word:
+	sub	rsi, 1D
         mov     r8, rdi
         mov     r9, rsi
+        xor     r10, r10
 .ignspace:
         call    read_char
-        xor     r10, r10
         test    rax, rax
         jz      .ret_zero
         cmp     rax, 0x20
         jbe     .ignspace
-        mov     rcx, r9
 .loop:
         lea     rdx, [r8 + r10]
         mov     byte [rdx], al
@@ -355,6 +359,8 @@ read_word:
         mov     byte [rdx], 0D
         mov     rax, r8
 	mov	rdx, r10
+	inc	r9
+	mov	byte [r8 + r9], 0D
         ret
 .ret_zero:
         mov     rax, 0D
@@ -367,37 +373,52 @@ read_word:
 ; takes:
 ;       rdi - string address to read from, must be terminated with \0
 ; modifies:
-;       rax, rdx, rcx, rdi, rsi, r9, r10, r11
+;       rax, rdx, rcx, rdi, r9, r10, r11
 ; returns:
 ;       rax - unsigned integer value
 ;	rdx - number of characters processed
-; TODO:
-;	increase speed by reading qword into reg and evaluate rax from reg
-;       instead from memory, make failsafe by checking if string
-;       consists only out of digits abort if not,
-;       do not get the string length instead check if character is valid
 
 %define parse_uint string_to_uint
 
 string_to_uint:
-        call    string_length
-	mov	rsi, rax
-	test	rax, rax
-	jz	.ret
-        mov     rcx, rax
         xor     rax, rax
-        xor     r9, r9
+	xor	r9, r9
+	mov	r8, [rdi]
+        cmp     byte r8b, 0x30                  ; check whether character is valid
+        jb      .abort
+        cmp     byte r8b, 0x39
+        ja      .abort
+        xor     r8b, 0x30
+	add	al, r8b
+	add	r9, 1D				; counter of how many characters read
         mov     r10, 10D
+	mov	r11, 1D
+	shr	r8, 8D
+	jmp	.loop
+.fetch:
+	xor	r11, r11
+	lea	rdi, [rdi + 8D]
+	mov	r8, [rdi]
 .loop:
+        cmp     byte r8b, 0x30                  ; check whether character is valid
+        jb      .ret
+        cmp     byte r8b, 0x39
+        ja      .ret
         mul     r10
-        xor     r11, r11
-        mov     r11b, [rdi]
-        xor     r11, 0x30       ; how about and or xor?
-        add     rax, r11
-        lea     rdi, [rdi + 1]
+        xor     r8b, 0x30
+	add	al, r8b
+	add	r9, 1D
+	add	r11, 1D
+	cmp	r11, 8D
+	jae	.fetch
+	shr	r8, 8D
         loop    .loop
 .ret:
-	mov	rdx, rsi
+	mov	rdx, r9
+        ret
+.abort:
+        mov     rax, -1D
+	mov	rdx, r9
         ret
 
 
@@ -444,10 +465,10 @@ string_to_int:
 	inc	rcx
         inc     r10
         cmp     r10, 8D
-        jae     .flush
+        jae     .fetch
         shr     r8, 8D
         jmp     .loop
-.flush:
+.fetch:
         xor     r10, r10
         lea     rdi, [rdi + 8D]
         mov     qword r8, [rdi]
@@ -601,9 +622,13 @@ calliso:
         push    r9
         push    r10
         push    r11
+	push	r12
+	push	r13
+	push	r14
+	push	r15
         push    rax
         mov     rax, rsp
-        add     rax, 96D
+        add     rax, 128D
         push    rax
         call    [rax]
         pop     rdx
@@ -614,6 +639,10 @@ calliso:
 .a1:
         pop     rdx
 .a2:
+	pop	r15
+	pop	r14
+	pop	r13
+	pop	r12
         pop     r11
         pop     r10
         pop     r9
@@ -625,33 +654,3 @@ calliso:
         pop     rcx
         pop     rbx
         ret	
-
-times 4 db	0D
-test: db 'This is a test string...', 0D
-%define	STRING	test
-
-global _start
-_start:
-	mov	rcx, 0xFFFFFFF
-	push	rax
-	push	rax
-	push	rax
-	push	rax
-.loop:
-	mov	rdi, STRING
-	mov	rsi, rsp
-	push	rcx
-	mov	rdx, 32D
-	call	string_copy
-	pop	rcx
-	loop	.loop
-	test	rax, rax
-	jz	.zero
-	mov	rdi, rax
-	call	print_string
-	call	print_newline
-	call	exit
-.zero:
-	mov	rdi, zero
-	call	print_string
-	jmp	exit

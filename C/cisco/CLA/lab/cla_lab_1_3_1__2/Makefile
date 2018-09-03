@@ -1,3 +1,3 @@
-all:
+all: main.c
 	mkdir -p bin/
-	gcc -O3 main.c -o bin/lab
+	gcc -O3 -o bin/cla_lab *.c

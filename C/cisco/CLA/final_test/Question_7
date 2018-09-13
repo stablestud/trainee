@@ -1,0 +1,7 @@
+int X = 1;
+
+X = X + 2 * X;
+X = X / 2 * X;
+X = X + 2 + X;
+
+// What is value of X?

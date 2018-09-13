@@ -1,0 +1,4 @@
+int X;
+X = ('r' - 's') * ('A' / 'Z');
+
+// Whats the value of X?

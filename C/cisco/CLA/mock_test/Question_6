@@ -1,0 +1,6 @@
+float X = 2.0;
+X = X + X * 4;
+X = X / X * X;
+X = X / X + X;
+
+// Whats the value of X?

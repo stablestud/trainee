@@ -13,6 +13,7 @@ global _exit
 
 %define exit _exit
 
+align 16
 _exit:
         mov     eax, 60D
         syscall
@@ -29,6 +30,7 @@ _exit:
 
 %define strlen string_length
 
+align 16
 string_length:
 	mov	rax, rdi
 	mov	r10, 0x80_80_80_80__80_80_80_80
@@ -40,6 +42,7 @@ string_length:
 	je	.ret_align
 	add	rax, 1D
 	jmp	.loop_align
+align 16
 .loop:
 	lea	rax, [rax + 8D]
 .cmp:
@@ -108,6 +111,7 @@ string_length:
 %define putc print_char
 %define printc print_char
 
+align 16
 print_char:
         mov     eax, 1D
         push    rdi
@@ -131,6 +135,7 @@ print_char:
 %define puts print_string
 %define prints print_string
 
+align 16
 print_string:
         call    string_length
         lea     rsi, [rdi]
@@ -153,6 +158,7 @@ print_string:
 %define putln print_newline
 %define println print_newline
 
+align 16
 print_newline:
         mov     eax, 1D
         mov     edx, 1D
@@ -176,6 +182,7 @@ print_newline:
 %define printu print_uint
 %define printui print_uint
 
+align 16
 print_uint:
         push    rbx
         mov     rbx, rsp
@@ -196,17 +203,20 @@ print_uint:
         shl     byte sil, 1D
         jc      .flush
         jmp     .loop
+align 16
 .flush:
         or      r10, r9
         push    r10
         mov     rsi, 1D
         xor     r10, r10
         jmp     .loop
+align 16
 .fill:
         shl     byte sil, 1D
         jc      .print
         shl     r10, 8D
         jmp     .fill
+align 16
 .print:
         or      r10, r9
         push    r10
@@ -232,6 +242,7 @@ print_uint:
 
 %define printi print_int
 
+align 16
 print_int:
         push    rbx
         mov     rbx, rsp
@@ -276,6 +287,7 @@ print_int:
 
 %define getc read_char
 
+align 16
 read_char:
         xor     rax, rax
         xor     rdi, rdi
@@ -299,6 +311,7 @@ read_char:
 
 %define gets read_string
 
+align 16
 read_string:
         mov     rdx, rsi
 	push	rdi
@@ -333,6 +346,7 @@ read_string:
 
 %define getw read_word
 
+align 16
 read_word:
 	sub	rsi, 1D
         mov     r8, rdi
@@ -354,6 +368,7 @@ read_word:
         cmp     r10, r9
         jnz     .loop
         jmp     .ret_zero
+align 16
 .ret:
         lea     rdx, [r8 + r10]
         mov     byte [rdx], 0D
@@ -362,6 +377,7 @@ read_word:
 	inc	r9
 	mov	byte [r8 + r9], 0D
         ret
+align 16
 .ret_zero:
         mov     rax, 0D
 	mov	rdx, r10
@@ -380,6 +396,7 @@ read_word:
 
 %define parse_uint string_to_uint
 
+align 16
 string_to_uint:
         xor     rax, rax
 	xor	r9, r9
@@ -395,6 +412,7 @@ string_to_uint:
 	mov	r11, 1D
 	shr	r8, 8D
 	jmp	.loop
+align 16
 .fetch:
 	xor	r11, r11
 	lea	rdi, [rdi + 8D]
@@ -416,6 +434,7 @@ string_to_uint:
 .ret:
 	mov	rdx, r9
         ret
+align 16
 .abort:
         mov     rax, -1D
 	mov	rdx, r9
@@ -434,6 +453,7 @@ string_to_uint:
 
 %define parse_int string_to_int
 
+align 16
 string_to_int:
         xor     r9, r9
         xor     rax, rax
@@ -468,14 +488,17 @@ string_to_int:
         jae     .fetch
         shr     r8, 8D
         jmp     .loop
+align 16
 .fetch:
         xor     r10, r10
         lea     rdi, [rdi + 8D]
         mov     qword r8, [rdi]
         jmp     .loop
+align 16
 .sav_neg:
         not     r9
         jmp     .pre_loop
+align 16
 .app_neg:
         test    r9, r9
         jns     .ret
@@ -486,6 +509,7 @@ string_to_int:
 .ret:
 	mov	rdx, rcx
         ret
+align 16
 .abort:
         mov     rax, -1D
 	mov	rdx, rcx
@@ -519,6 +543,7 @@ string_equals:
 	shr	r8, 8D
 	shr	r9, 8D
 	jmp	.loop
+align 16
 .fetch:
 	lea	rdi, [rdi + 8D]
 	lea	rsi, [rsi + 8D]
@@ -526,9 +551,11 @@ string_equals:
 	mov	r9, [rsi]
 	xor	rdx, rdx
 	jmp	.loop
+align 16
 .ret_true:
 	mov	rax, 1D
 	ret
+align 16
 .ret_false:
 	xor	rax, rax
 	ret
@@ -547,6 +574,7 @@ string_equals:
 
 %define strncpy string_copy
 
+align 16
 string_copy:
 	push	rbx
 	mov	rbx, rsi
@@ -568,6 +596,7 @@ string_copy:
 	sub	rax, 8D
         mov     r9, [rdi]
 	jmp	.loop
+align 16
 .rest:
 	xor	r10, r10
 	mov	r10b, r9b
@@ -584,6 +613,7 @@ string_copy:
 	test	r9b, r9b
 	jz	.ret_rest
 	jmp	.loop_rest
+align 16
 .ret_rest:
         mov     rax, -1D
         shl     rax, cl
@@ -594,6 +624,7 @@ string_copy:
 	mov	rax, rbx
 	pop	rbx
 	ret
+align 16
 .ret_dnf:
 	xor	rax, rax
 	pop	rbx
@@ -611,6 +642,7 @@ string_copy:
 ; returns:
 ;       rax - return value of called function, if modified by function
 
+align 16
 calliso:
         push    rbx
         push    rcx

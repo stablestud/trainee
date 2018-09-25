@@ -1,0 +1,54 @@
+8.1.18.1 Using cout - manipulators
+
+Objectives
+Familiarize the student with:
+
+cout - using set manipulators;
+cout - using setfill.
+Scenario
+Write a program that takes one number (double) from the user. Next, your program should multiply this number by 11.123, then multiply the result by 11.123, and multiply it two more times (you should have five numbers - one original and four results of multiplication).
+
+Next, display all the values in two columns, separated by vertical lines and filled with the star ('*') character, up to ten characters. The first column displays the values sorted in ascending order, while the second column displays the values in descending order.
+
+Your version of the program must print the same result as the expected output for all given input. Test it for all input cases.
+
+Example input
+11.123
+
+Example output
+****11.123|****170259 ***123.721|***15306.9 ***1376.15|***1376.15 ***15306.9|***123.721 ****170259|****11.123
+
+Example input
+2
+
+Example output
+*********2|***30613.8 ****22.246|****2752.3 ***247.442|***247.442 ****2752.3|****22.246 ***30613.8|*********2
+
+Example input
+0.1
+
+Example output
+*******0.1|***1530.69 ****1.1123|***137.615 ***12.3721|***12.3721 ***137.615|****1.1123 ***1530.69|*******0.1
+
+
+#include <iostream>
+#include <string>
+#include <iomanip>
+#include <vector>
+
+using namespace std;
+
+double multiply_value(double value)
+{
+	return value * 11.123;
+}
+
+int main()
+{
+	double value;
+	cin >> value;
+
+	//your code
+
+	return 0;
+}

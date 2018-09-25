@@ -1,0 +1,59 @@
+1.2.7.1 Vectors - vectors of objects
+
+Objectives
+Familiarize the student with:
+
+vectors - creating them;
+vectors - filling them with values;
+vectors - vectors of objects
+printing on screen.
+Scenario
+Assume you are writing some simple software for an ATM. You must store the values of money of each denomination. For this program, we assume that the machine stores only banknotes of values 10, 20, 50, 100 and 200.
+
+Create an object for each type of banknote and store two values in it: the banknote value and how many banknotes are stored. Store those objects in a vector (it's best to use an initialization list). Then input two integer values and check if the ATM has enough money to withdraw this amount of money (both of them, one after the other).
+
+Starting values for all types of banknotes:
+
+10 - 5
+20 - 6
+50 - 3
+100 - 4
+200 - 5
+Possible answers (one for both values):
+
+Enough money.
+Not enough money.
+Incorrect amount of money. - i.e., if the amount is not a multiple of ten
+Your version of the program must print the same result as the expected output for all given input.
+Example input
+17 12
+
+Example output
+Incorrect amount of money. Incorrect amount of money.
+
+Example input
+20 60
+
+Example output
+Enough money. Enough money.
+
+Example input
+200 1800
+
+Example output
+Enough money. Not enough money.
+
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+int main()
+{
+	//your code
+
+	return 0;
+}

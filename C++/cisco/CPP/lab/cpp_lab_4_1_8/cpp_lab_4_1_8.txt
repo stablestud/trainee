@@ -1,0 +1,47 @@
+4.1.8.1 Unique operations
+
+Objectives
+Familiarize the student with:
+
+unique - creating a new vector;
+unique - using the function with objects.
+Scenario
+Write a program that creates a vector filled with pets' names and their types (we've already created it for you), then create a second vector and copy only the pets with unique names from the first vector to the second.
+
+Pets are the objects of a class with two values: name and pet_type. Pets are unique only when they have different names. Write the content of both vectors, each pet on one line, with one newline after the first vector.
+
+Your version of the program must print the same result as the expected output.
+
+Amber Cat
+Barky Dog
+Barky Reptile
+Casper Fish
+Casper Reptile
+Godzilla Reptile
+
+Amber Cat
+Barky Dog
+Casper Fish
+Godzilla Reptile
+
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+
+using namespace std;
+
+//your code
+
+int main() 
+{
+	vector<Pet> pets = { {"Amber", "Cat"}, {"Barky", "Dog"}, { "Barky", "Reptile" }, 
+		{"Casper", "Fish"}, {"Casper", "Reptile"}, {"Godzilla", "Reptile" } };
+
+	vector<Pet> uniquePets(pets.size());
+
+	//your code
+
+	return 0;
+}

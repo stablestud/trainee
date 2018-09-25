@@ -1,0 +1,46 @@
+2.2.29.1 Sets - inserting
+
+Objectives
+Familiarize the student with:
+
+sets - creating them;
+sets - filling them with values;
+sets - removing and inserting values;
+printing on screen.
+Scenario
+Fill in the blanks in the program. After this, test your program (just run it). Your version of the program must print the same result as the expected output.
+
+-3 -1 1 5 9
+9 5 2 -1 -3
+
+
+#include <iostream>
+#include <fstream>
+#include <set>
+#include <functional>
+
+using namespace std;
+
+int main() {
+	set <int> valuesAscending = { -1, 5, -3, 2, };
+	set <int, greater<int>> valuesDescending = { -1, 5, -3, 2, };
+
+	valuesAscending.insert(_);
+	valuesDescending.insert(_);
+	valuesAscending.erase(_);
+	valuesDescending.erase(_);
+	valuesAscending.insert(_);
+	valuesDescending.insert(_);
+
+	for (auto value : valuesAscending)
+		cout << value << " ";
+
+	cout << endl;
+
+	for (auto value : valuesDescending)
+		cout << value << " ";
+
+	cout << endl;
+
+	return 0;
+}

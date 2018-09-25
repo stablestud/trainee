@@ -1,0 +1,53 @@
+4.1.11.1 Random shuffle operation
+
+Objectives
+Familiarize the student with:
+
+random shuffle - calling it;
+random shuffle - creating your own function.
+Scenario
+We’ve prepared the deck of cards for you. Your task is to shuffle the cards, then deal the cards to four players, then print the content of the players' hands. Important note: In this case, your version of the program may print other results than those presented (it depends on std::rand implementation).
+
+In a normal program, you should init your random number generator with some random value (e.g., time or mouse input) but here we use a constant value. Thanks to that, you get the same results in each run of the program.
+
+9S KD 5C AS 6H AC 2D 2S 2C 9C 7H 5H 10S 
+KH KC 5D 9D JC JS AD 2H 10D 5S 7C QC JD 
+8C 9H 10C 6D 10H 3H 3S QS 3C 4H AH 6S 8D 
+KS 4S JH 6C 8S 7S 7D 8H 4D 4C QD 3D QH
+
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+
+using namespace std;
+
+int rng_function(int range)
+{
+	return std::rand() % range;
+}
+
+int main() 
+{
+	const unsigned RANDOM_SEED = 5;
+	std::srand(RANDOM_SEED);
+	vector<int> myvector;
+	vector<string> cards;
+	vector<string> card_names={ "A", "2", "3", "4" , "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
+
+	for (auto name : card_names)
+	{
+		//you can encode Spade, Heart, Diamond, Club as Unicode characters U+2660–2667
+		cards.push_back(name + "S");
+		cards.push_back(name + "H");
+		cards.push_back(name + "D");
+		cards.push_back(name + "C");
+	}
+
+	vector<vector<string>> players(4);
+
+	// your code
+
+	return 0;
+}

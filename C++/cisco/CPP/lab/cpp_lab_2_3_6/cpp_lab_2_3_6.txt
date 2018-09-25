@@ -1,0 +1,52 @@
+2.3.6.1 Maps - iterators
+
+Objectives
+Familiarize the student with:
+
+maps - creating them;
+maps - iterating over them;
+maps - using values.
+Scenario
+We've created a map of some variables (code below) which holds the addresses of the virtual memory (a vector - also in the code below). It's very similar (but simplified) to the technique used in compilers and interpreters to store variables and their mapping to memory locations. Write a program which asks the user for a variable name, then prints all variables with addresses and their values. Next, check if the given variable name exists in the map and print it (if it exists), or if it doesn't exist, then display the message: "Variable: variable_name doesn't exist." You can use the count or find functions of the map to find out if the variable exists (count is a bit simpler in this case). Your version of the program must print the same result as the expected output.
+
+Example input
+x
+
+Example output
+Variable: x at address: 0 has value: 9 Variable: xx at address: 3 has value: 7 Variable: xy at address: 4 has value: 3 Variable: xz at address: 5 has value: 2 Variable: y at address: 1 has value: 6 Variable: z at address: 2 has value: 5 Variable: x at address: 0 has value: 9
+
+Example input
+z
+
+Example output
+Variable: x at address: 0 has value: 9 Variable: xx at address: 3 has value: 7 Variable: xy at address: 4 has value: 3 Variable: xz at address: 5 has value: 2 Variable: y at address: 1 has value: 6 Variable: z at address: 2 has value: 5 Variable: z at address: 2 has value: 5
+
+Example input
+asdf
+
+Example output
+Variable: x at address: 0 has value: 9 Variable: xx at address: 3 has value: 7 Variable: xy at address: 4 has value: 3 Variable: xz at address: 5 has value: 2 Variable: y at address: 1 has value: 6 Variable: z at address: 2 has value: 5 Variable: asdf doesn't exist.
+
+
+#include <iostream>
+#include <map>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+	map<string, int> variables_map = { {"x", 0}, {"y", 1}, {"z", 2}, 
+			{ "xx", 3 },{ "xy", 4 },{ "xz", 5 } };
+
+	vector<int> values = { 9, 6, 5, 7, 3, 2};
+
+	string variable_name;
+
+	cin >> variable_name;
+
+	//your code
+
+	return 0;
+}

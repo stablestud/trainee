@@ -1,0 +1,35 @@
+4.1.12.1 Partitioning operations
+
+Objectives
+Familiarize the student with:
+
+partitioning - creating separate parts;
+partitioning - predicate writing.
+Scenario
+Write a program that fills a vector with numbers from 1 to 40. Next, divide it into two parts, the first part consisting of numbers divisible by 3 (without the remainder) and numbers with the digit 3 in them, and the second part consisting of every other number.
+
+Display these two sequences of numbers on separate lines (separate numbers with spaces). You don't have to create any variables to hold the separate parts, just display them.
+
+Your version of the program must print the same result as the expected output.
+
+39 38 3 37 36 6 35 34 9 33 32 12 13 31 15 30 27 18 24 23 21 
+22 20 19 25 26 17 28 29 16 14 11 10 8 7 5 4 2 1 40
+
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+//your code
+
+int main()
+{
+	vector<int> results(40);
+
+	//your code
+
+	return 0;
+}

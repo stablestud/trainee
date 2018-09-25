@@ -1,0 +1,55 @@
+9.1.4.1 Template functions
+
+Objectives
+Familiarize the student with:
+
+template functions - creating them;
+template functions - using them.
+Scenario
+Prepare and test two template functions. The first function is to compute the signum - it returns -1 when the argument value is less than 0, 0 when the argument value is 0, and 1 when the argument value is greater than 0.
+
+The second function should use stringstream to convert the values to a string (but remember that there is the to_string function, too - it's been around since C++11).
+
+Test both functions for arguments of different types, and get some argument values from the user. the example input is tested for one int and one double value for both functions.
+
+Print the results of all four function calls.
+
+Your version of the program must print the same result as the expected output for all possible inputs.
+
+Example input
+11 -1.11
+
+Example output
+1 -1 11 -1.11
+
+Example input
+-2 2.11
+
+Example output
+-1 1 -2 2.11
+
+Example input
+0 0.11
+
+Example output
+0 1 0 0.11
+
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <iomanip>
+#include <sstream>
+
+using namespace std;
+
+//your code
+
+int main() {
+	int valuei;
+	double valued;
+
+	//your code
+
+	return 0;
+}

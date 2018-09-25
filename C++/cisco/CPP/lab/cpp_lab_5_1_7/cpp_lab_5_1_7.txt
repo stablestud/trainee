@@ -1,0 +1,60 @@
+5.1.7.1 Binary searching
+
+Objectives
+Familiarize the student with:
+
+binary search - sorting;
+binary search - searching.
+Scenario
+Write a program that creates a vector of countries with names and areas in thousands of square km (we've prepared a list of ten of the biggest countries in the code). Next, ask the user for the area to find, try to find this area, and print "Found." when it is found, and "Not found." otherwise. Remember to sort the vector before searching.
+
+Your version of the program must print the same result as the expected output.
+
+Example input
+9992
+
+Example output
+Not found.
+
+Example input
+2780
+
+Example output
+Found.
+
+Example input
+9984
+
+Example output
+Found.
+
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+struct Country
+{
+	string name;
+	int area;
+};
+
+//your code
+
+int main()
+{
+	vector <Country> countries = {
+		{"India", 3287 },{ "Argentina", 2780 },
+		{"Brazil", 8515}, {"Australia", 7692},
+		{"China", 9572 },{ "United States of America", 9525 },
+		{"Russia", 17098 },{ "Canada", 9984 },
+		{"Kazakhstan", 	2724 }, {"Algeria", 2381 } 
+	};
+
+	//your code
+
+	return 0;
+}

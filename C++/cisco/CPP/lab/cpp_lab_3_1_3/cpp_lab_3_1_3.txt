@@ -1,0 +1,59 @@
+3.1.3.1 Find operations
+
+Objectives
+Familiarize the student with:
+
+maps - creating them;
+find - using the function;
+for_each - using the function with a map.
+Scenario
+Write a program that creates a map of ten countries and their capitals. It's a list of countries with the biggest capitals (the values are given in the code below). Next, your program should ask the user for the country name and print the information about the search result. If the country is found, then print "The capital of country_name is capital_name." If it is not found, then print the message: "No such country on the list." Try to use just the find function (and answer the question: what is the problem with this function and the map?). Then just use the map::find method. Your version of the program must print the same result as the expected output for all given inputs.
+
+Example input
+China
+
+Example output
+The capital of China is Beijing.
+
+Example input
+Neverland
+
+Example output
+No such country on the list.
+
+Example input
+Democratic Republic of the Congo
+
+Example output
+The capital of Democratic Republic of the Congo is Kinshasa.
+
+
+#include <iostream>
+#include <map>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+	map<string, string> capitals = { 
+		{"China", "Beijing"}, 
+		{"India", "New Delhi"}, 
+		{"Japan", "Tokyo" },
+		{"Philippines", "Manila" },
+		{"Russia", "Moscow" },
+		{"Egypt", "Cairo" },
+		{"Indonesia", "Jakarta" },
+		{"Democratic Republic of the Congo", "Kinshasa" },
+		{"South Korea", "Seoul" },
+		{"Bangladesh", "Dhaka" }
+	};
+
+	string s;
+
+	getline(cin, s);
+
+	//your code
+
+	return 0;
+}

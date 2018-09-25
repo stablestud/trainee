@@ -1,0 +1,39 @@
+3.1.5.1 Searching operations
+
+Objectives
+Familiarize the student with:
+
+search - using the function;
+search - finding more than one pattern.
+Scenario
+Write a program that creates two vectors: the first with integer values (given in the code below) and the second with relations between consecutive values of the first one. The relations vector consists only of the values 0, 1 and -1. 0 means that two adequate values from the first vector are equal, 1 means that the second value is greater, and -1 means that the second value of the pair is less than the first.
+
+Next, find two patterns: 0, 1, -1 and -1, 1, 0 and display four values from the first vector for each found pattern. You can use the distance function to get the distance of the found pattern from the beginning of the vector. Write a function to print the found pattern with three arguments: the original vector, the vector to be searched in, and the sequence of elemements to be looked for. Call this function twice.
+
+Your version of the program must print the same result as the expected output.
+
+Pattern found, values at 0 : 1 1 5 3
+Pattern found, values at 9 : 4 4 5 3
+Pattern found, values at 2 : 5 3 4 4
+Pattern found, values at 11 : 5 3 8 8
+
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+//your_code
+
+int main()
+{
+	vector<int> values = { 1, 1, 5, 3, 4, 4, 3, 2, 2, 4, 4, 5, 3, 8, 8, 1};
+
+	//your_code
+	// pattern 1: { 0, 1, -1 }
+	// pattern 2: { -1, 1, 0 }
+
+	return 0;
+}

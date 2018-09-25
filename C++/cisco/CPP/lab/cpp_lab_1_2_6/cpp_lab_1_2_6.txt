@@ -1,0 +1,40 @@
+1.2.6.1 Vectors - the copy constructor
+
+Objectives
+Familiarize the student with:
+
+vectors - creating them;
+vectors - filling them with values;
+vectors - the copy constructor;
+printing on screen.
+Scenario
+Write a program that creates a vector of IP numbers (we've prepared one for you), creates a copy of it, and displays some numbers from the copy. The program should take one integer number, which decides how many IP numbers from the copy should be printed. Remember to check this number: it can't be greater than the copy vector size.
+Print this message if it is greater: "Too big - value must be smaller than or equal to vector size." and finish the program. Your version of the program must print the same result as the expected output for all given input.
+
+Example input
+5
+
+Example output
+Too big - value must be smaller than or equal to vector size.
+
+Example input
+2
+
+Example output
+127.0.0.1 192.168.0.1
+
+
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+	vector <string> ip_table {"127.0.0.1", "192.168.0.1", "192.168.1.100", "255.255.255.255" };
+
+	//your code
+
+	return 0;
+}

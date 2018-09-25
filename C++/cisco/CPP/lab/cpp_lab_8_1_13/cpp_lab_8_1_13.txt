@@ -1,0 +1,50 @@
+8.1.13.1 Using cout - flags
+
+Objectives
+Familiarize the student with:
+
+using cout - using flags.
+Scenario
+Write a program that takes one number (double) from the user. Next, your program should print this number in different ways:
+
+in raw format;
+with a sign before the number and a decimal point;
+with a decimal point;
+with a sign before the number.
+Your version of the program must print the same result as the expected output.
+
+Example input
+11
+
+Example output
+11 11 +11.0000 11.0000 +11
+
+Example input
+-11
+
+Example output
+-11 -11 -11.0000 -11.0000 -11
+
+Example input
+2.5
+
+Example output
+2.5 2.5 +2.50000 2.50000 +2.5
+
+
+#include <iostream>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+	double value;
+	cin >> value;
+
+	cout << value << endl;
+
+	//your code
+
+	return 0;
+}

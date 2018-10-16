@@ -9,9 +9,8 @@ section .text
 ; returns:
 ;       nothing
 
-global _exit
-
-%define exit _exit
+global	_exit
+%define exit	_exit
 
 align 16
 _exit:
@@ -28,7 +27,8 @@ _exit:
 ; returns:
 ;       rax - size of the string counted without \0 sign
 
-%define strlen string_length
+global	string_length
+%define	strlen	string_length
 
 align 16
 string_length:
@@ -108,6 +108,7 @@ align 16
 ; returns:
 ;       nothing
 
+global	print_char
 %define putc print_char
 %define printc print_char
 
@@ -132,8 +133,9 @@ print_char:
 ; returns:
 ;       nothing
 
-%define puts print_string
-%define prints print_string
+global	print_string
+%define puts	print_string
+%define prints	print_string
 
 align 16
 print_string:
@@ -155,8 +157,9 @@ print_string:
 ; returns:
 ;       nothing
 
-%define putln print_newline
-%define println print_newline
+global	print_newline
+%define putln	print_newline
+%define println	print_newline
 
 align 16
 print_newline:
@@ -179,8 +182,9 @@ print_newline:
 ; returns:
 ;       nothing
 
-%define printu print_uint
-%define printui print_uint
+global	print_uint
+%define printu	print_uint
+%define printui	print_uint
 
 align 16
 print_uint:
@@ -240,6 +244,7 @@ align 16
 ; returns:
 ;       nothing
 
+global	print_int
 %define printi print_int
 
 align 16
@@ -285,6 +290,7 @@ print_int:
 ; returns:
 ;       rax - character read from stdin
 
+global	read_char
 %define getc read_char
 
 align 16
@@ -309,6 +315,7 @@ read_char:
 ; returns:
 ;       rax - returns buffer starting address
 
+global	read_string
 %define gets read_string
 
 align 16
@@ -344,6 +351,7 @@ read_string:
 ; returns:
 ;       rax - buffer starting address, or 0 if failed
 
+global	read_word
 %define getw read_word
 
 align 16
@@ -394,6 +402,7 @@ align 16
 ;       rax - unsigned integer value
 ;	rdx - number of characters processed
 
+global	string_to_uint
 %define parse_uint string_to_uint
 
 align 16
@@ -451,6 +460,7 @@ align 16
 ;       rax - signed integer value
 ;	rdx - number of characters processed
 
+global	string_to_int
 %define parse_int string_to_int
 
 align 16
@@ -526,6 +536,7 @@ align 16
 ; returns:
 ;	rax - 1 if strings are equal, 0 if not
 
+global	string_equals
 %define strcmp string_equals
 
 string_equals:
@@ -572,6 +583,7 @@ align 16
 ; returns:
 ;	rax - buffers address if string can by copied, 0 otherwise
 
+global	string_copy
 %define strncpy string_copy
 
 align 16
@@ -632,7 +644,8 @@ align 16
 
 
 ; -[calliso]-
-; Call isolator, makes a call to the address pushed previously onto the stack
+; Call isolator, makes a call to the address pushed previously onto the stack,
+; used mainly for debugging functions
 ; takes:
 ;       Address to function, must be pushed to stack before calling
 ;       this function

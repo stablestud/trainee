@@ -1,0 +1,36 @@
+
+#define STAT	(- STAT_dev \
+		- STAT_ino \
+		- STAT_nlink \
+		- STAT_mode \
+		- STAT_uid \
+		- STAT_gid \
+		- STAT_pad \
+		- STAT_rdev \
+		- STAT_size \
+		- STAT_blksize \
+		- STAT_blocks \
+		- STAT_atime \
+		- STAT_atime_nsec \
+		- STAT_mtime \
+		- STAT_mtime_nsec \
+		- STAT_ctime \
+		- STAT_ctime_nsec)
+
+#define STAT_dev	64
+#define STAT_ino	64
+#define STAT_nlink	64
+#define STAT_mode	32
+#define STAT_uid	32
+#define STAT_gid	32
+#define STAT_pad	32
+#define STAT_rdev	64
+#define STAT_size	64
+#define STAT_blksize	64
+#define STAT_blocks	64
+#define STAT_atime	64
+#define STAT_atime_nsec	64
+#define STAT_mtime	64
+#define STAT_mtime_nsec	64
+#define STAT_ctime	64
+#define STAT_ctime_nsec	64

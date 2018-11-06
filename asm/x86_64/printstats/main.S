@@ -9,28 +9,29 @@ st_f:	.asciz	"stat()	failed ("
 cl_f:	.asciz	"close() failed ("
 bracl:	.asciz	")\n"
 semnl:	.asciz	":\n"
-sdev:	.asciz	"dev: "
-sino:	.asciz	"\nino: "
-snlink:	.asciz	"\nnlink: "
-smode:	.asciz	"\nmode: "
-suid:	.asciz	"\nuid: "
-sgid:	.asciz	"\ngid: "
-srdev:	.asciz	"\nrdev: "
-ssize:	.asciz	"\nsize: "
-sblksize:	.asciz	"\nblksize: "
-sblocks:	.asciz	"\nblocks: "
-satime:	.asciz	"\natime: "
-satime_nsec:	.asciz	"\natime_nsec: "
-smtime:	.asciz	"\nmtime: "
-smtime_nsec:	.asciz	"\nmtime_nsec: "
-sctime:	.asciz	"\nctime: "
-sctime_nsec:	.asciz	"\nctime_nsec: "
+sdev:	.asciz	"Device:\t"
+sino:	.asciz	"\nInode:\t"
+snlink:	.asciz	"\nLinks:\t"
+smode:	.asciz	"\nmode:\t"
+suid:	.asciz	"\nuid:\t"
+sgid:	.asciz	"\ngid:\t"
+srdev:	.asciz	"\nrdev:\t"
+ssize:	.asciz	"\nsize:\t"
+sblksize:	.asciz	"\nblock size:\t"
+sblocks:	.asciz	"\nblocks:\t"
+satime:	.asciz	"\nAccess time in sec. since epoch:\t"
+satime_nsec:	.asciz	"\nAccess time: nanoseconds:\t\t"
+smtime:	.asciz	"\nModify time in sec. since epoch:\t"
+smtime_nsec:	.asciz	"\nModify time: nanoseconds:\t\t"
+sctime:	.asciz	"\nCreate time in sec. since epoch:\t"
+sctime_nsec:	.asciz	"\nCreate time: nanoseconds:\t\t"
 
 
 
 .text
 .globl	_start
 _start:
+	movq	$-1,		%rax
 	movq	%rsp,		%rbp
 	lea	STAT(%rsp),	%rsp
 	movq	$file,		%rdi
@@ -47,26 +48,102 @@ print_stat:
 	call	print_string
 	movq	$semnl,		%rdi
 	call	print_string
+/*	print dev	64 bit	*/
 .Lpstat_dev:
 	movq	$sdev,		%rdi
 	call	print_string
 	movq	(%rbp),		%rdi
 	call	print_uint
+/*	print ino	64 bit	*/
 .Lpstat_ino:
 	movq	$sino,		%rdi
 	call	print_string
-	movq	64(%rbp),	%rdi
+	movq	8(%rbp),	%rdi
 	call	print_uint
+/*	print mode	32 bit	*/
 .Lpstat_nlink:
 	movq	$snlink,	%rdi
 	call	print_string
-	movq	128(%rbp),	%rdi
+	movl	16(%rbp),	%edi
 	call	print_uint
+/*	padding 32 bit __USE_LARGEFILE64 <bits/stat.h>	*/
+/*	print link	32 bit	*/
 .Lpstat_mode:
 	movq	$smode,		%rdi
 	call	print_string
-	movq	150(%rbp),	%rdi
-	shr	$32,		%rdi
+	movl	24(%rbp),	%edi
+	call	print_uint
+/*	print uid	32 bit	*/
+.Lpstat_uid:
+	movq	$suid,		%rdi
+	call	print_string
+	movl	28(%rbp),	%edi
+	call	print_uint
+/*	print gid	32 bit	*/
+.Lpstat_gid:
+	movq	$sgid,		%rdi
+	call	print_string
+	movl	32(%rbp),	%edi
+	call	print_uint
+/*	print rdev	64 bit	*/
+.Lpstat_rdev:
+	movq	$srdev,		%rdi
+	call	print_string
+	movq	40(%rbp),	%rdi
+	call	print_uint
+/*	print size	64 bit	*/
+.Lpstat_size:
+	movq	$ssize,		%rdi
+	call	print_string
+	movq	48(%rbp),	%rdi
+	call	print_uint
+/*	print block size 64 bit	*/
+.Lpstat_blksize:
+	movq	$sblksize,	%rdi
+	call	print_string
+	movq	56(%rbp),	%rdi
+	call	print_uint
+/*	print block count 64 bit	*/
+.Lpstat_blocks:
+	movq	$sblocks,	%rdi
+	call	print_string
+	movq	64(%rbp),	%rdi
+	call	print_uint
+/*	print atime 64 bit	*/
+.Lpstat_atime:
+	movq	$satime,	%rdi
+	call	print_string
+	movq	72(%rbp),	%rdi
+	call	print_uint
+/*	print atime_nsec 64 bit */
+.Lpstat_atime_nsec:
+	movq	$satime_nsec,	%rdi
+	call	print_string
+	movq	80(%rbp),	%rdi
+	call	print_uint
+/*	print mtime 64 bit	*/
+.Lpstat_mtime:
+	movq	$smtime,	%rdi
+	call	print_string
+	movq	88(%rbp),	%rdi
+	call	print_uint
+/*	print mtime_nsec 64 bit */
+.Lpstat_mtime_nsec:
+	movq	$smtime_nsec,	%rdi
+	call	print_string
+	movq	96(%rbp),	%rdi
+	call	print_uint
+/*	print ctime 64 bit	*/
+.Lpstat_ctime:
+	movq	$sctime,	%rdi
+	call	print_string
+	movq	104(%rbp),	%rdi
+	call	print_uint
+/*	print ctime_nsec 64 bit */
+.Lpstat_ctime_nsec:
+	movq	$sctime_nsec,	%rdi
+	call	print_string
+	movq	112(%rbp),	%rdi
 	call	print_uint
 .Lpstat_end:
 	call	print_newline
@@ -75,7 +152,7 @@ print_stat:
 stat:
 	movq	$__NR_stat,	%rax
 	syscall
-	cmpq	$-1,		%rax
+	cmpl	$-1,		%eax
 	jle	.Lstat_f
 	ret
 .Lstat_f:

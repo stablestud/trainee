@@ -7,6 +7,7 @@ file:	.asciz	"file.txt"
 op_f:	.asciz	"open()	failed ("
 st_f:	.asciz	"stat()	failed ("
 cl_f:	.asciz	"close() failed ("
+mm_f:	.asciz	"mmap() failed ("
 bracl:	.asciz	")\n"
 semnl:	.asciz	":\n"
 sdev:	.asciz	"Device:\t"
@@ -25,6 +26,7 @@ smtime:	.asciz	"\nModify time in sec. since epoch:\t"
 smtime_nsec:	.asciz	"\nModify time: nanoseconds:\t\t"
 sctime:	.asciz	"\nCreate time in sec. since epoch:\t"
 sctime_nsec:	.asciz	"\nCreate time: nanoseconds:\t\t"
+cont_m:	.asciz	"\nContent of file:\n"
 
 
 
@@ -37,9 +39,77 @@ _start:
 	movq	$file,		%rdi
 	movq	%rbp,		%rsi
 	call	print_stat
+	testq	%rax,		%rax
+	jz	.Lend
+	movq	%rax,		%rdi
+	call	print_cont
+.Lend:
 	xorq	%rdi,		%rdi
 	jmp	_exit
 	
+/*	Print file contents with open(), mmap() and close()
+	rdi - file size retrieved from stat()
+	rsi - pointer to file name	*/
+print_cont:
+	pushq	%rdi	/* File size */
+	pushq	%rdi	/* File size */
+	call	open
+	push	%rax	/* File desc. */
+	movq	$cont_m,	%rdi
+	call	print_string
+	pop	%r8	/* File desc. */
+	pop	%rsi	/* File size */
+	call	mmap
+	movq	%rax,		%rsi
+	movq	$1,		%rdi
+	movq	$__NR_write,	%rax
+	movq	$10,	%rdx
+	pop	%rdx	/* File size */
+	syscall
+	ret
+
+mmap:
+	movq	$__NR_mmap,	%rax
+	movq	$0,		%rdi
+	movq	$PROT_READ,	%rdx
+	movq	$MAP_PRIVATE,	%r10
+	syscall
+	cmpq	$0,		%rax
+	jle	.Lmmap_fail
+.Lmmap_ret:
+	ret
+.Lmmap_fail:
+	cmpq	$-2,		%rax
+	jl	.Lmmap_ret
+	pushq	%rax
+	movq	$mm_f,		%rdi
+	call	print_string
+	pop	%rdi
+	call	print_int
+	movq	$bracl,		%rdi
+	call	print_string
+	movq	$1,		%rdi
+	jmp	_exit
+
+open:
+	movl	$__NR_open,	%eax
+	movq	$file,		%rdi
+	movq	$O_RDONLY,	%rsi
+	syscall
+	cmpl	$-1,		%eax
+	jle	.Lopen_fail
+	ret
+.Lopen_fail:
+	pushq	%rax
+	movq	$op_f,		%rdi
+	call	print_string
+	pop	%rdi
+	call	print_int
+	movq	$bracl,		%rdi
+	call	print_string
+	movq	$1,		%rdi
+	jmp	_exit
+
 /*	Print file statistic with stat()
 	rdi - pointer to struct
 	rsi - pointer to file name	*/
@@ -96,6 +166,7 @@ print_stat:
 	movq	$ssize,		%rdi
 	call	print_string
 	movq	48(%rbp),	%rdi
+	movq	%rdi,		%r15
 	call	print_uint
 /*	print block size 64 bit	*/
 .Lpstat_blksize:
@@ -147,6 +218,7 @@ print_stat:
 	call	print_uint
 .Lpstat_end:
 	call	print_newline
+	movq	%r15,		%rax
 	ret
 
 stat:
@@ -163,5 +235,5 @@ stat:
 	call	print_int
 	movq	$bracl,		%rdi
 	call	print_string
-	movq	$-1,		%rdi
+	movq	$1,		%rdi
 	jmp	_exit

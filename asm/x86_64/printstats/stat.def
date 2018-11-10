@@ -34,3 +34,10 @@
 #define STAT_mtime_nsec	8
 #define STAT_ctime	8
 #define STAT_ctime_nsec	8
+
+#define O_RDONLY	     00
+#define O_WRONLY	     01
+#define O_RDWR		     02
+
+#define PROT_READ	0x1	
+#define MAP_PRIVATE	0x2

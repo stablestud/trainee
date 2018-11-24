@@ -54,7 +54,7 @@ open:
 mmap:
 	movq	$__NR_mmap,	%rax	# syscall numbr
 	movq	$0,		%rdi	# address
-	movq	$4096,		%rsi	# region length (page size)
+	movq	$4096,		%rsi	# region length in bytes, in this case a single page (number can be less for the same result)
 	movq	$PROT_READ,	%rdx	# Protection flags (read, write, execute...)
 	movq	$MAP_PRIVATE,	%r10	# Utility flags (shared or private, anonymous pages, etc.)
 	movq	8(%rsp),	%r8	# file descriptor
@@ -94,7 +94,7 @@ close:
 write:
 	movq	$__NR_write,	%rax	# syscall numbr
 	movq	$1,		%rdi	# file descriptor (stdout)
-	movq	$15,		%rdx	# characters to print
+	movq	$13,		%rdx	# characters to print
 	syscall
 	cmpl	$0,		%eax	# check if it failed
 	jl	.Lwrite_fail

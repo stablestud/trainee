@@ -33,7 +33,6 @@ cont_m:	.asciz	"\nContent of file:\n"
 .text
 .globl	_start
 _start:
-	movq	$-1,		%rax
 	movq	%rsp,		%rbp
 	lea	STAT(%rsp),	%rsp
 	movq	$file,		%rdi
@@ -60,19 +59,19 @@ print_cont:
 	pop	%r8	/* File desc. */
 	pop	%rsi	/* File size */
 	call	mmap
-	movq	%rax,		%rsi
-	movq	$1,		%rdi
-	movq	$__NR_write,	%rax
-	movq	$10,	%rdx
+	movq	%rax,		%rsi    /* Address of string */
+	movq	$1,		%rdi    /* File desciptor (stdout */
+	movq	$__NR_write,	%rax    /* Syscall number */
 	pop	%rdx	/* File size */
 	syscall
 	ret
 
 mmap:
-	movq	$__NR_mmap,	%rax
-	movq	$0,		%rdi
-	movq	$PROT_READ,	%rdx
-	movq	$MAP_PRIVATE,	%r10
+	movq	$__NR_mmap,	%rax    /* Syscall number */
+	movq	$0,		%rdi    /* Address to map to */
+	movq	$PROT_READ,	%rdx    /* Protection flags */
+	movq	$MAP_PRIVATE,	%r10    /* Map flags */
+        movq    $0,             %r9
 	syscall
 	cmpq	$0,		%rax
 	jle	.Lmmap_fail
@@ -92,11 +91,11 @@ mmap:
 	jmp	_exit
 
 open:
-	movl	$__NR_open,	%eax
+	movq	$__NR_open,	%rax
 	movq	$file,		%rdi
 	movq	$O_RDONLY,	%rsi
 	syscall
-	cmpl	$-1,		%eax
+	cmpq	$-1,		%rax
 	jle	.Lopen_fail
 	ret
 .Lopen_fail:

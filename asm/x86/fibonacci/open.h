@@ -1,12 +1,9 @@
 #ifndef OPEN_H
 #define OPEN_H
 
-#include <asm/unistd_64.h> /* For syscalls macros */
-
-
 /* open syscall
 
-	%rdi - zero terminated string containing the path to the file to be opened
+	%rdi - address of zero terminated string containing the path to the file to be opened
 	%rsi - open flags (defined in <fcntl.h>
 	%rdx - extended use of flags
 

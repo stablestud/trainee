@@ -1,3 +1,5 @@
+#include <asm/unistd_64.h> /* For syscalls macros */
+
 #include "mmap.h"
 
 /* mmap syscall
@@ -10,8 +12,9 @@
 	%r8  - offset in bytes in the file
 
 	Success: returns beginning address of mapped memory
-	Fail:    returns -1
+	Fail:    returns MAP_FAILED (def in <sys/mman.h>)
 */
+.globl	mmap
 
 mmap:
 	movl	$__NR_mmap,	%eax	/* Syscall number */

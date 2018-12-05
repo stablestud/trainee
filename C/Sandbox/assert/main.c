@@ -9,7 +9,7 @@
 #define Q(X) #X
 //#define NDEBUG
 
-// Set ling to 0 and file name to expanded macro X(__STDC__)
+// Set line to 0 and file name to expanded macro X(__STDC__)
 #line 0 X(__STDC__)
 
 double func1( int hello )

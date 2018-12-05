@@ -1,0 +1,42 @@
+3.1.8.1 Mismatch operations
+
+Objectives
+Familiarize the student with:
+
+mismatch - using the function;
+mismatch - preparing data.
+Scenario
+You have two series of given numbers (in the code below). Try to find mismatches (with the use of the mismatch function) in this data, assuming that a mismatch is when two values differ by more than a certain value (starting at value 15). Try to find mismatches until there are no more mismatches. Display (as in the output shown) the actual values, and the values from both vectors, adding 1 in each iteration.
+
+Your version of the program must print the same result as the expected output.
+
+First difference greater than 15 is found: 211 - 227
+First difference greater than 16 is found: 302 - 320
+First difference greater than 17 is found: 302 - 320
+First difference greater than 18 is found: 229 - 210
+First difference greater than 19 is found: 260 - 239
+First difference greater than 20 is found: 260 - 239
+First difference greater than 21 is found: 311 - 333
+
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+//your code
+
+int main()
+{
+	vector<int> original_values =
+		{ 210, 314, 202, 110, 211, 302, 358, 229, 260, 411, 412, 311, 373, 483 };
+
+	vector<int> noisy_values =
+		{ 211, 324, 203, 113, 227, 320, 340, 210, 239, 411, 412, 333, 371, 501 };
+
+	//your code
+
+	return 0;
+}

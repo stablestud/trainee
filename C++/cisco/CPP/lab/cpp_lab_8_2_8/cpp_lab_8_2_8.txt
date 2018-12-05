@@ -1,0 +1,36 @@
+8.2.8.1 Using stringstream
+
+Objectives
+Familiarize the student with:
+
+stringstream - simple usage;
+stringstream - using it with getline.
+Scenario
+Write a program that takes one line from the user (store it in a string variable). Next, your program should tokenize it with getline and stringstream (use a colon as a separator), and display each token on a separate line.
+
+Your version of the program must print the same result as the expected output for all given input. Test it for all input cases.
+
+Example input
+ABC:DEF:GHA
+
+Example output
+ABC DEF GHA
+
+Example input
+A1:B2:C3
+
+Example output
+A1 B2 C3
+
+
+#include <iostream>
+#include <string>
+#include <sstream>
+
+using namespace std;
+
+int main() {
+	//your code
+
+	return 0;
+}

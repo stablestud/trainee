@@ -1,0 +1,8 @@
+#include <stdio.h> 
+
+int main(void) { 
+        char t[] = { 'a', 'z', 'B', 'Z', '0' };
+
+        printf("%d\n", t[t[1] - t[0] - t[3] + t[2] + 3] - t[4]);
+        return 0; 
+} 

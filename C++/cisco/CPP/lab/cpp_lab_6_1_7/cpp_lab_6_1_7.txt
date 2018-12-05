@@ -1,0 +1,58 @@
+6.1.7.1 Set-related operations
+
+Objectives
+Familiarize the student with:
+
+set-related operations - finding max;
+set-related operations - finding min;
+set-related operations - operating on objects.
+Scenario
+We'll use the data from the previous task to find the biggest and the smallest countries from both datasets. Your program should display:
+
+name and area of the smallest country from the first vector;
+name and area of the smallest country from the second vector;
+name and area of the biggest country from the first vector;
+name and area of the biggest country from the second vector.
+Your version of the program must print the same result as the expected output.
+
+Algeria 2381
+Algeria 2381
+Russia 17098
+Brazil 8515
+
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <functional>
+
+using namespace std;
+
+struct Country
+{
+	string name;
+	int area;
+};
+
+//your code
+
+int main()
+{
+	vector <Country> countries = {
+		{ "India", 3287 },{ "Argentina", 2780 },
+		{ "Brazil", 8515 },{ "Australia", 7692 },
+		{ "China", 9572 },{ "United States of America", 9525 },
+		{ "Russia", 17098 },{ "Canada", 9984 },
+		{ "Kazakhstan", 	2724 },{ "Algeria", 2381 }
+	};
+
+	vector <Country> countries_small = {
+		{ "Brazil", 8515 },{ "Australia", 7692 },
+		{ "Kazakhstan", 	2724 },{ "Algeria", 2381 }
+	};
+
+	//your code
+	
+	return 0;
+}

@@ -1,0 +1,11 @@
+#include <stdio.h> 
+
+int main(void) { 
+#undef X 
+	int X = 1; 
+	int Y = X - 2; 
+#define	X -2 
+	printf("%d",Y+X); 
+
+	return 0; 
+}

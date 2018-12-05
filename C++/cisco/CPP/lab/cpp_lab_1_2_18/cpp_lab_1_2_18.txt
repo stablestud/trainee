@@ -1,0 +1,44 @@
+1.2.18.1 Lists - filling them with values
+
+Objectives
+Familiarize the student with:
+
+lists - creating them;
+lists - filling them with values;
+lists - removing and inserting values;
+printing on screen.
+Scenario
+Fill in the blanks in the program. After this, test your program (just run it). Your version of the program must print the same result as the expected output.
+
+6 9 6 8
+
+
+#include <iostream>
+#include <list>
+
+using namespace std;
+
+int main()
+{
+	list<int> elements1({ 1, 2, 3 });
+	list<int> elements2(___________);
+
+	cout << elements1.front() + elements2.front() << " ";
+
+	elements1.remove(2);
+	elements2.remove(8);
+
+	cout << elements1.back() + elements2.back() << " ";
+
+	elements1.pop_back();
+	elements2.pop_back();
+	elements2.insert(elements2.begin(), 7);
+
+	cout << elements1.back() + elements2.back() << " ";
+
+	elements2.pop_back();
+
+	cout << elements1.back() + elements2.back() << " ";
+
+	return 0;
+}

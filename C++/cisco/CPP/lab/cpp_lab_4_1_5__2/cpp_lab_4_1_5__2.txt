@@ -1,0 +1,53 @@
+4.1.5.2 Conditional replace operations - part II
+
+Objectives
+Familiarize the student with:
+
+Conditional replace - using the function;
+Conditional replace - writing a predicate.
+Scenario
+Write a program that creates a vector of the populations of the ten largest cities (the values are given in the code below - only the city proper). Next, your program should ask user for a number, but should replace only those values which are lesser or greater by one million than the given value. At the end of program, you should print all the values on separate lines.
+
+Your version of the program must print the same result as the expected output for all given inputs.
+
+Example input
+16000000
+
+Example output
+24256800 23500000 21516000 12038175 16000000 16000000 16000000 14025000 13513734 12478447
+
+Example input
+13111222
+
+Example output
+24256800 23500000 21516000 12038175 16970105 16787941 16060303 13111222 13111222 13111222
+
+Example input
+24500001
+
+Example output
+24500001 23500000 21516000 12038175 16970105 16787941 16060303 14025000 13513734 12478447
+
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+//your code
+
+int main()
+{
+	vector<int> populations = 
+		{ 24256800, 23500000, 21516000, 12038175, 16970105, 
+		  16787941, 16060303, 14025000, 13513734, 12478447 };
+
+	int new_value;
+	cin >> new_value;
+
+	//your code
+
+	return 0;
+}

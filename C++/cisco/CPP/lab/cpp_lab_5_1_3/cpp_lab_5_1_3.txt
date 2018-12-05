@@ -1,0 +1,39 @@
+5.1.3.1 Sorting objects
+
+Objectives
+Familiarize the student with:
+
+sort - sorting;
+sort - the comparator function;
+printing on screen.
+Scenario
+Write a program that creates one vector of points (as in the code below - you must create the class Point) and sort these points in ascending order. One point is greater than another when its distance from the center point (0, 0) is greater. Print the values from the vector before and after sorting. Remember that you must write you own comparator function.
+
+Your version of the program must print the same result as the expected output. Test it for more cases (add some points).
+
+1 2
+3 5
+2 2
+
+1 2
+2 2
+3 5
+
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+
+using namespace std;
+
+//your code 
+
+int main()
+{
+	vector <Point> points = { {1, 2}, {3, 5}, {2, 2} };
+
+	//your code 
+
+	return 0;
+}

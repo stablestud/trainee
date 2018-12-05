@@ -1,0 +1,51 @@
+2.3.8.1 Maps - accessing data
+
+Objectives
+Familiarize the student with:
+
+lists - creating them;
+lists - filling them with values;
+lists - removing and inserting values;
+printing on screen.
+Scenario
+Fill in the blanks in the program. After this, test your program (just run it). This program holds the values of a building area in meters. Each numbered building can consist of many smaller buildings (marked with letters). Your version of the program must print the same result as the expected output.
+
+Building number: 1 letter: a has: 30 square meters.
+Building number: 1 letter: b has: 40 square meters.
+Building number: 2 letter: a has: 50 square meters.
+Building number: 2 letter: b has: 25 square meters.
+Building number: 2 letter: c has: 11 square meters.
+Building number: 3 letter: a has: 20 square meters.
+Building number: 3 letter: b has: 35 square meters.
+
+
+#include <iostream>
+#include <map>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+	map<char, int> building1 = { { 'a', 30 },{ 'b', 40 } };
+	map<char, int> building2 = { { 'a', 50 },{ 'b', 25 }, {'c', 11} };
+	map<char, int> building3 = { { 'a', 20 },{ 'b', 35 } };
+	map<int, map<char, int>> buildings = {
+		{1, building1 },
+		{2, building2 },
+		{3, building3 }
+	};
+
+	for (_____________________ : buildings)
+	{
+		for (_______________________________________)
+		{
+
+			cout << "Building number: " << ______________________ 
+				 << " letter: " << ______________ << " has: " 
+				 << _______________ << " square meters." << endl;
+		}
+	}
+
+	return 0;
+}

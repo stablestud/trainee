@@ -1,0 +1,45 @@
+4.1.9.1 Reversing operations
+
+Objectives
+Familiarize the student with:
+
+reverse_copy - using the function.
+Scenario
+Write a program that checks if a sequence of given numbers is a palindrome of some other numbers (the sequence is given in the code below).
+
+A palindrome is a sequence of numbers which reads the same backward as forward.
+
+First, get five numbers from the user, then create a reversed copy of this sequence, then check it for equality with the given values. If it's equal, print "Palindrome." Otherwise print "Not palindrome."
+
+Think about this: do you have to keep the original values of both sequences in all cases?
+
+Your version of the program must print the same result as the expected output.
+
+Example input
+8 7 6 5 1
+
+Example output
+Palindrome.
+
+Example input
+1 2 3 4 5
+
+Example output
+Not palindrome
+
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <string>
+
+using namespace std;
+
+int main() 
+{
+	vector<int> values = { 1, 5, 6, 7, 8 };
+
+	//your code
+
+	return 0;
+}

@@ -1,0 +1,57 @@
+4.1.6.1 Filling operations
+
+Objectives
+Familiarize the student with:
+
+fill - using the function;
+fill_n - using the function;
+transform - using the function.
+Scenario
+Write a program that creates five vectors of the same size (the first vector is filled with the values: 6, 5, 7, 3, 4, 6, 5, 7, 3, 4, while the rest of them are not initialized with any values at the start). Fill the second vector with the value 3 (with the fill function) and the third vector with the value 2.
+
+Ask the user for a number: this is the count of the elements of the first vector to be filled with the value 5. Next, your program should add all values from the first and second vectors and store the result in the fourth vector. Then, your program should subtract all values from the first and third vectors and store the result in the fifth vector.
+
+After this, print the values of the two results of the vectors (4th and 5th).
+
+What will happen when the user inputs a number greater than 10? Check it (you don't have to handle it in the code, just test improper user input).
+
+Your version of the program must print the same result as the expected output for all given input. Test it for all input cases.
+
+Example input
+1
+
+Example output
+8 8 10 6 7 9 8 10 6 7 3 3 5 1 2 4 3 5 1 2
+
+Example input
+5
+
+Example output
+8 8 8 8 8 9 8 10 6 7 3 3 3 3 3 4 3 5 1 2
+
+Example input
+9
+
+Example output
+8 8 8 8 8 8 8 8 8 7 3 3 3 3 3 3 3 3 3 2
+
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+//your code
+
+int main()
+{
+	vector<int> values = { 6, 5, 7, 3, 4, 6, 5, 7, 3, 4 };
+
+	//your code
+
+	cout << endl;
+
+	return 0;
+}

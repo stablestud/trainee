@@ -1,0 +1,62 @@
+2.2.7.2 Multisets - iterators
+
+Objectives
+Familiarize the student with:
+
+multisets - creating them;
+multisets - filling them with values;
+multisets - iterating over them;
+printing on screen.
+Scenario
+Fill in the blanks in the program. After this, test your program (just run it). Your version of the program must print the same result as the expected output.
+
+Example input
+1
+
+Example output
+18 17 14 12 10 7 4 1 found 1 times.
+
+Example input
+8
+
+Example output
+25 24 21 19 17 14 11 8 found 3 times.
+
+
+#include <iostream>
+#include <set>
+
+using namespace std;
+
+int main()
+{
+	multiset<int> m1 = { 1, 5, 7, 8, 9, 4, 5};
+	multiset<int> m2 = { ___________________};
+
+	unsigned value;
+
+	cin >> value;
+
+	int count = 0;
+
+	for (auto x : m1)
+	{
+		if (x == value)
+			count++;
+	}
+
+	for (auto x : m2)
+	{
+		if (x == value)
+			count++;
+	}
+
+	for (set<int>::reverse_iterator it1 = m1.rbegin(), it2 = m2.______(); it1 != m1.rend(); ++it1, _____)
+	{
+		cout << *it1 + *it2 + value << " ";
+	}
+
+	cout << endl << value << " found " << count << " times." << endl;
+
+	return 0;
+}

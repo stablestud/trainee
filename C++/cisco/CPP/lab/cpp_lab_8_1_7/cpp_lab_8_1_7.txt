@@ -1,0 +1,49 @@
+8.1.7.1 Using cout - formatting
+
+Objectives
+Familiarize the student with:
+
+cout - using it;
+cout - formatting the output;
+printing on screen.
+Scenario
+Write a program that gets a double value from the user and displays it in seven different combinations of formats and precisions.
+
+First, write the value without setting any precision or format, then set the format to fixed, and precision to 2, 3 and 4. Next, set the format to scientific and precision to 2, 3 and 4. Display the values after each precision change.
+
+Your version of the program must print the same result as the expected output for all given input. Test it for all input cases.
+
+Example input
+1.23456789
+
+Example output
+1.23457 1.23 1.235 1.2346 1.23e+00 1.235e+00 1.2346e+00
+
+Example input
+4.321
+
+Example output
+4.321 4.321 4.32 4.321 4.3210 4.32e+00 4.321e+00 4.3210e+00
+
+Example input
+9.87
+
+Example output
+9.87 9.87 9.870 9.8700 9.87e+00 9.870e+00 9.8700e+00
+
+
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+	double value;
+	cin >> value;
+
+	//your code
+
+	return 0;
+}

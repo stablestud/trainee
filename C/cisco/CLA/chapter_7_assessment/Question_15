@@ -1,0 +1,17 @@
+#include <stdio.h> 
+
+int main(void) { 
+	char s[20]; 
+
+	FILE *f = fopen("file","w"); 
+	int i = fputs("12A",f); 
+
+	fclose(f); 
+	f = fopen("file","r"); 
+
+	fgets(s,20,f); 
+	puts(s); 
+
+	fclose(f); 
+	return 0; 
+}

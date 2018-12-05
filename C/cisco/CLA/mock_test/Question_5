@@ -1,0 +1,6 @@
+int X = 8;
+X = X - X / 2;
+X = X * X / 4;
+X = X + 2 * X;
+
+// Whats the value of X?

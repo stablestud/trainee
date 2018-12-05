@@ -1,0 +1,53 @@
+3.1.2.1 for_each - part I
+
+Objectives
+Familiarize the student with:
+
+for_each - preparing the function;
+for_each - preparing the function object;
+for_each - using the function.
+Scenario
+Fill in the blanks in the program. After this, test your program (just run it). Your version of the program must print the same result as the expected output.
+
+Print all elements of the set - using the function
+4 6 7 9 10
+Print all elements of the set - using the function object
+4 6 7 9 10
+
+
+#include <iostream>
+#include <set>
+#include <algorithm>
+
+using namespace std;
+
+void printPlusOne(_________________) 
+{
+	cout << value + 1 << " ";
+}
+
+struct PrintPlusOne
+{
+	void operator()(_____ int & value) //change argument to const int & value for set
+	{
+		cout << _________ << " ";
+	}
+};
+
+int main()
+{
+	set <int>s1 = { ______________};
+
+	cout<<"Print all elements of the set - using the function\n";
+	for_each(s1.begin(), s1.end(), printPlusOne); 
+
+	cout<<endl;
+
+	cout<<"Print all elements of the set - using the function object\n";
+
+	for_each(s1.begin(), s1.end(), PrintPlusOne() ); 
+
+	cout<<endl;
+
+	return 0;
+}

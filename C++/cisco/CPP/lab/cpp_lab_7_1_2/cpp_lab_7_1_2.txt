@@ -1,0 +1,42 @@
+7.1.2.1 Functional operators
+
+Objectives
+Familiarize the student with:
+
+using functional operators;
+Printing on screen.
+Scenario
+Write a program that computes two students' grades. The grades for both students are given in vectors (the data is in the code below), and so are the weights for each subject (the size of this vector is equal to the grades vectors). You should use functional operators to compute the weighted grades. After this, print each student separately: the original values of the grades, the weighted values, and the sum and average of the weighted values.
+
+Write a simple function to print each student's data and call it twice (for each student). You can use the accumulate function (numeric header) to sum up a vector, but remember: the last argument's type of accumulate is used not for the initial value, but for the type of the result (so use 0.0 instead of 0).
+
+Your version of the program must print the same result as the expected output for all given input.
+
+8 5 9 7
+7 4 8 6
+6 3 7 5
+
+
+#include <iostream>
+#include <algorithm>
+#include <iterator>
+#include <functional>
+#include <vector>
+#include <numeric>
+
+using namespace std;
+
+//your code
+
+int main()
+{
+	vector<double> student1Grades = { 3, 4, 5, 4, 4.5, 5, 3.5, 4 };
+	vector<double> student2Grades = { 5, 4.5, 5, 4.5, 3, 3, 3.5, 5 };
+	vector<double> gradeWeights =  { 0.05, 0.15, 0.1, 0.2, 0.05, 0.3, 0.1, 0.05 };
+	vector<double> weighted1(8);
+	vector<double> weighted2(8);
+
+	//your code
+
+	return 0;
+}

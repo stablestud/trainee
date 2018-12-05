@@ -1,0 +1,41 @@
+6.1.2.1 Merging
+
+Objectives
+Familiarize the student with:
+
+lists - creating them;
+lists - filling them with values;
+lists - removing and inserting values;
+printing on screen.
+Scenario
+Write a program that creates two vectors of points (as in the code below - you must create the class Point) and merge these vectors into a third vector (take only the two points closest to the center from each vector). One point is greater than the other when its distance from the center point (0, 0) is greater.
+
+Print the values from the merged vector after merging. Remember that you must write and use you own comparator function (or you can add some smart code to the Point class).
+
+Your version of the program must print the same result as the expected output. Test it for more cases (add some more points).
+
+1 2
+2 1
+2 2
+3 2
+
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <iterator>
+
+using namespace std;
+
+//your code
+
+int main()
+{
+	vector <Point> pointsA = { { 1, 2 },{ 3, 5 },{ 2, 2 } };
+	vector <Point> pointsB = { { 3, 2 },{ 2, 1 },{ 4, 1 } };
+	vector <Point> pointsClosest;
+
+	//your code
+
+	return 0;
+}

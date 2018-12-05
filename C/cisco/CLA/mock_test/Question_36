@@ -1,0 +1,16 @@
+#include <stdio.h> 
+#include <string.h>
+
+char *f(int p, char *s) { 
+        s[p + 2] = '\0';
+        return s - 1;
+} 
+
+int main(void) { 
+        char s[] = "ABCDEF";
+
+        int i = strlen(f(1,s + 2));
+        printf("%d\n",i); 
+
+        return 0; 
+}

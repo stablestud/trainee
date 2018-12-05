@@ -1,0 +1,37 @@
+2.3.14.1 Maps - operations
+
+Objectives
+Familiarize the student with:
+
+maps - creating and filling them with values;
+maps - removing and inserting values;
+printing on screen.
+Scenario
+Write a program that creates a map of students' results (the values are given in the code below). Next, your program should print all the scores, delete Bart's result, print all the scores again, add Bob's result (with a value of 16) and print all the scores for the last time. Add one newline after the first two prints to clarify the output. Your version of the program must print the same result as the expected output.
+
+Bart result is : 17
+John result is : 12
+Sarah result is : 15
+
+John result is : 12
+Sarah result is : 15
+
+Bob result is : 16
+John result is : 12
+Sarah result is : 15
+
+
+#include <iostream>
+#include <map>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+	map<string, int> results = { {"Sarah", 15 }, {"John", 12 }, {"Bart", 17} };
+
+	//your code
+
+	return 0;
+}

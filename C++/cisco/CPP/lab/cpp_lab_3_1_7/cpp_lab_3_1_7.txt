@@ -1,0 +1,45 @@
+3.1.7.1 Counting operations
+
+Objectives
+
+Familiarize the student with:
+
+    count_if - using the function;
+    count_if - using the function with a predicate.
+
+Scenario
+
+Write a program that creates one vector of double numbers (the values are given in the code below), and asks the user for two numbers: start_value and stop_value.
+
+After this, print how many elements are in the given range (you don't have to check the correctness of the range - if the user inputs incorrect values, then he or she just finds zero elements).
+
+Your version of the program must print the same result as the expected output for all given input. Test it for all input cases.
+
+1
+2
+
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+//your code
+
+int main()
+{
+	vector<double> values = 
+		{ 2.1, 3.14, 2.2, 1.1, 2.11, 3.2, 3.6, 2.5, 2.6, 4.11, 4.12, 3.11, 3.73, 4.83};
+
+	unsigned start_value;
+	cin >> start_value;
+
+	unsigned stop_value;
+	cin >> stop_value;
+
+	//your code
+
+	return 0;
+}

@@ -1,0 +1,43 @@
+
+#define STAT	(-STAT_dev \
+		- STAT_ino \
+		- STAT_nlink \
+		- STAT_mode \
+		- STAT_uid \
+		- STAT_gid \
+		- STAT_pad \
+		- STAT_rdev \
+		- STAT_size \
+		- STAT_blksize \
+		- STAT_blocks \
+		- STAT_atime \
+		- STAT_atime_nsec \
+		- STAT_mtime \
+		- STAT_mtime_nsec \
+		- STAT_ctime \
+		- STAT_ctime_nsec)
+
+#define STAT_dev	8
+#define STAT_ino	8
+#define STAT_nlink	4
+#define STAT_mode	4
+#define STAT_uid	4
+#define STAT_gid	4
+#define STAT_rdev	8
+#define STAT_pad	8
+#define STAT_size	8
+#define STAT_blksize	8
+#define STAT_blocks	8
+#define STAT_atime	8
+#define STAT_atime_nsec	8
+#define STAT_mtime	8
+#define STAT_mtime_nsec	8
+#define STAT_ctime	8
+#define STAT_ctime_nsec	8
+
+#define O_RDONLY	     00
+#define O_WRONLY	     01
+#define O_RDWR		     02
+
+#define PROT_READ	0x1	
+#define MAP_PRIVATE	0x2

@@ -6,7 +6,7 @@
 	%rdi - file descriptor to close
 
 	Success: returns  0
-	Fail:    returns -1
+	Fail:    returns -1 (32 bit)
 */
 
 .extern open

@@ -2,6 +2,8 @@
 
 #include "open.h"
 
+.text
+
 /* Open syscall
 
 	%rdi - address of zero terminated string containing the path to the file to be opened
@@ -9,11 +11,16 @@
 	%rdx - extended use of flags
 
 	Success: returns file descriptor of opened file
-	Fail:    returns -1
+	Fail:    returns -1 (32 bit)
 */
 .globl	open
 
 open:
 	movl	$__NR_open,	%eax
 	syscall
+	cmpl	$-4096,		%eax
+	ja	.Lopfailed
+	ret
+.Lopfailed:
+	movl	$-1,		%eax
 	ret

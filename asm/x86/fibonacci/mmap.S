@@ -2,6 +2,8 @@
 
 #include "mmap.h"
 
+.text
+
 /* mmap syscall
 
 	%rdi - starting address from where len memory should be mapped (0 to let system decide)
@@ -12,7 +14,7 @@
 	%r8  - offset in bytes in the file
 
 	Success: returns beginning address of mapped memory
-	Fail:    returns MAP_FAILED (def in <sys/mman.h>)
+	Fail:    returns MAP_FAILED (defined in <sys/mman.h>)
 */
 .globl	mmap
 

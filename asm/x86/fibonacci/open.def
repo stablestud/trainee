@@ -1,5 +1,5 @@
-#ifndef FILE_DEF
-#	define FILE_DEF
+#ifndef OPEN_DEF
+#	define OPEN_DEF
 
 #	ifndef O_ACCMODE
 #		define O_ACCMODE	00000003
@@ -42,7 +42,7 @@
 #	endif /* O_NONBLOCK */
 
 #	ifndef O_DSYNC
-#		define O_DSYNC		00010000	/* used to be O_SYNC, see below */
+#		define O_DSYNC		00010000	/* used to be O_SYNCw */
 #	endif /* O_DSYNC */
 
 #	ifndef FASYNC
@@ -73,4 +73,4 @@
 #		define O_CLOEXEC	02000000	/* set close_on_exec */
 #	endif /* O_CLOEXEC */
 
-#endif /* FILE_DEF */
+#endif /* OPEN_DEF */

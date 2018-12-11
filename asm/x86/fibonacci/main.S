@@ -7,7 +7,7 @@
 
 .data
 
-rwf:	.asciz	"Couldn't read path.\n"
+rpf:	.asciz	"Couldn't read path.\n"
 opf:	.asciz	"Couldn't open file.\n"
 mmf:	.asciz	"Couldn't mmap file.\n"
 
@@ -25,20 +25,24 @@ mmf:	.asciz	"Couldn't mmap file.\n"
 
 .globl _start
 _start:
+	/* read file path */
 	movq	80(%rsp),	%rsp
 	movq	%rsp,		%rdi
 	movq	$80,		%rsi
-	call	read_word
+	call	read_string
 	testq	%rax,		%rax
-	jz	.Lrwfailed
+	jz	.Lrpfailed
+
+	/* open and map file to memory */
 	movq	%rax,		%rdi
 	call	fload
 	cmpq	$-1,		%rax
 	je	.Lflofailed
 	cmpq	$-2,		%rax
 	je	.Lflmfailed
-.Lrwfailed:	/* Read file path failed */
-	leaq	(rwf),		%rdi
+call	_exit
+.Lrpfailed:	/* Read file path failed */
+	leaq	(rpf),		%rdi
 	jmp	.Lperror
 .Lflofailed:	/* Couldn't open file */
 	leaq	(opf),		%rdi

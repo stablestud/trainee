@@ -23,26 +23,26 @@ fload:
 	movl	$O_RDONLY,	%esi
 	call	open
 	cmpl	$-1,		%eax
-	jle	.Lfailo
+	je	.Lopfailed
 
 	/* mmap syscall */
-	movq	%rax,		%r9
+	movq	%rax,		%r8
 	xorl	%edi,		%edi
-	movl	$1,		%esi
+	movl	$4096,		%esi
 	movl	$PROT_READ,	%edx
 	movq	$MAP_PRIVATE,	%r10
-	xorq	%r8,		%r8
+	xorq	%r9,		%r9
 	call	mmap
 	cmpl	$MAP_FAILED,	%eax
-	je	.Lfailm
+	je	.Lmmfailed
 	ret
 
 	/* open failed (-1) */	
-.Lfailo:
+.Lopfailed:
 	movq	$-1,		%rax
 	ret
 
 	/* mmap failed (-2) */
-.Lfailm:
+.Lmmfailed:
 	movq	$-2,		%rax
 	ret

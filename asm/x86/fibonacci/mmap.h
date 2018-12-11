@@ -11,7 +11,7 @@
 	%r8  - offset in bytes in the file
 
 	Success: returns beginning address of mapped memory
-	Fail:    returns MAP_FAILED (defined in <sys/mman.h>)
+	Fail:    returns MAP_FAILED (defined in <sys/mman.h>) (32 bit)
 */
 
 .extern mmap

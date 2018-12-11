@@ -20,12 +20,6 @@
 fload:
 	/* open syscall */
 	/* %rdi alreay set by function invocation */
-push %rdi
-call print_string
-call print_newline
-pop %rdi
-movq %rdi, %rax
-ret
 	movl	$O_RDONLY,	%esi
 	call	open
 	cmpl	$-1,		%eax

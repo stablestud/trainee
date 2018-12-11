@@ -1,4 +1,4 @@
-#include <asm/unistd_64.h> /* For syscalls macros */
+#include <asm/unistd_64.h> /* For syscall macros */
 
 #include "open.h"
 

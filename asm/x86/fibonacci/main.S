@@ -1,4 +1,19 @@
-/*	LOW-LEVEL-PROGRAMMING Chapter 4
+
+#include <asm/unistd_64.h> /* For syscall macros */
+
+#include "mmap.h"
+#include "open.h"
+#include "close.h"
+
+.data
+
+rwf:	.asciz	"Couldn't read path.\n"
+opf:	.asciz	"Couldn't open file.\n"
+mmf:	.asciz	"Couldn't mmap file.\n"
+
+.text
+
+/*	fibonacci
 	One number will be read from a file
 	which goes through multiple equations
 	- x^y factorial
@@ -8,26 +23,30 @@
 	- check if x is a fibonacci number
 */
 
-#include <asm/unistd_64.h> /* For syscalls macros */
-
-#include "mmap.h"
-#include "open.h"
-#include "close.h"
-
-.data
-
-f:	.asciz	"file.txt"
-
-
-.text
-
 .globl _start
 _start:
-	leaq	(f),		%rdi
-	xorl	%esi,		%esi
-	xorl	%edx,		%edx
-	call	open
-
-	movl	%eax,		%edi
-	movl	$__NR_exit,	%eax		
-	syscall
+	movq	80(%rsp),	%rsp
+	movq	%rsp,		%rdi
+	movq	$80,		%rsi
+	call	read_word
+	testq	%rax,		%rax
+	jz	.Lrwfailed
+	movq	%rax,		%rdi
+	call	fload
+	cmpq	$-1,		%rax
+	je	.Lflofailed
+	cmpq	$-2,		%rax
+	je	.Lflmfailed
+.Lrwfailed:	/* Read file path failed */
+	leaq	(rwf),		%rdi
+	jmp	.Lperror
+.Lflofailed:	/* Couldn't open file */
+	leaq	(opf),		%rdi
+	jmp	.Lperror
+.Lflmfailed:	/* To map specified file failed */
+	leaq	(mmf),		%rdi
+	jmp	.Lperror
+.Lperror:
+	call	print_string
+	movl	$-1,		%edi
+	call	_exit

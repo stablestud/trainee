@@ -1,3 +1,6 @@
+%ifndef LIB_INC
+	%define LIB_INC
+
 ; AMD64 functions that are similar to a few of the C stdlib functions
 ;
 ;	functions defined
@@ -17,8 +20,6 @@
 ;	- string_copy
 ;	- calliso
 
-%ifndef LIB_INC
-	%define LIB_INC
 
 ; -[exit]-
 ; Terminates the program

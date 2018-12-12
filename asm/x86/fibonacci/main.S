@@ -4,6 +4,7 @@
 #include "mmap.h"
 #include "open.h"
 #include "close.h"
+#include "../lib/lib.h"
 
 .data
 
@@ -15,7 +16,7 @@ mmf:	.asciz	"Couldn't mmap file.\n"
 
 /*	fibonacci
 	One number will be read from a file
-	which goes through multiple equations
+	which goes through multiple expressions
 	- x^y factorial
 	- 
 	- sum of all numbers digits
@@ -41,6 +42,7 @@ _start:
 	je	.Lflofailed
 	cmpq	$-2,		%rax
 	je	.Lflmfailed
+	movq	%rax,		%rdi
 call	_exit
 .Lrpfailed:	/* Read file path failed */
 	leaq	(rpf),		%rdi

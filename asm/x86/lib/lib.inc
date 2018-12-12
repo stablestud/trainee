@@ -148,11 +148,11 @@ global	read_word
 ; -[string_to_uint]-
 ; parse a string containing a unsigned number to an unsigned integer
 ; takes:
-;       rdi - string address to read from, must be terminated with \0
+;       rdi - string address to read from, string must be terminated with \0
 ; modifies:
 ;       rax, rdx, rcx, rdi, r9, r10, r11
 ; returns:
-;       rax - unsigned integer value
+;       rax - unsigned integer value, -1 on failure
 ;	rdx - number of characters processed
 
 global	string_to_uint
@@ -161,11 +161,11 @@ global	string_to_uint
 ; -[string_to_int]-
 ; parse a string containing a signed number to an signed integer
 ; takes:
-;       rdi - string address to read from, must be terminated with \0
+;       rdi - string address to read from, string must be terminated with \0
 ; modifies:
 ;       rax, rcx, rdx, rsi, rdi, r8, r9, r10, r11
 ; returns:
-;       rax - signed integer value
+;       rax - signed integer value, -1 on failure
 ;	rdx - number of characters processed
 
 global	string_to_int

@@ -26,6 +26,7 @@ fload:
 	je	.Lopfailed
 
 	/* mmap syscall */
+	movq	%rax,		16(%rsp)	/* Save file descriptor to stack */
 	movq	%rax,		%r8
 	xorl	%edi,		%edi
 	movl	$4096,		%esi

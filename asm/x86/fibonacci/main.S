@@ -13,6 +13,7 @@ amf:	.asciz	"Couldn't allocate heap.\n"
 rpf:	.asciz	"Couldn't read path.\n"
 opf:	.asciz	"Couldn't open file.\n"
 mmf:	.asciz	"Couldn't mmap file.\n"
+rif:	.asciz	"Couldn't read integer from file.\n"
 
 .text
 
@@ -51,13 +52,16 @@ _start:
 .Lflmfailed:	/* To map specified file failed */
 	leaq	(mmf),		%rdi
 	jmp	.Lperror
+.Lrifailed:
+	leaq	(rif),		%rdi
+	jmp	.Lperror
 .Lperror:
 	call	print_string
 	movl	$-1,		%edi
 	call	_exit
 
 .Lrdflpath:
-	pushq	%rax
+	pushq	%rax				// PUSH #1 starting address of heap (8B)
 	/* read file path from stdin */
 	movq	%rax,		%rdi
 	movq	$4095,		%rsi
@@ -66,6 +70,8 @@ _start:
 	jz	.Lrpfailed
 
 	/* open and map file to memory */
+	xorl	%ecx,		%ecx
+	pushq	%rcx				// PUSH #2 file descriptor of file (8B)
 	movq	%rax,		%rdi
 	call	fload
 	cmpq	$-1,		%rax
@@ -75,4 +81,10 @@ _start:
 
 	/* Convert string in file to integer */
 	movq	%rax,		%rdi
+	call	string_to_uint
+	cmpq	$-1,		%rax
+	je	.Lrifailed
+	pushq	%rax				// PUSH #3 integer read from file (8B)
 
+	/* do something with integer */
+call _exit

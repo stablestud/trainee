@@ -655,6 +655,8 @@ align 16
 ; returns:
 ;       rax - return value of called function, if modified by function
 
+global calliso
+
 align 16
 calliso:
         push    rbx

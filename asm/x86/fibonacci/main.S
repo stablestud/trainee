@@ -17,13 +17,13 @@ rif:	.asciz	"Couldn't read integer from file.\n"
 
 .text
 
-/*	fibonacci
+/* Fibonacci
 	One number will be read from a file
 	which goes through multiple expressions
-	- x^y factorial
-	- 
-	- sum of all numbers digits
-	-
+	- x! (factorial, x! = 1 * 2 .... (x - 1) * x), it is guaranteed that x >= 0
+	- output 0 if the input number is prime, 1 otherwise
+	- sum of all number's digits
+	- x-th fibonacci number
 	- check if x is a fibonacci number
 */
 
@@ -85,6 +85,8 @@ _start:
 	cmpq	$-1,		%rax
 	je	.Lrifailed
 	pushq	%rax				// PUSH #3 integer read from file (8B)
+
+// unload mapping if not needed with munmap
 
 	/* do something with integer */
 call _exit

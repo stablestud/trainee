@@ -26,7 +26,8 @@ mmf:	.asciz	"Couldn't mmap file.\n"
 .globl _start
 _start:
 	/* read file path */
-	movq	80(%rsp),	%rsp
+	/* shouldn't I allocated memory for this area? */
+	movq	81(%rsp),	%rsp
 	movq	%rsp,		%rdi
 	movq	$80,		%rsi
 	call	read_string

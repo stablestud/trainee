@@ -39,6 +39,11 @@
 #		define MAP_PRIVATE	0x02		/* Changes are private.  */
 #	endif /* MAP_PRIVATE */
 
+#	ifndef MAP_ANONYMOUS
+#		define MAP_ANONYMOUS	0x20		/* Don't use a file.  */
+#		define MAP_ANON		MAP_ANONYMOUS
+#	endif /* MAP_ANONYMOUS */
+
 
 #	ifndef MAP_FAILED
 #		define MAP_FAILED	-1

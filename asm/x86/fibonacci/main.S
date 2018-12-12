@@ -2,12 +2,14 @@
 #include <asm/unistd_64.h> /* For syscall macros */
 
 #include "mmap.h"
+#include "mmap.def"
 #include "open.h"
 #include "close.h"
 #include "../lib/lib.h"
 
 .data
 
+amf:	.asciz	"Couldn't allocate heap.\n"
 rpf:	.asciz	"Couldn't read path.\n"
 opf:	.asciz	"Couldn't open file.\n"
 mmf:	.asciz	"Couldn't mmap file.\n"
@@ -26,24 +28,20 @@ mmf:	.asciz	"Couldn't mmap file.\n"
 
 .globl _start
 _start:
-	/* read file path */
-	/* shouldn't I allocated memory for this area? */
-	movq	81(%rsp),	%rsp
-	movq	%rsp,		%rdi
-	movq	$80,		%rsi
-	call	read_string
-	testq	%rax,		%rax
-	jz	.Lrpfailed
+	movq	%rsp,		%rbp
+	/* Allocate memory to read file path into */
+	xorl	%edi,		%edi
+	movl	$1,		%esi
+	movl	$PROT_WRITE | PROT_READ,	%edx
+	movl	$MAP_ANON | MAP_PRIVATE,	%r10d
+	xorl	%r8d,		%r8d
+	xorl	%r9d,		%r9d
+	call	mmap
+	cmpl	$-1,		%eax
+	jne	.Lrdflpath
+	leaq	(amf),		%rdi
+	jmp	.Lperror
 
-	/* open and map file to memory */
-	movq	%rax,		%rdi
-	call	fload
-	cmpq	$-1,		%rax
-	je	.Lflofailed
-	cmpq	$-2,		%rax
-	je	.Lflmfailed
-	movq	%rax,		%rdi
-call	_exit
 .Lrpfailed:	/* Read file path failed */
 	leaq	(rpf),		%rdi
 	jmp	.Lperror
@@ -57,3 +55,24 @@ call	_exit
 	call	print_string
 	movl	$-1,		%edi
 	call	_exit
+
+.Lrdflpath:
+	pushq	%rax
+	/* read file path from stdin */
+	movq	%rax,		%rdi
+	movq	$4095,		%rsi
+	call	read_string
+	testq	%rax,		%rax
+	jz	.Lrpfailed
+
+	/* open and map file to memory */
+	movq	%rax,		%rdi
+	call	fload
+	cmpq	$-1,		%rax
+	je	.Lflofailed
+	cmpq	$-2,		%rax
+	je	.Lflmfailed
+
+	/* Convert string in file to integer */
+	movq	%rax,		%rdi
+

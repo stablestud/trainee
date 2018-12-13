@@ -10,7 +10,6 @@
 	Success: returns file descriptor of opened file
 	Fail:    returns -1 (32 bit)
 */
-
 .extern open
 
 #endif /* OPEN_H */

@@ -11,9 +11,18 @@
 	%r8  - offset in bytes in the file
 
 	Success: returns beginning address of mapped memory
-	Fail:    returns MAP_FAILED (defined in <sys/mman.h>) (32 bit)
+	Failure: returns MAP_FAILED (defined in <sys/mman.h>) (32 bit)
 */
-
 .extern mmap
+
+/* munmap syscall
+
+	%rdi - address page which should be unmapped, unmaps only complete pages
+	%rsi - amount of bytes from starting address which should be unmapped
+
+	Success: returns 0
+	Failure: returns -1
+*/
+.extern munmap
 
 #endif /* MMAP_H */

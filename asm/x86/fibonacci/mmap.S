@@ -28,3 +28,24 @@ mmap:
 .Lmmfailed:
 	movl	$MAP_FAILED,	%eax
 	ret
+
+
+/* munmap syscall
+
+	%rdi - address page which should be unmapped, unmaps only complete pages
+	%rsi - amount of bytes from starting address which should be unmapped
+
+	Success: returns 0
+	Failure: returns -1
+*/
+.globl munmap
+
+munmap:
+	movl	$__NR_munmap,	%eax	/* Syscall number */
+	syscall
+	cmpl	$-4096,		%eax
+	ja	.Lumfailed
+	ret
+.Lumfailed:
+	movl	$-1,		%eax
+	ret

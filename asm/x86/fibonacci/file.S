@@ -47,3 +47,37 @@ fload:
 .Lmmfailed:
 	movq	$-2,		%rax
 	ret
+
+
+/* Unmaps file and close file decriptor
+	
+	%rdi - address to mapped memory
+	%rsi - file descriptor to close
+
+	Success: return zero
+	Failure: prints error message and return -1 or -2 (64bit)
+*/
+.globl	funload
+
+funload:
+	pushq	%rsi
+	call	munmap
+	cmpl	$-1,		%eax
+	je	.Lmufailed
+	popq	%rdi
+	call	close
+	cmpl	$-1,		%eax
+	je	.Lclfailed
+	xorl	%eax,		%eax
+	ret
+
+	/* munmap failed (-1) */
+.Lmufailed:
+	popq	%rax
+	movq	$-1,		%rax
+	ret
+
+	/* close failed (-2) */
+.Lclfailed:
+	movq	$-2,		%rax
+	ret

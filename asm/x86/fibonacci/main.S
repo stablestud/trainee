@@ -9,6 +9,8 @@
 
 .data
 
+pmf:	.asciz	"Enter file to open: "
+
 amf:	.asciz	"Couldn't allocate heap.\n"
 rpf:	.asciz	"Couldn't read path.\n"
 opf:	.asciz	"Couldn't open file.\n"
@@ -39,10 +41,10 @@ _start:
 	xorl	%r9d,		%r9d
 	call	mmap
 	cmpl	$-1,		%eax
-	jne	.Lrdflpath
+	jne	.Lpmf
+
 	leaq	(amf),		%rdi
 	jmp	.Lperror
-
 .Lrpfailed:	/* Read file path failed */
 	leaq	(rpf),		%rdi
 	jmp	.Lperror
@@ -52,7 +54,7 @@ _start:
 .Lflmfailed:	/* To map specified file failed */
 	leaq	(mmf),		%rdi
 	jmp	.Lperror
-.Lrifailed:
+.Lrifailed:	/* To read an integer out of the memory failed */ 
 	leaq	(rif),		%rdi
 	jmp	.Lperror
 .Lperror:
@@ -60,10 +62,15 @@ _start:
 	movl	$-1,		%edi
 	call	_exit
 
-.Lrdflpath:
+.Lpmf:
 	pushq	%rax				// PUSH #1 starting address of heap (8B)
+	/* Print message to user */
+	leaq	(pmf),		%rdi
+	call	print_string
+	movq	(%rsp),		%rdi
+
+.Lrdflpath:
 	/* read file path from stdin */
-	movq	%rax,		%rdi
 	movq	$4095,		%rsi
 	call	read_string
 	testq	%rax,		%rax

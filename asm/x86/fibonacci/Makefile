@@ -1,4 +1,4 @@
-all: mkdir file open mmap close main lib
+all: mkdir file open mmap close main factorial lib
 	ld bin/*.o -o bin/fibonacci
 mkdir:
 	mkdir -p bin/
@@ -12,6 +12,8 @@ open:	open.S open.h mkdir
 	gcc -c open.S -o bin/open.o
 main:	main.S mkdir
 	gcc -c main.S -o bin/main.o
+factorial:	factorial.S factorial.h mkdir
+	gcc -c factorial.S -o bin/factorial.o
 lib:	../lib mkdir
 	make -C ../lib obj
 	cp ../lib/bin/lib.o bin/lib.o

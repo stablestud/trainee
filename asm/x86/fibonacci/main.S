@@ -10,6 +10,8 @@
 .data
 
 pmf:	.asciz	"Enter file to open: "
+pmc:	.asciz	"Factorial of number "
+pmcc:	.asciz  " is "
 
 amf:	.asciz	"Couldn't allocate heap.\n"
 rpf:	.asciz	"Couldn't read path.\n"
@@ -23,10 +25,10 @@ rif:	.asciz	"Couldn't read integer from file.\n"
 	One number will be read from a file
 	which goes through multiple expressions
 	- x! (factorial, x! = 1 * 2 .... (x - 1) * x), it is guaranteed that x >= 0
-	- output 0 if the input number is prime, 1 otherwise
-	- sum of all number's digits
-	- x-th fibonacci number
-	- check if x is a fibonacci number
+	X output 0 if the input number is prime, 1 otherwise
+	X sum of all number's digits
+	X x-th fibonacci number
+	X check if x is a fibonacci number
 */
 
 .globl _start
@@ -92,6 +94,19 @@ _start:
 	cmpq	$-1,		%rax
 	je	.Lrifailed
 	pushq	%rax				// PUSH #3 integer read from file (8B)
+
+	/* Calculate and print factorial result */
+	leaq	(pmc),		%rdi
+	call	print_string
+	movq	(%rsp),		%rdi
+	call	print_uint
+	leaq	(pmcc),		%rdi
+	call	print_string
+	movq	(%rsp),		%rdi
+	call	factorial
+	movq	%rax,		%rdi
+	call	print_uint
+	call	print_newline
 
 // unload mapping if not needed with munmap
 

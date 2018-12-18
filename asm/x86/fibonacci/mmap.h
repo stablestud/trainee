@@ -21,7 +21,7 @@
 	%rsi - amount of bytes from starting address which should be unmapped
 
 	Success: returns 0
-	Failure: returns -1
+	Failure: returns -1 (32 bit)
 */
 .extern munmap
 

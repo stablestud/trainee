@@ -61,6 +61,7 @@ fload:
 
 funload:
 	pushq	%rsi
+	movl	$1,		%esi
 	call	munmap
 	cmpl	$-1,		%eax
 	je	.Lmufailed

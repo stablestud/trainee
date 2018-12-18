@@ -19,6 +19,10 @@ opf:	.asciz	"Couldn't open file.\n"
 mmf:	.asciz	"Couldn't mmap file.\n"
 rif:	.asciz	"Couldn't read integer from file.\n"
 
+um1:	.asciz	"Failed to unload heap memory.\n"
+um2:	.ascii	"Failed to unload file from memory.\n"
+clf:	.asciz	"Couldn't close file.\n"
+
 .text
 
 /* Fibonacci
@@ -64,6 +68,24 @@ _start:
 	movl	$-1,		%edi
 	call	_exit
 
+.Lum1failed:
+	leaq	(um1),		%rdi
+	leaq	(.Lum1cont),	%rax
+	jmp	.Lumperror
+.Lum2failed:
+	leaq	(um2),		%rdi
+	leaq	(.Lum2cont),	%rax
+	jmp	.Lumperror
+.Lclfailed:
+	leaq	(clf),		%rdi
+	leaq	(.Lum2cont),	%rax
+.Lumperror:
+	push	%rax
+	call	print_string
+	pop	%rax
+	jmp	*%rax
+
+
 .Lpmf:
 	pushq	%rax				// PUSH #1 starting address of heap (8B)
 	/* Print message to user */
@@ -88,6 +110,7 @@ _start:
 	cmpq	$-2,		%rax
 	je	.Lflmfailed
 
+
 	/* Convert string in file to integer */
 	movq	%rax,		%rdi
 	call	string_to_uint
@@ -95,7 +118,25 @@ _start:
 	je	.Lrifailed
 	pushq	%rax				// PUSH #3 integer read from file (8B)
 
+	/* Unload first mapping */
+	movq	16(%rsp),	%rdi
+	movq	$1,		%rsi
+	call	munmap
+	testl	%eax,		%eax
+	jnz	.Lum1failed
+
+	/* Unload file */
+.Lum1cont:
+	movq	16(%rsp),	%rdi
+	movq	8(%rsp),	%rsi
+	call	funload
+	cmpq	$-1,		%rax
+	je	.Lum2failed
+	cmpq	$-2,		%rax
+	je	.Lclfailed
+
 	/* Calculate and print factorial result */
+.Lum2cont:
 	leaq	(pmc),		%rdi
 	call	print_string
 	movq	(%rsp),		%rdi
@@ -108,7 +149,6 @@ _start:
 	call	print_uint
 	call	print_newline
 
-// unload mapping if not needed with munmap
 
 	/* do something with integer */
 call _exit

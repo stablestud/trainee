@@ -17,7 +17,7 @@
 
 /* munmap syscall
 
-	%rdi - address page which should be unmapped, unmaps only complete pages
+	%rdi - address which should be unmapped, unmaps only complete pages
 	%rsi - amount of bytes from starting address which should be unmapped
 
 	Success: returns 0

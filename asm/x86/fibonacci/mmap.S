@@ -32,7 +32,7 @@ mmap:
 
 /* munmap syscall
 
-	%rdi - address page which should be unmapped, unmaps only complete pages
+	%rdi - address which should be unmapped, unmaps only complete pages
 	%rsi - amount of bytes from starting address which should be unmapped
 
 	Success: returns 0
@@ -43,8 +43,8 @@ mmap:
 munmap:
 	movl	$__NR_munmap,	%eax	/* Syscall number */
 	syscall
-	cmpl	$-4096,		%eax
-	ja	.Lumfailed
+	testl	%eax,		%eax
+	jnz	.Lumfailed
 	ret
 .Lumfailed:
 	movl	$-1,		%eax

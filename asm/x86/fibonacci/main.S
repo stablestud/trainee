@@ -1,17 +1,20 @@
 
 #include <asm/unistd_64.h> /* For syscall macros */
 
+#include "../lib/lib.h"
+#include "file.h"
 #include "mmap.h"
 #include "mmap.def"
-#include "open.h"
-#include "close.h"
-#include "../lib/lib.h"
+#include "factorial.h"
+#include "prime.h"
 
 .data
 
 pmf:	.asciz	"Enter file to open: "
 pmc:	.asciz	"Factorial of number "
 pmcc:	.asciz  " is "
+pmp:	.asciz	"a prime number.\n"
+pmnp:	.asciz	"not "
 
 amf:	.asciz	"Couldn't allocate heap.\n"
 rpf:	.asciz	"Couldn't read path.\n"
@@ -110,7 +113,6 @@ _start:
 	cmpq	$-2,		%rax
 	je	.Lflmfailed
 
-
 	/* Convert string in file to integer */
 	movq	%rax,		%rdi
 	call	string_to_uint
@@ -149,6 +151,20 @@ _start:
 	call	print_uint
 	call	print_newline
 
+	/* Calculate and print if number is a prime number */
+	movq	(%rsp),		%rdi
+	call	print_uint
+	leaq	(pmcc),		%rdi
+	call	print_string
+	movq	(%rsp),		%rdi
+	call	prime
+	testl	%eax,		%eax
+	jz	.Lpprime
+	leaq	(pmnp),		%rdi
+	call	print_string
+.Lpprime:
+	leaq	(pmp),		%rdi
+	call	print_string
 
 	/* do something with integer */
 call _exit

@@ -1,4 +1,3 @@
-
 #include <asm/unistd_64.h> /* For syscall macros */
 
 #include "../lib/lib.h"
@@ -7,6 +6,7 @@
 #include "mmap.def"
 #include "factorial.h"
 #include "prime.h"
+#include "digits.h"
 
 .data
 
@@ -15,6 +15,7 @@ pmc:	.asciz	"Factorial of number "
 pmcc:	.asciz  " is "
 pmp:	.asciz	"a prime number.\n"
 pmnp:	.asciz	"not "
+pms:	.asciz	"Sum of all digits: "
 
 amf:	.asciz	"Couldn't allocate heap.\n"
 rpf:	.asciz	"Couldn't read path.\n"
@@ -32,15 +33,14 @@ clf:	.asciz	"Couldn't close file.\n"
 	One number will be read from a file
 	which goes through multiple expressions
 	- x! (factorial, x! = 1 * 2 .... (x - 1) * x), it is guaranteed that x >= 0
-	X output 0 if the input number is prime, 1 otherwise
-	X sum of all number's digits
+	- output 0 if the input number is prime, 1 otherwise
+	- sum of all number's digits
 	X x-th fibonacci number
 	X check if x is a fibonacci number
 */
 
 .globl _start
 _start:
-	movq	%rsp,		%rbp
 	/* Allocate memory to read file path into */
 	xorl	%edi,		%edi
 	movl	$1,		%esi
@@ -63,7 +63,7 @@ _start:
 .Lflmfailed:	/* To map specified file failed */
 	leaq	(mmf),		%rdi
 	jmp	.Lperror
-.Lrifailed:	/* To read an integer out of the memory failed */ 
+.Lrifailed:	/* To read an integer out of the memory failed */
 	leaq	(rif),		%rdi
 	jmp	.Lperror
 .Lperror:
@@ -89,23 +89,23 @@ _start:
 	jmp	*%rax
 
 
-.Lpmf:
-	pushq	%rax				// PUSH #1 starting address of heap (8B)
 	/* Print message to user */
+.Lpmf:
+	pushq	%rax				// PUSH #1 starting address of heap (8b)
 	leaq	(pmf),		%rdi
 	call	print_string
 	movq	(%rsp),		%rdi
 
+	/* Read file path from stdin */
 .Lrdflpath:
-	/* read file path from stdin */
 	movq	$4095,		%rsi
 	call	read_string
 	testq	%rax,		%rax
 	jz	.Lrpfailed
 
-	/* open and map file to memory */
+	/* Open and map file to memory */
 	xorl	%ecx,		%ecx
-	pushq	%rcx				// PUSH #2 file descriptor of file (8B)
+	pushq	%rcx				// PUSH #2 file descriptor of file (8b)
 	movq	%rax,		%rdi
 	call	fload
 	cmpq	$-1,		%rax
@@ -118,7 +118,7 @@ _start:
 	call	string_to_uint
 	cmpq	$-1,		%rax
 	je	.Lrifailed
-	pushq	%rax				// PUSH #3 integer read from file (8B)
+	pushq	%rax				// PUSH #3 integer read from file (8b)
 
 	/* Unload first mapping */
 	movq	16(%rsp),	%rdi
@@ -166,5 +166,15 @@ _start:
 	leaq	(pmp),		%rdi
 	call	print_string
 
+	/* Calculate the sum of numbers digits */
+	leaq	(pms),		%rdi
+	call	print_string
+	movq	(%rsp),		%rdi
+	call	digits
+	movq	%rax,		%rdi
+	call	print_uint
+	call	print_newline
+
 	/* do something with integer */
-call _exit
+	xorl	%edi,		%edi
+	call _exit

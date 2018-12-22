@@ -34,7 +34,7 @@
         nothing
 */
 
-.globl _exit
+.extern _exit
 
 
 /*
@@ -48,7 +48,7 @@
         rax - size of the string counted without \0 sign
 */
 
-.globl	string_length
+.extern	string_length
 
 
 /*
@@ -62,7 +62,7 @@
         nothing
 */
 
-.globl	print_char
+.extern	print_char
 
 
 /*
@@ -76,7 +76,7 @@
         nothing
 */
 
-.globl	print_string
+.extern	print_string
 
 
 /*
@@ -90,7 +90,7 @@
         nothing
 */
 
-.globl	print_newline
+.extern	print_newline
 
 
 /*
@@ -104,7 +104,7 @@
         nothing
 */
 
-.globl	print_uint
+.extern	print_uint
 
 
 /*
@@ -118,7 +118,7 @@
         nothing
 */
 
-.globl	print_int
+.extern	print_int
 
 
 /*
@@ -132,7 +132,7 @@
         rax - character read from stdin
 */
 
-.globl	read_char
+.extern	read_char
 
 
 /*
@@ -147,7 +147,7 @@
         rax - returns buffer starting address
 */
 
-.globl	read_string
+.extern	read_string
 
 
 /*
@@ -164,7 +164,7 @@
         rax - buffer starting address, or 0 if failed
 */
 
-.globl	read_word
+.extern	read_word
 
 
 /*
@@ -179,7 +179,7 @@
  	rdx - number of characters processed
 */
 
-.globl	string_to_uint
+.extern	string_to_uint
 
 
 /*
@@ -194,7 +194,7 @@
  	rdx - number of characters processed
 */
 
-.globl	string_to_int
+.extern	string_to_int
 
 
 /*
@@ -209,7 +209,7 @@
  	rax - 1 if strings are equal, 0 if not
 */
 
-.globl	string_equals
+.extern	string_equals
 
 
 /*
@@ -225,7 +225,7 @@
  	rax - buffers address if string can by copied, 0 otherwise
 */
 
-.globl	string_copy
+.extern	string_copy
 
 /*
   -[calliso]-
@@ -241,6 +241,6 @@
         rax - return value of called function, if modified by function
 */
 
-.globl calliso
+.extern calliso
 
 #endif /* LIB_H */

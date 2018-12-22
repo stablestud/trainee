@@ -30,7 +30,7 @@
 ; returns:
 ;       nothing
 
-global _exit
+extern	_exit
 
 
 ; -[string_length]-
@@ -42,7 +42,7 @@ global _exit
 ; returns:
 ;       rax - size of the string counted without \0 sign
 
-global	string_length
+extern	string_length
 
 
 ; -[print_char]-
@@ -54,7 +54,7 @@ global	string_length
 ; returns:
 ;       nothing
 
-global	print_char
+extern	print_char
 
 
 ; -[print_string]-
@@ -66,7 +66,7 @@ global	print_char
 ; returns:
 ;       nothing
 
-global	print_string
+extern	print_string
 
 
 ; -[print_newline]-
@@ -78,7 +78,7 @@ global	print_string
 ; returns:
 ;       nothing
 
-global	print_newline
+extern	print_newline
 
 
 ; -[print_uint]-
@@ -90,7 +90,7 @@ global	print_newline
 ; returns:
 ;       nothing
 
-global	print_uint
+extern	print_uint
 
 
 ; -[print_int]-
@@ -102,7 +102,7 @@ global	print_uint
 ; returns:
 ;       nothing
 
-global	print_int
+extern	print_int
 
 
 ; -[read_char]-
@@ -114,7 +114,7 @@ global	print_int
 ; returns:
 ;       rax - character read from stdin
 
-global	read_char
+extern	read_char
 
 
 ; -[read_string]-
@@ -127,7 +127,7 @@ global	read_char
 ; returns:
 ;       rax - returns buffer starting address
 
-global	read_string
+extern	read_string
 
 
 ; -[read_word]-
@@ -142,7 +142,7 @@ global	read_string
 ; returns:
 ;       rax - buffer starting address, or 0 if failed
 
-global	read_word
+extern	read_word
 
 
 ; -[string_to_uint]-
@@ -155,7 +155,7 @@ global	read_word
 ;       rax - unsigned integer value, -1 on failure
 ;	rdx - number of characters processed
 
-global	string_to_uint
+extern	string_to_uint
 
 
 ; -[string_to_int]-
@@ -168,7 +168,7 @@ global	string_to_uint
 ;       rax - signed integer value, -1 on failure
 ;	rdx - number of characters processed
 
-global	string_to_int
+extern	string_to_int
 
 
 ; -[string_equals]-
@@ -181,7 +181,7 @@ global	string_to_int
 ; returns:
 ;	rax - 1 if strings are equal, 0 if not
 
-global	string_equals
+extern	string_equals
 
 
 ; -[string_copy]-
@@ -195,7 +195,7 @@ global	string_equals
 ; returns:
 ;	rax - buffers address if string can by copied, 0 otherwise
 
-global	string_copy
+extern	string_copy
 
 
 ; -[calliso]-
@@ -210,6 +210,6 @@ global	string_copy
 ; returns:
 ;       rax - return value of called function, if modified by function
 
-global calliso
+extern	calliso
 
 %endif ; LIB_INC

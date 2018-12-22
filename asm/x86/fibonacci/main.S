@@ -4,18 +4,22 @@
 #include "file.h"
 #include "mmap.h"
 #include "mmap.def"
-#include "factorial.h"
 #include "prime.h"
 #include "digits.h"
+#include "factorial.h"
+#include "fibonacci.h"
 
 .data
 
 pmf:	.asciz	"Enter file to open: "
 pmc:	.asciz	"Factorial of number "
 pmcc:	.asciz  " is "
-pmp:	.asciz	"a prime number.\n"
+pmp:	.asciz	"a prime number\n"
 pmnp:	.asciz	"not "
-pms:	.asciz	"Sum of all digits: "
+pms:	.asciz	"Sum of all digits is "
+pmx1:	.asciz	"The "
+pmx2:	.asciz	"th fibonacci number is "
+pmcf:	.asciz	"a fibonacci number\n"
 
 amf:	.asciz	"Couldn't allocate heap.\n"
 rpf:	.asciz	"Couldn't read path.\n"
@@ -35,8 +39,8 @@ clf:	.asciz	"Couldn't close file.\n"
 	- x! (factorial, x! = 1 * 2 .... (x - 1) * x), it is guaranteed that x >= 0
 	- output 0 if the input number is prime, 1 otherwise
 	- sum of all number's digits
-	X x-th fibonacci number
-	X check if x is a fibonacci number
+	- x-th fibonacci number
+	- check if x is a fibonacci number
 */
 
 .globl _start
@@ -175,6 +179,34 @@ _start:
 	call	print_uint
 	call	print_newline
 
-	/* do something with integer */
+	/* Calculate x-th fibonacci number */
+	leaq	(pmx1),		%rdi
+	call	print_string
+	movq	(%rsp),		%rdi
+	call	print_uint
+	leaq	(pmx2),		%rdi
+	call	print_string
+	movq	(%rsp),		%rdi
+	call	fibo_xth
+	movq	%rax,		%rdi
+	call	print_uint
+	call	print_newline
+
+	/* Check if number is a fibonacci number */
+	movq	(%rsp),		%rdi
+	call	print_uint
+	leaq	(pmcc),		%rdi
+	call	print_string
+	movq	(%rsp),		%rdi
+	call	fibo_check
+	testl	%eax,		%eax
+	jnz	.Lpfibo
+	leaq	(pmnp),		%rdi
+	call	print_string
+.Lpfibo:
+	leaq	(pmcf),		%rdi
+	call	print_string
+	
+	/* Terminate program */
 	xorl	%edi,		%edi
 	call _exit

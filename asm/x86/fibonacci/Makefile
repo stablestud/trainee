@@ -1,4 +1,4 @@
-all: mkdir file open mmap close main factorial prime digits lib
+all: mkdir file open mmap close main factorial prime digits fibonacci lib
 	ld bin/*.o -o bin/fibonacci
 mkdir:
 	mkdir -p bin/
@@ -18,6 +18,8 @@ prime:	prime.S prime.h mkdir
 	gcc -c prime.S -o bin/prime.o
 digits:	digits.S digits.h mkdir
 	gcc -c digits.S -o bin/digits.o
+fibonacci:	fibonacci.S fibonacci.h mkdir
+	gcc -c fibonacci.S -o bin/fibonacci.o
 lib:	../lib mkdir
 	make -C ../lib obj
 	cp ../lib/bin/lib.o bin/lib.o

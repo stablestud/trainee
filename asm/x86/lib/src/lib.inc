@@ -62,7 +62,7 @@ extern	print_char
 ; takes:
 ;       rdi - address of string
 ; modifies:
-;       rax, rdx, rsi, rdi, rcx, r11
+;       rax, rcx, rdx, rdi, rsi, r8, r9, r10, r11
 ; returns:
 ;       nothing
 
@@ -191,7 +191,7 @@ extern	string_equals
 ;	rsi - address of buffer (destination)
 ;	rdx - length of buffer
 ; modifies:
-; 	rax, rcx, rsi, rdi, r9, r10, r8
+; 	rax, rcx, rsi, rdi, r8, r9, r10, r11
 ; returns:
 ;	rax - buffers address if string can by copied, 0 otherwise
 

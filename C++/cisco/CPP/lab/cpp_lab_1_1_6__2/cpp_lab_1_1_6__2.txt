@@ -32,37 +32,13 @@ Example input
 Example output
 sum: 18.5 avg: 3.7
 
-
 #include <vector>
 #include <iostream>
 
-using namespace std;
-
+using namespcace std;
 int main()
 {
-	vector <int> v(8);
-
-	for (unsigned i = 0; i < v.____(); ++i)
-	{
-		v[____] = i * 2;
-	}
-
-	for (unsigned i = 0; i < v.____(); ++i)//simplify
-	{
-		cout << v[____] << " ";
-	}
-
-	cout << endl;
-
-	cout << v.____() << endl;
-
-	v.push_back(42);
-
-	cout << v.____() << endl;
-
-	v.pop_back();
-
-	cout << v.____() << endl;
-
+	vector<float> v(5);
+	//your code
 	return 0;
 }

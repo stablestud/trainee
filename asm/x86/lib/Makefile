@@ -1,8 +1,8 @@
 all:	setup obj
 setup:
 	mkdir -p bin/
-lib:	lib.asm setup
-	nasm -felf64 -o lib.o lib.asm
-	ld -o bin/lib lib.o
-obj:	lib.asm setup
-	nasm -felf64 -o bin/lib.o lib.asm
+lib:	src/lib.asm setup
+	nasm -felf64 -o bin/lib.o src/lib.asm
+	ld -o bin/lib bin/lib.o
+obj:	src/lib.asm setup
+	nasm -felf64 -o bin/lib.o src/lib.asm

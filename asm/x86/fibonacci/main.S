@@ -1,6 +1,6 @@
 #include <asm/unistd_64.h> /* For syscall macros */
 
-#include "../lib/lib.h"
+#include "../lib/src/lib.S"
 #include "file.h"
 #include "mmap.h"
 #include "mmap.def"

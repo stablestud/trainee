@@ -8,32 +8,17 @@
 #include <string>
 #include "ipAddress.h"
 
-void sendForPrint(const IpAddress* const);
-
-int main(void)
+int main(int argc, char * argv[])
 {
-        std::string new_ip;
-        /* Uncomment to check up to 3 ip-addresses
-        std::cin >> new_ip;
-        IpAddress ip1(new_ip);
+	IpAddress ip;
 
-        std::cin >> new_ip;
-        IpAddressChecked ip2(new_ip);
-        */
-        std::cin >> new_ip;
-        IpAddressChecked ip3(new_ip);
+	if (argc < 2) {
+		std::string input;
+		std::cin >> input;
+		ip(input);
+	} else {
+		ip(argv[1]);
+	}
 
-        std::cout << std::endl;
-        /*
-        sendForPrint(ip1);
-        sendForPrint(ip2);
-        */
-        sendForPrint(&ip3);
-}
-
-/* I declared the method print as virtual,  *
- * then why shouldn't I make use of it? :-) */
-void sendForPrint(const IpAddress* const obj)
-{
-        obj->print();
+	return !ip.returnCorrect();
 }

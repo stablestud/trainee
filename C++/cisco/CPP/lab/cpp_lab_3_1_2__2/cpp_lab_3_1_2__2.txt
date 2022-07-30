@@ -1,0 +1,32 @@
+3.1.2.2 for_each - part II
+
+Objectives
+Familiarize the student with:
+
+lists - creating them;
+lists - filling them with values;
+lists - removing and inserting values;
+printing on screen.
+Scenario
+Write a program that creates a vector with values 3, 5, 6, 8, and 9. After this, print the squares of all the vector elements, and after a newline, print all the elements in reverse order. Your version of the program must print the same result as the expected output. Try to keep your program short - remember to use for_each.
+
+9 25 36 64 81
+81 64 36 25 9
+
+
+#include <iostream>
+#include <algorithm>
+#include <vector>
+
+using namespace std;
+
+//your code
+
+int main()
+{
+	vector<int>v1 = { 3, 5, 6, 8, 9};
+
+	//your code
+
+	return 0;
+}

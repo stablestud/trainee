@@ -1,0 +1,47 @@
+1.2.5.1 Vectors - initialization
+
+Objectives
+
+Familiarize the student with:
+
+    vectors - creating them;
+    vectors - filling them with values;
+    printing on screen.
+
+Scenario
+
+Fill in the blanks in the program. After this, test your program with all input values. Your version of the program must print the same result as the expected output.
+
+Example input
+1
+
+Example output
+sums: 7 7 7 6 8
+
+Example input
+5
+
+Example output
+sums: 11 11 11 10 12
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+int main()
+{
+	int t[] =  {5, 4, 3, 1, 2};
+	vector<int> v1(t, t + 5);
+	vector<int> v2({____________});
+	vector<int> sums(v1.size());
+	int x;
+	cin >> x;
+	for (unsigned i = 0; i < v1.size(); ++i)
+		sums[i] = + ü v1[i] + v2[i];
+	cout << "sums: ";
+	for (int sum : sums)
+		cout << ___ << " ";
+	cout << endl;
+	return 0;
+}

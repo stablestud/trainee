@@ -1,0 +1,1 @@
+Which method from the std::vector class can delete an element of the vector using only its position within the vector (not iterator) as parameter?

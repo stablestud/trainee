@@ -1,0 +1,52 @@
+#ifndef MMAP_DEF
+#	define MMAP_DEF
+
+
+	/* Page protection flag */ 
+#	ifndef PROT_READ
+#		define PROT_READ	0x1		/* Page can be read.  */
+#	endif /* PROT_READ */
+
+#	ifndef PROT_WRITE
+#		define PROT_WRITE	0x2		/* Page can be written.  */
+#	endif /* PROT_WRITE */
+
+#	ifndef PROT_EXEC
+#		define PROT_EXEC	0x4		/* Page can be executed.  */
+#	endif /* PROT_EXEC */
+
+#	ifndef PROT_NONE
+#		define PROT_NONE	0x0		/* Page can not be accessed.  */
+#	endif /* PROT_NONE */
+
+#	ifndef PROT_GROWSDOWN
+#		define PROT_GROWSDOWN	0x01000000	/* Extend change to start of
+							   growsdown vma (mprotect only).  */
+#	endif /* PROT_GROWSDOWN */
+
+#	ifndef PROT_GROWSUP
+#		define PROT_GROWSUP	0x02000000	/* Extend change to start of
+							   growsup vma (mprotect only).  */
+#	endif /* PROT_GROWSUP */
+
+
+	/* Sharing types (must choose one and only one of these).  */
+#	ifndef MAP_SHARED
+#		define MAP_SHARED	0x01		/* Share changes.  */
+#	endif /* MAP_SHARED */
+
+#	ifndef MAP_PRIVATE
+#		define MAP_PRIVATE	0x02		/* Changes are private.  */
+#	endif /* MAP_PRIVATE */
+
+#	ifndef MAP_ANONYMOUS
+#		define MAP_ANONYMOUS	0x20		/* Don't use a file.  */
+#		define MAP_ANON		MAP_ANONYMOUS
+#	endif /* MAP_ANONYMOUS */
+
+
+#	ifndef MAP_FAILED
+#		define MAP_FAILED	-1
+#	endif /* MAP_FAILED */
+
+#endif /* MMAP_DEF */

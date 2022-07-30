@@ -1,0 +1,43 @@
+9.1.8.1 Template specialization
+
+Objectives
+Familiarize the student with:
+
+lists - creating them;
+lists - filling them with values;
+lists - removing and inserting values;
+printing on screen.
+Scenario
+Prepare and test two versions of the signum template function. The first version is to compute the signum - it returns -1 when the argument value is less than 0, 0 when the argument value is 0, and 1 when the argument value is greater than 0.
+
+The second version of the function is a specialized one: it computes the signum for the class Point - it writes a very simple class (with two variables to store the x and y values. The Point version of the signum function returns -1 when both values have signum -1, 1 when both valueas have signum 1, and otherwise it returns 0.
+
+Test both versions of the functions. We've created some code with example points.
+
+Your version of the program must print the same result as the expected output.
+
+Value: -5 sgn: -1
+Point: -1, 2 sgn:0
+Point: -3, -5 sgn:-1
+Point: 2, 2 sgn:1
+
+
+#include <iostream>
+#include <fstream>
+#include <vector>
+
+using namespace std;
+
+//your code
+
+int main() {
+	int valuei = -5;
+	vector <Point> points = { { -1, 2 },{ -3, -5 },{ 2, 2 } };
+
+	cout << "Value: " << valuei << " sgn: " << signum(valuei) << endl;
+
+	for(auto point: points)
+		cout << "Point: " << point.getX() << ", " << point.getY() << " sgn:" << signum(point) << endl;
+
+	return 0;
+}

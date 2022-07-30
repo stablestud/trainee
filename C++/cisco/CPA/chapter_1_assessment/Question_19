@@ -1,0 +1,3 @@
+int i;
+i = 8; //cin >> i;
+cout << i << hex << i + i << oct << i;

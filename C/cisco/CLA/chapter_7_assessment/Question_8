@@ -1,0 +1,10 @@
+#include <stdio.h> 
+
+int main(void) { 
+	int i; 
+
+	i = fprintf(stdin,"Hello!"); 
+	printf("%d",i == EOF); 
+
+	return 0; 
+}

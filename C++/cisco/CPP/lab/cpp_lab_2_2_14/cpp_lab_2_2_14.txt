@@ -1,0 +1,52 @@
+2.2.14.1 Sets - boundaries
+
+Objectives
+Familiarize the student with:
+
+sets - creating them;
+sets - finding the boundaries of a range;
+sets - iterating over boundaries;
+sets - holding the same value multiple times (as a multiset)
+printing on screen.
+Scenario
+Write a program that creates two multisets (the multisets are given in the code below) and asks the user for two numbers: start_value and stop_value. Next, your program should sum all the elements between start_value and stop_value (inclusive) in both multisets. If one of the values is not found, then display: "Not found", but if both are found, then display the sum. Create a function to do all of these operations with a multiset and two numbers as arguments, and call it twice (for both multisets). Your version of the program must print the same result as the expected output for all given input. Test it for all input cases.
+
+Example input
+1.1 2.9
+
+Example output
+10.1 7.7
+
+Example input
+9 2
+
+Example output
+Not found Not found
+
+Example input
+1.9 4
+
+Example output
+Not found 17.84
+
+
+#include <iostream>
+#include <set>
+
+using namespace std;
+
+//your code
+
+int main() {
+	multiset <double> valuesA = { 1.1, 2.3, 2.7, 2.9, 3.5 };
+	multiset <double> valuesB = { 2.5, 2.7, 3.14, 3.5, 3.5, 4.5 };
+
+	double start_value, stop_value;
+
+	cin >> start_value;
+	cin >> stop_value;
+
+	//your code
+
+	return 0;
+}

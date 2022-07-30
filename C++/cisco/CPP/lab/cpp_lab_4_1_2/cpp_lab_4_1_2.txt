@@ -1,0 +1,76 @@
+4.1.2.1 Copying operations
+
+Objectives
+Familiarize the student with:
+
+copy - the old way of doing it;
+copy - the standard way of doing it;
+vectors - copying blocks of vectors;
+printing on screen.
+Scenario
+Write a program that creates three vectors of size 10 (the first vector is filled with the values: 5, 6, 7, 8, 9, 0, 1, 2, 3, 4) and asks the user for two numbers: start_value and stop_value.
+
+Next, your program should copy some values (begin at start_value and end at stop_value) from the first vector to the second and third vectors. Do it in two ways: to copy data from the first vector to the second, you should use a simple loop, iterating over the elements of the first vector; and to copy data from the first vector to the third, you should use the std::copy function.
+
+After this, print the values of all three vectors.
+
+If start_value is greater than stop_value, then display the message: "Stop value must be greater than or equal to start value." If start_value or stop_value is greater than 9, then display the message: "Stop value and start value must be less than or equal to 9."
+
+Your version of the program must print the same result as the expected output for all given input. Test it for all input cases. Compare the fragments of your code - which one is easier to write or modify?
+
+Example input
+6 5
+
+Example output
+Stop value must be greater than or equal to start value.
+
+Example input
+9 11
+
+Example output
+Stop value and start value must be less than or equal to 9.
+
+Example input
+0 5
+
+Example output
+5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 0 0 0 0 5 6 7 8 9 0 0 0 0 0
+
+Example input
+3 7
+
+Example output
+5 6 7 8 9 0 1 2 3 4 8 9 0 1 2 0 0 0 0 0 8 9 0 1 2 0 0 0 0 0
+
+
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void print(const int & value)
+{
+	cout << value << " ";
+}
+
+int main()
+{
+	vector<int> v1 = {5, 6, 7, 8, 9, 0, 1, 2, 3, 4};
+	vector<int> v2(10);
+	vector<int> v3(10);
+
+	unsigned start_value;
+	cin >> start_value;
+
+	unsigned stop_value;
+	cin >> stop_value;
+
+	//your code
+
+	for_each(v1.begin(), v1.end(), print); cout << endl;
+	for_each(v2.begin(), v2.end(), print); cout << endl;
+	for_each(v3.begin(), v3.end(), print); cout << endl;
+
+	return 0;							  
+}

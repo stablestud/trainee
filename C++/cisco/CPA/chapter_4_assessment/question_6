@@ -1,0 +1,13 @@
+#include <iostream>
+using namespace std;
+    
+int main() {
+        int i = 2;
+        float f = 5.8;
+        
+        f = (int)f;
+        i = (float) i;
+        cout << f/i;
+
+        return 0;
+}

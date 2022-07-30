@@ -1,0 +1,49 @@
+4.1.5.1 Replace operations - part I
+
+Objectives
+Familiarize the student with:
+
+replace - using the function.
+Scenario
+Fill in the blanks in the program. After this, test your program (just run it). Your version of the program must print the same result as the expected output for all possible inputs.
+
+Example input
+1 2
+
+Example output
+2 3 2 3 2 3
+
+Example input
+3 1
+
+Example output
+2 1 2 1 1 1
+
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+int main()
+{
+	vector<int> values = { 2, _, 2, _, 1, _};
+
+	int old_value;
+
+	cin >> old_value;
+
+	int new_value;
+
+	cin >> _________;
+	replace(______________, ____________, _________, _________);
+
+	for (auto i : values)
+		cout << i << " ";
+
+	cout << endl;
+
+	return 0;
+}

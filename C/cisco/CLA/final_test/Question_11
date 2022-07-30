@@ -1,0 +1,5 @@
+int X = 1, Y = 2, Z;
+
+Z = X / Y * --X * Y++;
+
+// What is value of X?

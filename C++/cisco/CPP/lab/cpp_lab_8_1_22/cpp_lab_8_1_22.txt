@@ -1,0 +1,47 @@
+8.1.22.1 Using streams - getline
+
+Objectives
+Familiarize the student with:
+
+getline - simple usage;
+string - finding a string in string.
+Scenario
+Write a program that takes one line from the user (store it in a string variable). Next, your program should check if the input starts with the exact introduction: "My name is ", then take the rest of the string and display the message: "Hi, rest_of_string!".
+
+If the input doesn't start with the correct string (case-sensitive), display the message: "Hi, please introduce yourself."
+
+Your version of the program must print the same result as the expected output for all given input. Test it for all input cases.
+
+Example input
+My name is Sarah
+
+Example output
+Hi, Sarah!
+
+Example input
+My name is John
+
+Example output
+Hi, John!
+
+Example input
+Myrname ys noname
+
+Example output
+Hi, please introduce yourself.
+
+
+#include <iostream>
+#include <string>
+#include <vector>
+
+using namespace std;
+
+int main()
+{
+	string introduction = "My name is ";
+
+	//your code
+
+	return 0;
+}

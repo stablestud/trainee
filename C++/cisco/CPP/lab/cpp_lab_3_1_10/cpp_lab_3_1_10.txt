@@ -1,0 +1,45 @@
+3.1.10.1 search_n operations
+
+Objectives
+Familiarize the student with:
+
+lists - creating them;
+lists - filling them with values;
+lists - removing and inserting values;
+printing on screen.
+Scenario
+Write a function body to find all the lengths of consecutive sequences of numbers (we call this function twice, for the values: 11 and 21). Use search_n to check if the consecutive sequence of given numbers appears in the vector.
+
+Your version of the program must print the same result as the expected output.
+
+11 found 1 time(s) at: 0
+11 found 2 time(s) at: 0
+11 found 3 time(s) at: 5
+11 found 4 time(s) at: 12
+21 found 1 time(s) at: 2
+21 found 2 time(s) at: 2
+21 found 3 time(s) at: 9
+
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+void print_found(vector<int> values, int value)
+{
+	//your code
+}
+
+int main()
+{
+	vector<int> values =
+		{ 11, 11, 21, 21, 30, 11, 11, 11, 17, 21, 21, 21, 11, 11, 11, 11 };
+
+	print_found(values, 11);
+	print_found(values, 21);
+
+	return 0;
+}

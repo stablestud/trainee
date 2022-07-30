@@ -1,0 +1,41 @@
+8.2.4.1 Using files - flags
+
+Objectives
+Familiarize the student with:
+
+file - opening it with ifstream;
+file - using flags to check the status.
+Scenario
+Write a program that reads a file from the disk and prints only the even lines from this file. You should use the ifstream class and getline function, and also remember to check the appropriate flags. If your program can't open the file, display the message: "File error: couldn't open."
+
+Remember to create a text file with the content as in the second example input.
+
+Your version of the program must print the same result as the expected output.
+
+Example input
+No file.
+
+Example output
+File error: couldn't open.
+
+Example input
+File content: ASDF asdf QWER qwer
+
+Example output
+asdf qwer
+
+
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <iomanip>
+
+using namespace std;
+
+int main() {
+	string filename  = "filename.txt";
+
+	//your code
+
+	return 0;
+}

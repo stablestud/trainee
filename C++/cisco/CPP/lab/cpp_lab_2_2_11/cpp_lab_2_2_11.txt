@@ -1,0 +1,40 @@
+2.2.11.1 Sets - swapping
+
+Objectives
+Familiarize the student with:
+
+sets - filling them with values;
+sets - swapping values between sets;
+printing on screen.
+Scenario
+Fill in the blanks in the program. After this, test your program (just run it). Your version of the program must print the same result as the expected output.
+
+2.71 2.19 -3.14 -3.88
+3.7 2.9 -1.1 -2.3
+
+
+#include <iostream>
+#include <fstream>
+#include <set>
+#include <functional>
+
+using namespace std;
+
+int main() {
+	set <double, _______________> valuesA = { -1.1, 2.9, ____, 3.7 };
+	set <_______________________> valuesB = { -3.14, 2.71, _____, 2.19 };
+
+	valuesA.swap(valuesB);
+
+	for (auto value : valuesA)
+		cout << value << " ";
+
+	cout << endl;
+
+	for (auto value : valuesB)
+		cout << value << " ";
+
+	cout << endl;
+
+	return 0;
+}

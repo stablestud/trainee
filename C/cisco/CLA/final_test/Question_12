@@ -1,0 +1,5 @@
+int X;
+
+X = 'b' - 'a' * ('\' / '\');
+
+// What is value of X?

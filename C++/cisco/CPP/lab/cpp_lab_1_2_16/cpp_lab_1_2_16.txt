@@ -1,0 +1,35 @@
+1.2.16.1 Deque - filling it with values
+
+Objectives
+Familiarize the student with:
+
+deque - creating it;
+deque - filling it with values;
+printing on screen.
+Scenario
+Fill in the blanks in the program. After this, test your program (just run it). Your version of the program must print the same result as the expected output. Think if (and how) you can fill the blanks with different values and get the same output.
+
+5 3 5 7
+
+
+#include <iostream>
+#include <deque>
+
+using namespace std;
+
+int main()
+
+{
+	deque<int> d1({1, 2, 3});
+	deque<int> d2(_________);
+
+	cout << d1.front() + d2.front() << " ";
+
+	for (int d: d1)
+	{
+		cout << d + d2.back() << " ";
+		d2.pop_back();
+	}
+
+	return 0;
+}

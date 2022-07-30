@@ -1,0 +1,11 @@
+#include <iostream>
+
+using namespace std;
+
+namespace SpaceOne {  char a = 'a'; }
+namespace SpaceTwo {  char a = 'z'; }
+
+int main () {
+        // insert code here, to generate the output "za"
+        return 0;
+}

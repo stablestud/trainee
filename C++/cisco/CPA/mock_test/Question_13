@@ -1,0 +1,16 @@
+#include <iostream>
+
+using namespace std;
+
+namespace Space
+{  char a = 'a', b = 'b';  }
+
+int a = 1, b = 2;
+
+int main () {
+        // insert code here, to generate the output "a 2".
+
+        cout << a << " " << b;
+
+        return 0;
+}

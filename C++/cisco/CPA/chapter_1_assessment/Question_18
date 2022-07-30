@@ -1,0 +1,3 @@
+int i = 3, j = ++i, k = ++i;
+i = 5; // cin >> i;
+cout << k + i << j - i << i * i;

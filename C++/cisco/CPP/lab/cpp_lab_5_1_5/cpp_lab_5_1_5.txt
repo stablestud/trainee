@@ -1,0 +1,33 @@
+5.1.5.1 Finding boundaries
+
+Objectives
+Familiarize the student with:
+
+finding boundaries;
+lower_bound - using it;
+upper_bound - using it.
+Scenario
+Write a program that creates one vector of values from 1 to 20 in ascending order. Find the lower bound of 5 and the upper bound of 11 and print all the values between, including the bounds.
+
+Your version of the program must print the same result as the expected output.
+
+5 6 7 8 9 10 11
+
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+//your code
+
+int main()
+{
+	vector<int> results(20);
+
+	//your code
+
+	return 0;
+}

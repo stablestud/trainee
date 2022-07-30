@@ -1,0 +1,17 @@
+Enums
+Competitive programming
+Copying constructors that initializes variables like a subconstructer (e.g
+Class ( src &x ) : variables ( x ) {}
+Pointers to constants - can it only be not modified through the pointer? e.g. try to bypass the limitation
+Constructor void : localVar ( value );
+Can I create a class only with a copy constructor?
+Copying constructor ( class* source ) - pointer instead of reference ( call with function passed by value! )
+Composed class copying everything? Even with all implicitly constructors
+Const return value of functions / const pointer parameter
+GetChar(); - does it only work on Windows?
+Can all methods have an semicolon?
+Initiate value in class with same name as superclass
+Const class field initialize with different data tye
+
+asm:
+branch prediction hints x86
